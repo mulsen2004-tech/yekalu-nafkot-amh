@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="የቃሉ ናፍቆት — የመጽሐፍ ቅዱስ ጥልቅ ጥናት መተግበርያ">
+  <title>📖 የቃሉ ናፍቆት የመጽሐፍ ቅዱስ ጥናት መተግበርያ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div id="app">
+  <div class="corner-decoration top-left">🕊️</div>
+  <div class="corner-decoration top-right">🌿</div>
+  <div class="corner-decoration bottom-left">🌿</div>
+  <div class="corner-decoration bottom-right">🕊️</div>
+
+  <button class="hamburger-btn hidden" id="hamburgerBtn" aria-label="ምናሌ ክፈት">☰</button>
+  <button class="exit-btn hidden" id="exitBtn" aria-label="ውጣ" title="ውጣ">
+    <span class="exit-icon">⏏️</span>
+    <span class="exit-text">ውጣ</span>
+  </button>
+
+  <div class="app-header" id="appHeader">
+    <div class="app-title">📖 የቃሉ ናፍቆት</div>
+    <div class="app-date" id="dateDisplay"></div>
+  </div>
+
+  <span class="chapter-timer" id="chapterTimer">⏱️ 00:00</span>
+
+    <div id="loginSection" class="card" style="
+      background:
+        linear-gradient(rgba(42,26,16,0.15), rgba(74,44,26,0.30)),
+        url('images/jesus-bread-wine.jpg') center/cover no-repeat !important;
+      min-height: 560px;
+      border-radius: 22px;
+      position: relative;
+    ">
+      <div class="login-content">
+        <h1 class="app-main-title">የቃሉ ናፍቆት</h1>
+        <p class="app-main-subtitle">የመጽሐፍ ቅዱስ ጥናት መተግበርያ</p>
+        <div class="login-glass">
+        <div class="login-logo">📖</div>
+        <h3>🔑 በኢሜይል አድራሻዎት ይግቡ</h3>
+        <p class="login-subtitle">የይለፍ ቃል ወይም ፓስወርድ አያስፈልግዎትም። በኢሜይልዎ ብቻ ይግቡ።</p>
+        <div class="login-verse">"እኔ የሕይወት እንጀራ ነኝ፤ ወደ እኔ የሚመጣ ከቶ አይራብም።" — ዮሐንስ 6:35</div>
+        <div class="login-input-wrap">
+          <input type="email" id="emailInput" placeholder="email@gmail.com" aria-label="ኢሜይል">
+          <button class="btn btn-primary" id="loginBtn">🚀 ይቀጥሉ</button>
+        </div>
+        <div class="login-footnote">
+          📖 <strong>የቃሉ ናፍቆት</strong> · የመጽሐፍ ቅዱስ ጥልቅ ጥናት
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="homeSection">
+    <div class="home-hero">
+      <h2>📖 እንኳን ደህና መጡ!</h2>
+      <p>በ'የቃሉ ናፍቆት' የመጽሐፍ ቅዱስ ጥናት መተግበርያ፣ ቃሉን በጥልቀት ማጥናት ወደሚያስችልዎ የጥናት ጉዞ እንኳን በደህና መጡ። በመንፈስ ቅዱስ ረድኤትና በጸሎት ቃሉ ይገለጥልዎታል። እባክዎ በታማኝነት፣ በናፍቆት፣ በመሰጠትና ጊዜዎን በመሰዋት፣ በእውነትና በመንፈስ ቃሉን ያጥኑ። ጌታ ለህይወትዎ ዛሬም ይናገራል። ከታች ካሉት አማራጮች የሚያጠኑትን ክፍል፣ መጽሐፍና ምዕራፍ ይምረጡ።</p>
+      <div class="home-verse">"ቃልህ ለእግሬ መብራት፥ ለመንገዴም ብርሃን ነው።" — መዝሙር 119:105</div>
+    </div>
+
+    <div class="home-selector">
+      <h3>📚 የጥናት ምርጫ</h3>
+      <div class="chain-row">
+        <div>
+          <label class="chain-label" for="selTestament">📜 ኪዳናት</label>
+          <select class="chain-select" id="selTestament">
+            <option value="">— ይምረጡ —</option>
+            <option value="OT">📖 ብሉይ ኪዳን</option>
+            <option value="NT">✝️ አዲስ ኪዳን</option>
+          </select>
+        </div>
+        <div>
+          <label class="chain-label" for="selBook">📕 መጽሐፍ</label>
+          <select class="chain-select" id="selBook" disabled><option value="">— መጽሐፉን ይምረጡ —</option></select>
+        </div>
+        <div>
+          <label class="chain-label" for="selChapter">📄 ምዕራፍ</label>
+          <select class="chain-select" id="selChapter" disabled><option value="">— ምዕራፉን ይምረጡ —</option></select>
+        </div>
+      </div>
+      <div style="margin-top:16px;display:flex;justify-content:center;">
+        <button class="nav-btn-main" id="startStudyBtn" disabled>🚀 ጥናቱን ይጀምሩ</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="mainSection" class="hidden">
+    <div style="padding:0;border:none;background:transparent;">
+      <div id="curriculumHeader" style="margin-bottom:10px;">
+        <div style="font-size:.75rem;font-weight:800;color:var(--accent-gold);" id="curriculumUnit"></div>
+        <div style="font-size:1rem;font-weight:700;margin-top:2px;" id="curriculumTitle"></div>
+        <div style="font-size:.78rem;color:var(--text-medium);margin-top:4px;">
+          <span id="curriculumFocus"></span>
+        </div>
+      </div>
+
+      <div class="slide-stage">
+        <div class="slide-progress" id="slideProgress" aria-hidden="true"></div>
+        <p class="visually-hidden" id="slideAnnouncer" aria-live="polite" aria-atomic="true"></p>
+        <div id="slideContent"></div>
+      </div>
+    </div>
+
+    <div class="bottom-nav hidden" id="bottomNav">
+      <button class="btn" id="homeBtn">🏠 ወደ መነሻ</button>
+      <span class="nav-label" id="navChapterLabel"></span>
+      <button class="btn btn-accent" id="nextBtn">ወደ ሚቀጥለው ገጽ →</button>
+    </div>
+  </div>
+
+  <div class="footer-note">📖 የቃሉ ናፍቆት · የመጽሐፍ ቅዱስ ጥልቅ ጥናት · <span style="font-size:.6rem;opacity:.7;">Compiled by Mulualem Wossen. በሙሉዓለም ወሰን የተቀናበረ።</span></div>
+</div>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="ማውጫ">
+  <div class="drawer-header">
+    <h2>⚙️ ማውጫና ቅንብሮች</h2>
+    <button class="drawer-close" id="drawerCloseBtn" aria-label="ዝጋ">✕</button>
+  </div>
+
+  <div class="drawer-user" id="drawerUser">
+    <div class="drawer-user-avatar" id="drawerUserAvatar">👤</div>
+    <div class="drawer-user-info">
+      <div class="drawer-user-name" id="drawerUserName">—</div>
+      <div class="drawer-user-email" id="drawerUserEmail">—</div>
+    </div>
+  </div>
+
+  <div class="drawer-section">
+    <div class="drawer-section-title">📖 የጥናት ተግባሮች</div>
+    <button class="drawer-btn" id="drawerHomeBtn"><span class="icon">🏠</span> ወደ መነሻ ገጽ ሂድ</button>
+    <button class="drawer-btn" id="drawerSaveBtn"><span class="icon">💾</span> ሂደትህንና ማስታወሻህን አስቀምጥ</button>
+    <button class="drawer-btn" id="drawerNameBtn"><span class="icon">👤</span> ሙሉ ስምህን በትክክል አስገባ</button>
+    <button class="drawer-btn" id="drawerShareBtn"><span class="icon">📤</span> መተግበርያውን አጋራ</button>
+    <button class="drawer-btn" id="drawerHelpBtn"><span class="icon">❓</span> የአጠቃቀም መመሪያ</button>
+  </div>
+
+  <div class="drawer-section">
+    <div class="drawer-section-title">🎛️ ቅንብሮች</div>
+    <div class="pref-row">
+      <div><div class="pref-label"><span class="icon">🔊</span> ድምጽ (Sound)</div><span class="pref-hint">የትክክል/ስህተት ድምጾች</span></div>
+      <label class="switch"><input type="checkbox" id="prefSound" checked><span class="slider"></span></label>
+    </div>
+    <div class="pref-row">
+      <div><div class="pref-label"><span class="icon">📳</span> ንዝረት (Vibration)</div><span class="pref-hint">በስልክ ላይ ንዝረት</span></div>
+      <label class="switch"><input type="checkbox" id="prefHaptic" checked><span class="slider"></span></label>
+    </div>
+    <div class="pref-row">
+      <div><div class="pref-label"><span class="icon">✨</span> የአኒሜሽን ምስሎች (Animations)</div><span class="pref-hint">የአኒሜሽን ምስሎች</span></div>
+      <label class="switch"><input type="checkbox" id="prefAnimations" checked><span class="slider"></span></label>
+    </div>
+    <div class="pref-row">
+      <div><div class="pref-label"><span class="icon">🎵</span> በዕረፍት ሙዚቃ</div><span class="pref-hint">ለስላሳ ማጀብያ ሙዚቃ</span></div>
+      <label class="switch"><input type="checkbox" id="prefMusic"><span class="slider"></span></label>
+    </div>
+    <div class="pref-row">
+      <div><div class="pref-label"><span class="icon">🕊️</span> ርግብ (Dove)</div><span class="pref-hint">ርግብ አማካሪ</span></div>
+      <label class="switch"><input type="checkbox" id="prefMascot" checked><span class="slider"></span></label>
+    </div>
+    <div class="pref-row">
+      <div><div class="pref-label"><span class="icon">🌙</span> ጨለማ ገጽታ</div><span class="pref-hint">Dark mode</span></div>
+      <label class="switch"><input type="checkbox" id="prefDark"><span class="slider"></span></label>
+    </div>
+  </div>
+
+  <div class="drawer-section">
+    <div class="drawer-section-title">⚠️ ጥንቃቄ የሚፈልግ ክፍል</div>
+    <button class="drawer-btn danger" id="drawerResetBtn"><span class="icon">♻️</span> የእስካሁን ሂደትህንና ማስታወሻህን አጥፋ</button>
+    <button class="drawer-btn danger" id="drawerLogoutBtn"><span class="icon">🚪</span> ከመተግበርያ መውጫ</button>
+  </div>
+
+  <div class="drawer-footer">📖 <strong>የቃሉ ናፍቆት</strong><br>የመጽሐፍ ቅዱስ ጥልቅ ጥናት መተግበርያ</div>
+</aside>
+
+<button class="music-btn" id="musicBtn" aria-label="ሙዚቃ ቀይር" title="ሙዚቃ ቀይር" style="display:none;">
+  <span class="music-ico" id="musicIco">🎵</span>
+</button>
+
+<div class="mascot" id="mascot" role="img" aria-label="ነጭ ርግብ" style="display:none;">
+  <div class="mascot-bubble" id="mascotBubble"></div>
+  <div class="mascot-body" id="mascotBody">🕊️</div>
+</div>
+
+<div class="achievement-popup" id="achievementPopup">
+  <div class="ach-emoji" id="achEmoji">🏅</div>
+  <div class="ach-text">
+    <div class="ach-title">🎉 አዲስ ስኬት!</div>
+    <div class="ach-name" id="achName">—</div>
+  </div>
+</div>
+
+<div id="celebrationOverlay"></div>
+
+<div class="popup-overlay" id="resetPopup" role="dialog" aria-modal="true">
+  <div class="popup-modal" style="max-width:480px;">
+    <span class="popup-icon" aria-hidden="true">♻️</span>
+    <div class="popup-title">የእስካሁን ሂደትህንና ማስታወሻህን አጥፋ</div>
+    <div class="popup-text" style="margin-bottom:20px;">እባክዎ የሚፈልጉትን አማራጭ ይምረጡ፦</div>
+    <div class="popup-actions" style="flex-direction:column;gap:12px;">
+      <button class="btn btn-primary" id="resetAllChaptersBtn" style="background:#a13d2d;font-size:.9rem;padding:14px;">🗑️ ሁሉንም ምዕራፎች አጥፋ</button>
+      <button class="btn" id="resetSelectedChapterBtn" style="background:var(--accent-gold);color:#1e1e1e;font-size:.9rem;padding:14px;">📄 የተመረጠውን ምዕራፍ ብቻ አጥፋ</button>
+      <button class="btn" id="resetCancelBtn" style="background:var(--surface-3);color:var(--text-dark);font-size:.85rem;padding:12px;">ተወው</button>
+    </div>
+  </div>
+</div>
+
+<div class="popup-overlay" id="chapterPopup" role="dialog" aria-modal="true">
+  <div class="popup-modal">
+    <span class="popup-icon" id="popupIcon" aria-hidden="true">🎉</span>
+    <div class="popup-title" id="popupTitle">ግሩም!</div>
+    <div class="popup-text" id="popupText"></div>
+    <div class="popup-stats">
+      <div class="popup-stat"><div class="num" id="popupCorrect">0</div><div class="lbl">✅ ትክክል</div></div>
+      <div class="popup-stat"><div class="num" id="popupTotal">0</div><div class="lbl">📝 ጥያቄዎች</div></div>
+      <div class="popup-stat"><div class="num" id="popupScore">0%</div><div class="lbl">🎯 ውጤት</div></div>
+    </div>
+    <div class="popup-verse" id="popupVerse"></div>
+    <div class="popup-actions"><button class="btn btn-primary" id="popupCloseBtn">🏠 ወደ መነሻ</button></div>
+  </div>
+</div>
+
+<div class="popup-overlay" id="sharePopup" role="dialog" aria-modal="true">
+  <div class="popup-modal">
+    <span class="popup-icon" aria-hidden="true">📤</span>
+    <div class="popup-title" id="shareTitle">አጋራ</div>
+    <div class="popup-text">ይህን መተግበርያ ለጓደኛዎ ያጋሩ</div>
+    <div class="share-grid">
+      <a class="share-item" id="shareTelegram" target="_blank" rel="noopener"><span class="share-ico">✈️</span><span>Telegram</span></a>
+      <a class="share-item" id="shareWhatsapp" target="_blank" rel="noopener"><span class="share-ico">💬</span><span>WhatsApp</span></a>
+      <a class="share-item" id="shareFacebook" target="_blank" rel="noopener"><span class="share-ico">📘</span><span>Facebook</span></a>
+      <a class="share-item" id="shareEmail"><span class="share-ico">📧</span><span>Email</span></a>
+      <a class="share-item" id="shareSms"><span class="share-ico">📱</span><span>SMS</span></a>
+      <a class="share-item" id="shareQr"><span class="share-ico">🔳</span><span>QR Code</span></a>
+      <button class="share-item" id="shareNative" style="grid-column:1/-1;"><span class="share-ico">📲</span><span>የስልክ ማጋሪያ (All apps)</span></button>
+    </div>
+    <div id="qrContainer" class="qr-container hidden">
+      <div id="qrCode"></div>
+      <div class="qr-hint">🔳 በስልክ ካሜራዎ ይቃኙ</div>
+    </div>
+    <button class="btn btn-primary" id="shareCloseBtn" style="margin-top:12px;">ዝጋ</button>
+  </div>
+</div>
+
+<div class="popup-overlay" id="helpPopup" role="dialog" aria-modal="true">
+  <div class="popup-modal" style="max-width:520px;">
+    <span class="popup-icon" aria-hidden="true">❓</span>
+    <div class="popup-title" id="helpTitle">የአጠቃቀም መመሪያና አጋዥ መረጃዎች</div>
+    <div class="modal-text">
+      <p><strong>ወደ «የቃሉ ናፍቆት» እንኳን በደህና መጡ!</strong> ይህ መተግበርያ የመጽሐፍ ቅዱስን ጥልቅ ጥናት በየደረጃው እንዲያጠኑ የሚረዳ መሣሪያ ነው።</p>
+      <p><strong>📖 እንዴት እንደሚጠቀሙበት ከዚህ በታች ያለውን ይመልከቱ፦</strong></p>
+      <ul>
+        <li><strong>🔑 መግቢያ፦</strong>ወደ ጥናት መተግበሪያው ለመግባት በኢሜይል አድራሻዎ ብቻ ይግቡ። የይለፍ ቃል አያስፈልግም።</li>
+        <li><strong>☰ ማውጫ፦</strong> ከላይ በስተቀኝ ያለውን ቁልፍ በመጫን ቅንብሮችንና ማስተካከያዎችን ያገኛሉ።</li>
+        <li><strong>🏠 መነሻ ገጽ፦</strong> ኪዳናትን፣ መጽሐፉንና ምዕራፉን ይምረጡ።</li>
+        <li><strong>🚀 ጥናት፦</strong> "ጥናቱን ጀምር" የሚለውን ቁልፍ ይጫኑ። በየጥናቱ ገጽ መጨረሻ ገጹን ዝለል የሚለዉን ቁልፍ አስገዳጅ ካልሆነ በስተቀር ባይጫኑት ይመረጣል፤ በቂ ጊዜ ወስደው ማጥናት ስላለብዎ።</li>
+        <li><strong>❓ ጥያቄዎች፦</strong> የጥያቄዎቹን መልስ ሲመርጡ ወዲያውኑ ውጤቱን ያያሉ።</li>
+        <li><strong>🎛️ ቅንብሮች፦</strong> ድምጽ፣ ንዝረት፣ አኒሜሽኖች፣ ሙዚቃ፣ ወዘተ እንዳስፈላጊነቱ ማብራት ወይም ማጥፋት ይችላሉ።</li>
+        <li><strong>♻️ አጥፋ፦</strong> የጥናት ሂደትዎን ከመጀመሪያ ለመጀመር ይህን ቁልፍ ይጠቀሙ።</li>
+      </ul>
+      <p style="text-align:center;font-style:italic;color:var(--text-dark);margin-top:16px;">"ቃልህ ለእግሬ መብራት፥ ለመንገዴም ብርሃን ነው።" — መዝሙር 119:105</p>
+    </div>
+    <button class="btn btn-primary" id="helpCloseBtn" style="margin-top:10px;">ተረዳሁ</button>
+  </div>
+</div>
+
+<div class="popup-overlay" id="namePopup" role="dialog" aria-modal="true">
+  <div class="popup-modal" style="max-width:420px;">
+    <span class="popup-icon" aria-hidden="true">👤</span>
+    <div class="popup-title" id="nameTitle">ሙሉ ስምዎን ያስገቡ</div>
+    <div class="popup-text" style="margin-bottom:14px;">ይህ ስም በምስክር ወረቀትዎ ላይ ይታያል።</div>
+    <input type="text" class="name-input" id="fullNameInput" placeholder="ለምሳሌ፡ ሙሉዓለም ወሰን" aria-label="ሙሉ ስም">
+    <div class="popup-actions" style="flex-direction:row;justify-content:center;gap:10px;">
+      <button class="btn" id="nameCancelBtn" style="flex:1;">ተወው</button>
+      <button class="btn btn-primary" id="nameSaveBtn" style="flex:1;">አስቀምጥ</button>
+    </div>
+  </div>
+</div>
+
+<div class="popup-overlay" id="bibleReadPopup" role="dialog" aria-modal="true">
+  <div class="popup-modal" style="max-width:480px;">
+    <span class="popup-icon" aria-hidden="true">📖</span>
+    <div class="popup-title" id="bibleReadTitle">በመጀመሪያ መጽሐፍ ቅዱስዎን ይክፈቱ</div>
+    <div class="popup-text" id="bibleReadText" style="text-align:left;">
+      <p>ውድ ተማሪ ሆይ፥ ጥናቱን ከመጀመርዎ በፊት እባክዎ <strong>የራስዎን መጽሐፍ ቅዱስ</strong> ከፍተው በመጸለይ የዛሬውን ክፍል በራስዎ ያንብቡ።</p>
+      <p style="margin-top:10px;"><strong>📖 የሚነበብ ክፍል፦</strong> <span id="bibleReadRef" style="color:var(--accent-gold);font-weight:800;">—</span></p>
+      <p style="margin-top:10px;font-size:.88rem;">ይህ መተግበርያ የጥናት ማስታወሻና ግንዛቤዎን የሚመዝኑበት መሳሪያ ብቻ ነው። ቃሉን በራስዎ መጽሐፍ ቅዱስ ማንበብ ለእርግጠኝነትና መጽሓፍ ቅዱስን የማንበብ ልምድዎን ለማዳበር ወሳኝ ነው።</p>
+      <p style="margin-top:10px;font-style:italic;color:var(--text-dark);font-weight:600;">"ቃልህ ለእግሬ መብራት፥ ለመንገዴም ብርሃን ነው።" — መዝሙር 119:105</p>
+    </div>
+    <div class="popup-actions" style="flex-direction:column;gap:10px;">
+      <button class="btn btn-primary" id="bibleReadConfirmBtn" style="font-size:.95rem;padding:14px;">✅ አንብቤያለሁ — ጥናቱን ጀምር</button>
+      <button class="btn" id="bibleReadCancelBtn" style="font-size:.85rem;">← ተመለስ</button>
+    </div>
+  </div>
+</div>
+
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-modal="true">
+  <div class="cert-modal">
+    <div class="cert-title">🏆 የምስክር ወረቀት</div>
+    <div class="cert-subtitle">Certificate of Completion</div>
+    <div class="cert-text">ይህ ምስክር ወረቀት ለ</div>
+    <div class="cert-name" id="certName">—</div>
+    <div class="cert-text">የተሰጠው ከታች የተገለጠውን የመጽሐፍ ቅዱስ ክፍል ጥናት ሙሉ በሙሉ በሚገባ ማጠናቀቃቸውን ለማረጋገጥ ነው።</div>
+    <div class="cert-book" id="certBook">—</div>
+    <div class="cert-date" id="certDate">—</div>
+    <div class="cert-stamp">✨ ተጠናቅቋል ✨</div>
+    <div class="cert-footer">የቃሉ ናፍቆት · የመጽሐፍ ቅዱስ ጥናት መተግበርያ</div>
+    <div class="cert-actions">
+      <button class="cert-close" id="certCloseBtn">ዝጋ</button>
+      <button class="cert-print" id="certPrintBtn">🖨️ አትም</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+
+</html>

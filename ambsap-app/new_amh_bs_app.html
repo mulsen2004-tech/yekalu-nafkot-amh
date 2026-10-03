@@ -1,0 +1,3172 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="የቃሉ ናፍቆት — የመጽሐፍ ቅዱስ ጥልቅ ጥናት መተግበርያ">
+  <title>🍞 የቃሉ ናፍቆት የመጽሐፍ ቅዱስ ጥናት መተግበርያ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Noto Sans Ethiopic','Segoe UI',Roboto,sans-serif;}
+    :root{
+      --bg-parchment:#fcf6e8;
+      --text-dark:#3e2723;
+      --text-medium:#5d4037;
+      --accent-gold:#c5a059;
+      --border-wood:#a1887f;
+      --shadow:rgba(62,39,35,0.12);
+      --surface:#fcf6e8;
+      --surface-2:#f4ebd9;
+      --surface-3:#e4d7bf;
+      --success:#2e7d32;
+      --success-light:#e8f5e9;
+      --error:#a13d2d;
+      --error-light:#ffebee;
+      --focus-ring:0 0 0 3px rgba(197,160,89,.55);
+      --radius:20px;
+      --radius-sm:14px;
+      --radius-xs:10px;
+    }
+    [data-theme="dark"]{
+      --bg-parchment:#2b231e;
+      --text-dark:#f0e6d6;
+      --text-medium:#c9b8a8;
+      --accent-gold:#d4af6a;
+      --border-wood:#5d4037;
+      --shadow:rgba(0,0,0,.5);
+      --surface:#2b231e;
+      --surface-2:#3a2f28;
+      --surface-3:#4a3d34;
+      --success:#81c784;
+      --success-light:#1b3a1e;
+      --error:#ef9a9a;
+      --error-light:#3a1a1a;
+      --focus-ring:0 0 0 3px rgba(212,175,106,.7);
+    }
+    html,body{overflow-x:hidden;}
+    body{
+      background-color:#efe6d5;
+      background-image:linear-gradient(135deg,#f4ebd9 0%,#e4d7bf 100%);
+      color:var(--text-dark);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+      padding:20px;
+      font-size:16px;
+      line-height:1.7;
+    }
+    [data-theme="dark"] body{
+      background-color:#1f1a16;
+      background-image:linear-gradient(135deg,#1f1a16 0%,#2b231e 100%);
+    }
+    #app{
+      background:var(--bg-parchment);
+      width:100%;
+      max-width:850px;
+      min-height:80vh;
+      padding:40px;
+      border-radius:24px;
+      border:6px solid var(--text-dark);
+      outline:3px solid var(--accent-gold);
+      outline-offset:-12px;
+      box-shadow:0 15px 35px var(--shadow);
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      overflow:hidden;
+    }
+    #app::before, #app::after {
+      content:'✙🌿';
+      position:absolute;
+      font-size:1.4rem;
+      color:var(--text-dark);
+      pointer-events:none;
+      user-select:none;
+    }
+    #app::before{top:18px;left:18px;}
+    #app::after{bottom:18px;right:18px;}
+    .corner-decoration {
+      position:absolute;
+      font-size:1.4rem;
+      color:var(--text-dark);
+      pointer-events:none;
+      user-select:none;
+    }
+    .top-right {top:18px;right:18px;}
+    .bottom-left {bottom:18px;left:18px;}
+
+    h1{font-size:1.8rem;font-weight:800;color:var(--text-dark);display:flex;align-items:center;gap:8px;flex-wrap:wrap;line-height:1.3;text-align:center;justify-content:center;}
+    h1 small{font-size:.7rem;font-weight:500;color:var(--text-medium);margin-left:auto;background:var(--surface-2);padding:3px 10px;border-radius:20px;}
+    h2{font-size:1.4rem;font-weight:700;color:var(--text-dark);margin-bottom:15px;text-align:center;}
+    h3{font-size:1.15rem;font-weight:700;color:var(--text-medium);display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+
+    .hamburger-btn {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, var(--surface-2), var(--surface-3));
+      border: 2px solid var(--border-wood);
+      color: var(--text-dark);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+      z-index: 9996;
+      transition: all .2s;
+      font-family: inherit;
+    }
+    .hamburger-btn:hover, .hamburger-btn:focus-visible {
+      transform: scale(1.05);
+      outline: none;
+      box-shadow: 0 6px 18px rgba(197,160,89,.5);
+      border-color: var(--accent-gold);
+    }
+    .hamburger-btn:active { transform: scale(0.98); }
+    .hamburger-btn.hidden { display: none !important; }
+
+    .app-header {
+      display: none;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+      margin-bottom: 18px;
+      padding-right: 60px;
+    }
+    .app-header.visible { display: flex; }
+    .app-header .app-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .app-header .app-date {
+      font-size: .68rem;
+      color: var(--text-medium);
+      background: var(--surface-2);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+      display: none;
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all .3s;
+      z-index: 10010;
+    }
+    .drawer-overlay.show { opacity: 1; visibility: visible; }
+
+    .drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 340px;
+      max-width: 90vw;
+      background: var(--bg-parchment);
+      box-shadow: -10px 0 40px rgba(0,0,0,.35);
+      transform: translateX(100%);
+      transition: transform .35s cubic-bezier(.34,1.3,.64,1);
+      z-index: 10011;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      border-left: 4px solid var(--accent-gold);
+    }
+    .drawer.show { transform: translateX(0); }
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 22px 16px;
+      border-bottom: 2px solid var(--border-wood);
+      background: linear-gradient(135deg, var(--surface-2), var(--surface-3));
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    .drawer-header h2 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-align: left;
+    }
+    .drawer-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid var(--border-wood);
+      color: var(--text-dark);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .15s;
+      font-family: inherit;
+    }
+    .drawer-close:hover, .drawer-close:focus-visible {
+      background: var(--error-light);
+      color: var(--error);
+      border-color: var(--error);
+      outline: none;
+    }
+    .drawer-section {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-wood);
+    }
+    .drawer-section:last-child { border-bottom: none; }
+    .drawer-section-title {
+      font-size: .68rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      padding-left: 4px;
+    }
+    .drawer-btn {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--surface-2);
+      border: 2px solid var(--border-wood);
+      border-radius: 12px;
+      color: var(--text-dark);
+      font-weight: 700;
+      font-size: .88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: inherit;
+      margin-bottom: 8px;
+      transition: all .15s;
+      text-align: left;
+    }
+    .drawer-btn:hover, .drawer-btn:focus-visible {
+      background: var(--accent-gold);
+      color: #1e1e1e;
+      border-color: var(--accent-gold);
+      outline: none;
+      transform: translateX(2px);
+    }
+    .drawer-btn:last-child { margin-bottom: 0; }
+    .drawer-btn .icon {
+      font-size: 1.1rem;
+      width: 26px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .drawer-btn.danger {
+      color: var(--error);
+      border-color: var(--error);
+    }
+    .drawer-btn.danger:hover {
+      background: var(--error);
+      color: #fff;
+      border-color: var(--error);
+    }
+
+    .pref-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 8px;
+      border-radius: 10px;
+      transition: background .15s;
+    }
+    .pref-row:hover { background: var(--surface-2); }
+    .pref-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    .pref-label .icon { font-size: 1.05rem; }
+    .pref-hint {
+      font-size: .68rem;
+      color: var(--text-medium);
+      font-weight: 500;
+      display: block;
+      margin-left: 27px;
+      margin-top: -2px;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 46px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .switch .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: var(--surface-3);
+      border: 2px solid var(--border-wood);
+      border-radius: 30px;
+      transition: all .3s;
+    }
+    .switch .slider::before {
+      content: '';
+      position: absolute;
+      height: 18px;
+      width: 18px;
+      left: 2px;
+      top: 2px;
+      background: #fff;
+      border-radius: 50%;
+      transition: all .3s;
+      box-shadow: 0 2px 4px rgba(0,0,0,.25);
+    }
+    .switch input:checked + .slider {
+      background: linear-gradient(135deg, var(--accent-gold), #8a5c0a);
+      border-color: var(--accent-gold);
+    }
+    .switch input:checked + .slider::before {
+      transform: translateX(20px);
+    }
+    .switch input:focus-visible + .slider {
+      box-shadow: 0 0 0 3px rgba(197,160,89,.5);
+    }
+
+    .drawer-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      background: linear-gradient(135deg, rgba(197,160,89,.15), rgba(93,64,55,.06));
+      border-bottom: 2px solid var(--accent-gold);
+    }
+    .drawer-user-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-gold), #8a5c0a);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(197,160,89,.4);
+    }
+    .drawer-user-info { flex: 1; min-width: 0; }
+    .drawer-user-name {
+      font-weight: 800;
+      font-size: .9rem;
+      color: var(--text-dark);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .drawer-user-email {
+      font-size: .7rem;
+      color: var(--text-medium);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .drawer-footer {
+      margin-top: auto;
+      padding: 14px 18px 20px;
+      text-align: center;
+      font-size: .68rem;
+      color: var(--text-medium);
+      border-top: 1px dashed var(--accent-gold);
+    }
+    .drawer-footer strong { color: var(--accent-gold); font-weight: 700; }
+
+    .chapter-timer {
+      position: fixed;
+      top: 22px;
+      right: 80px;
+      font-size: .72rem;
+      color: var(--text-dark);
+      font-weight: 700;
+      background: rgba(197,160,89,.9);
+      padding: 6px 14px;
+      border-radius: 20px;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--border-wood);
+      z-index: 9995;
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    }
+    .chapter-timer.visible { display: inline-flex; }
+
+    .card{
+      background:var(--surface);
+      border-radius:var(--radius);
+      padding:18px;
+      border:2px solid var(--border-wood);
+    }
+    .verse-box{
+      background:rgba(197,160,89,.08);
+      border-radius:12px;
+      border-left:5px solid var(--accent-gold);
+      padding:20px;
+      margin:20px 0;
+      text-align:center;
+      line-height:1.7;
+      color:var(--text-medium);
+    }
+    label{display:block;margin-bottom:8px;font-weight:700;color:var(--text-dark);}
+    input[type="email"],input[type="text"],input[type="password"],select,textarea{
+      width:100%;
+      padding:14px;
+      border:2px solid var(--border-wood);
+      background-color:rgba(255,255,255,.7);
+      color:var(--text-dark);
+      border-radius:12px;
+      font-size:1rem;
+      outline:none;
+      font-family:inherit;
+    }
+    [data-theme="dark"] input[type="email"],
+    [data-theme="dark"] input[type="text"],
+    [data-theme="dark"] input[type="password"],
+    [data-theme="dark"] select,
+    [data-theme="dark"] textarea{
+      background-color:rgba(30,24,20,.7);
+      color:var(--text-dark);
+    }
+    input:focus,select:focus,textarea:focus{
+      border-color:var(--text-dark);
+      background-color:#fff;
+      box-shadow:0 0 8px rgba(62,39,35,.15);
+    }
+    .btn{
+      display:inline-block;
+      width:100%;
+      background:var(--text-dark);
+      color:var(--bg-parchment);
+      border:none;
+      padding:15px;
+      font-size:1.1rem;
+      font-weight:700;
+      border-radius:12px;
+      cursor:pointer;
+      text-align:center;
+      box-shadow:0 4px 10px rgba(0,0,0,.1);
+      transition:background .2s;
+      font-family:inherit;
+    }
+    .btn:hover,.btn:focus-visible{background:var(--text-medium);outline:none;box-shadow:var(--focus-ring);}
+    .btn-primary{background:var(--text-dark);border-color:var(--text-dark);color:var(--bg-parchment);}
+    .btn-accent{background:var(--accent-gold);border-color:var(--accent-gold);color:#1e1e1e;}
+    .btn:disabled{opacity:.45;pointer-events:none;}
+
+    .slide-stage{position:relative;min-height:320px;}
+    .slide-card{
+      background:var(--surface);
+      border:2px solid var(--border-wood);
+      border-radius:var(--radius);
+      padding:18px 16px;
+      animation:slideIn .35s cubic-bezier(.2,.8,.3,1);
+      word-wrap:break-word;
+      overflow-wrap:break-word;
+    }
+    @keyframes slideIn{from{opacity:0;transform:translateX(40px);}to{opacity:1;transform:translateX(0);}}
+    @keyframes slideInBack{from{opacity:0;transform:translateX(-40px);}to{opacity:1;transform:translateX(0);}}
+    .slide-card.back{animation:slideInBack .35s cubic-bezier(.2,.8,.3,1);}
+    .slide-card.no-anim { animation: none !important; }
+    .slide-step-badge{
+      display:inline-block;
+      background:var(--accent-gold);
+      color:#1e1e1e;
+      font-size:.7rem;
+      font-weight:800;
+      padding:4px 12px;
+      border-radius:20px;
+      letter-spacing:.5px;
+      margin-bottom:10px;
+    }
+    .slide-title{font-size:1.05rem;font-weight:800;color:var(--text-dark);margin-bottom:12px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+    .verse-slide{
+      background:linear-gradient(135deg,rgba(197,160,89,.12),rgba(93,64,55,.05));
+      border:2px solid var(--accent-gold);
+      border-radius:var(--radius);
+      padding:18px 16px;
+      text-align:center;
+    }
+    .verse-slide .reference{font-weight:800;color:var(--text-dark);font-size:.85rem;display:block;margin-bottom:10px;letter-spacing:.4px;}
+    .verse-slide .verse-text{font-size:1rem;line-height:1.9;color:var(--text-dark);font-weight:500;}
+    .study-content{
+      background:var(--surface-2);
+      padding:14px 16px;
+      border-radius:var(--radius-sm);
+      border:1px solid var(--border-wood);
+      font-size:.92rem;
+      line-height:1.85;
+      color:var(--text-medium);
+      max-height:500px;
+      overflow-y:auto;
+      scroll-behavior:smooth;
+      padding-right:8px;
+    }
+    .study-content::-webkit-scrollbar{width:6px;}
+    .study-content::-webkit-scrollbar-track{background:var(--surface-3);border-radius:3px;}
+    .study-content::-webkit-scrollbar-thumb{background:var(--accent-gold);border-radius:3px;}
+    .study-content p{margin-bottom:12px;text-align:justify;}
+    .study-content strong{color:var(--text-dark);font-weight:700;}
+    .study-content h4{color:var(--accent-gold);font-size:.95rem;margin:14px 0 8px;font-weight:800;}
+    .study-content ul,.study-content ol{margin:8px 0 12px 20px;}
+    .study-content li{margin-bottom:6px;}
+    .keyword{
+      display:inline-block;
+      background:linear-gradient(135deg,var(--accent-gold),#8a5c0a);
+      color:#fff;
+      padding:2px 10px;
+      border-radius:12px;
+      font-size:.78rem;
+      font-weight:700;
+      margin:2px 2px;
+      box-shadow:0 2px 6px rgba(197,160,89,.3);
+    }
+    .cross-ref{
+      display:inline-block;
+      background:var(--surface-3);
+      color:var(--text-dark);
+      padding:3px 10px;
+      border-radius:12px;
+      font-size:.78rem;
+      font-weight:600;
+      margin:3px 3px;
+      border:1px solid var(--border-wood);
+      transition:all .15s;
+    }
+    .cross-ref:hover{background:var(--text-dark);color:#fff;transform:translateY(-2px);}
+    .rhema-content{
+      background:linear-gradient(135deg,rgba(197,160,89,.15),rgba(93,64,55,.08));
+      border:2px solid var(--accent-gold);
+      border-radius:var(--radius-sm);
+      padding:18px;
+      margin-bottom:12px;
+      font-size:.93rem;
+      line-height:1.9;
+      position:relative;
+    }
+    .rhema-content::before{content:'✨';position:absolute;top:-12px;right:16px;font-size:1.5rem;background:var(--surface);padding:0 6px;border-radius:50%;}
+    .prayer-content{
+      background:linear-gradient(135deg,rgba(46,125,50,.12),rgba(46,125,50,.04));
+      border:2px solid var(--success);
+      border-radius:var(--radius-sm);
+      padding:18px;
+      font-size:.93rem;
+      line-height:1.9;
+      position:relative;
+    }
+    .prayer-content::before{content:'🙏';position:absolute;top:-12px;right:16px;font-size:1.5rem;background:var(--surface);padding:0 6px;border-radius:50%;}
+    .slide-progress{display:flex;gap:4px;margin-bottom:12px;flex-wrap:wrap;justify-content:center;}
+    .slide-progress .pip{width:22px;height:5px;border-radius:3px;background:var(--surface-3);transition:background .3s;}
+    .slide-progress .pip.active{background:var(--accent-gold);}
+    .slide-progress .pip.completed{background:var(--success);}
+    .slide-nav{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:14px;flex-wrap:wrap;}
+    .slide-nav .spacer{flex:1;min-width:0;}
+    .nav-btn-sm{
+      background:var(--surface);
+      border:2px solid var(--border-wood);
+      color:var(--text-dark);
+      padding:8px 14px;
+      border-radius:30px;
+      font-weight:700;
+      font-size:.78rem;
+      cursor:pointer;
+      font-family:inherit;
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      transition:all .15s;
+    }
+    .nav-btn-sm:hover:not(:disabled),.nav-btn-sm:focus-visible:not(:disabled){background:var(--surface-3);color:var(--text-dark);outline:none;box-shadow:var(--focus-ring);}
+    .nav-btn-sm:disabled{opacity:.35;cursor:not-allowed;}
+    .nav-btn-main{
+      background:linear-gradient(135deg,var(--accent-gold),#8a5c0a);
+      color:#fff;
+      border:none;
+      padding:11px 22px;
+      border-radius:40px;
+      font-weight:800;
+      font-size:.88rem;
+      cursor:pointer;
+      font-family:inherit;
+      box-shadow:0 6px 18px rgba(197,160,89,.4);
+      transition:all .2s;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .nav-btn-main:hover,.nav-btn-main:focus-visible{transform:translateY(-2px);box-shadow:0 10px 24px rgba(197,160,89,.55);outline:none;}
+    .nav-btn-main:disabled{opacity:.6;pointer-events:none;background:var(--surface-3);color:var(--text-medium);box-shadow:none;transform:none;}
+
+    .bottom-nav{
+      background:var(--surface);
+      border-radius:var(--radius);
+      padding:8px 10px;
+      border:2px solid var(--border-wood);
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      align-items:center;
+      justify-content:space-between;
+      margin-top:14px;
+    }
+    .bottom-nav .btn{padding:7px 14px;font-size:.75rem;font-weight:700;border-radius:30px;width:auto;}
+    .bottom-nav .nav-label{font-size:.72rem;color:var(--text-medium);font-weight:700;text-align:center;flex:1;min-width:0;}
+
+    .footer-note{
+      font-size:.68rem;
+      color:var(--text-medium);
+      text-align:center;
+      padding:4px;
+      margin-top:30px;
+      border-top:1px dashed var(--accent-gold);
+      padding-top:15px;
+    }
+
+    .popup-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.7);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:10100;
+      opacity:0;
+      visibility:hidden;
+      transition:all .3s;
+      padding:16px;
+      backdrop-filter:blur(4px);
+    }
+    .popup-overlay.show{opacity:1;visibility:visible;}
+    .popup-modal{
+      background:var(--bg-parchment);
+      border-radius:20px;
+      padding:30px;
+      max-width:500px;
+      width:100%;
+      text-align:center;
+      border:6px solid var(--text-dark);
+      transform:scale(.85);
+      transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+      max-height:90vh;
+      overflow-y:auto;
+    }
+    .popup-overlay.show .popup-modal{transform:scale(1);}
+    .popup-icon{font-size:3.5rem;display:block;margin-bottom:10px;animation:bounceIn .7s;}
+    @keyframes bounceIn{0%{transform:scale(0) rotate(-180deg);}60%{transform:scale(1.2) rotate(10deg);}100%{transform:scale(1) rotate(0);}}
+    .popup-title{font-size:1.3rem;font-weight:800;color:var(--text-dark);margin-bottom:8px;}
+    .popup-text{font-size:.9rem;color:var(--text-medium);line-height:1.8;margin-bottom:12px;}
+    .popup-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0;}
+    .popup-stat{background:var(--surface-2);border-radius:12px;padding:12px 6px;border:1px solid var(--border-wood);}
+    .popup-stat .num{font-size:1.2rem;font-weight:800;color:var(--accent-gold);}
+    .popup-stat .lbl{font-size:.62rem;color:var(--text-medium);font-weight:700;text-transform:uppercase;margin-top:4px;}
+    .popup-verse{
+      font-size:.82rem;
+      color:var(--text-dark);
+      font-style:italic;
+      font-weight:600;
+      margin:12px 0 16px;
+      padding:10px 14px;
+      background:var(--surface-2);
+      border-radius:12px;
+      border-left:4px solid var(--accent-gold);
+      line-height:1.7;
+    }
+    .popup-actions{display:flex;flex-direction:column;gap:8px;}
+    .modal-text{text-align:left;font-size:.9rem;line-height:1.8;color:var(--text-medium);margin-bottom:14px;}
+    .modal-text ul{margin:8px 0 8px 18px;}
+    .modal-text li{margin-bottom:6px;}
+    .modal-text strong{color:var(--text-dark);}
+    .name-input{
+      width:100%;
+      padding:12px 16px;
+      border-radius:12px;
+      border:2px solid var(--border-wood);
+      background:var(--surface-2);
+      color:var(--text-dark);
+      font-size:.95rem;
+      font-family:inherit;
+      margin-bottom:12px;
+      text-align:center;
+      font-weight:600;
+    }
+    .name-input:focus{outline:none;border-color:var(--accent-gold);box-shadow:0 0 0 3px rgba(197,160,89,.3);}
+
+    .cert-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.85);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:10200;
+      opacity:0;
+      visibility:hidden;
+      transition:all .3s;
+      padding:16px;
+      backdrop-filter:blur(6px);
+    }
+    .cert-overlay.show{opacity:1;visibility:visible;}
+    .cert-modal{
+      background:#fffdf9;
+      border-radius:16px;
+      padding:30px 20px;
+      max-width:800px;
+      width:100%;
+      text-align:center;
+      position:relative;
+      border:8px double var(--text-dark);
+      box-shadow:0 20px 60px rgba(0,0,0,.5);
+      transform:scale(.9);
+      transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+      max-height:90vh;
+      overflow-y:auto;
+    }
+    .cert-overlay.show .cert-modal{transform:scale(1);}
+    .cert-title{font-size:1.6rem;font-weight:800;color:var(--text-dark);margin-bottom:8px;font-family:serif;letter-spacing:2px;}
+    .cert-subtitle{font-size:1rem;color:var(--text-medium);margin-bottom:24px;font-style:italic;}
+    .cert-name{font-size:2rem;font-weight:800;color:var(--accent-gold);margin:16px 0;border-bottom:3px solid var(--accent-gold);display:inline-block;padding:0 16px 8px;font-family:serif;}
+    .cert-text{font-size:1rem;color:var(--text-dark);line-height:1.9;margin:16px 0;}
+    .cert-book{font-size:1.3rem;font-weight:800;color:var(--success);margin:12px 0;}
+    .cert-date{font-size:.9rem;color:var(--text-medium);margin-top:24px;}
+    .cert-stamp{
+      width:100px;height:100px;
+      border-radius:50%;
+      border:4px solid var(--accent-gold);
+      display:flex;align-items:center;justify-content:center;
+      margin:16px auto;
+      font-weight:800;color:var(--accent-gold);font-size:1rem;
+      transform:rotate(-15deg);opacity:.85;font-family:serif;
+      box-shadow:0 0 0 4px rgba(197,160,89,.2);
+    }
+    .cert-footer{font-size:.75rem;color:#a8b8c8;margin-top:16px;font-style:italic;}
+    .cert-actions{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap;}
+    .cert-actions button{padding:10px 22px;border-radius:30px;border:none;font-weight:700;cursor:pointer;font-family:inherit;font-size:.88rem;transition:all .15s;}
+    .cert-close{background:var(--text-dark);color:#fff;}
+    .cert-print{background:var(--accent-gold);color:#fff;}
+    .cert-actions button:hover{filter:brightness(1.1);transform:translateY(-2px);}
+
+    .share-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 6px;}
+    .share-item{
+      display:flex;flex-direction:column;align-items:center;gap:4px;
+      padding:10px 4px;
+      background:var(--surface-2);
+      border:1.5px solid var(--border-wood);
+      border-radius:12px;
+      text-decoration:none;
+      color:var(--text-dark);
+      font-size:.72rem;
+      font-weight:700;
+      cursor:pointer;
+      transition:all .15s;
+      font-family:inherit;
+    }
+    .share-item:hover,.share-item:focus-visible{background:var(--text-dark);color:#fff;border-color:var(--text-dark);outline:none;box-shadow:var(--focus-ring);}
+    .share-ico{font-size:1.2rem;}
+    .qr-container{margin-top:12px;padding:12px;background:#fff;border-radius:14px;border:2px dashed var(--accent-gold);display:flex;flex-direction:column;align-items:center;gap:8px;}
+    .qr-hint{font-size:.72rem;color:#333;font-weight:700;}
+
+    .question-block{background:var(--surface);border-radius:var(--radius-sm);padding:14px 16px;border:1px solid var(--border-wood);}
+    .q-number{font-size:.72rem;font-weight:800;color:var(--accent-gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+    .q-type{display:inline-block;background:var(--text-dark);color:var(--bg-parchment);font-size:.65rem;padding:2px 10px;border-radius:10px;margin-left:6px;font-weight:700;}
+    .q-text{font-weight:600;font-size:.95rem;margin-bottom:12px;line-height:1.7;}
+    .options{display:flex;flex-direction:column;gap:8px;}
+    .option-btn{
+      text-align:left;
+      padding:11px 14px;
+      background:var(--surface-2);
+      border:2px solid var(--border-wood);
+      border-radius:var(--radius-xs);
+      font-size:.88rem;
+      cursor:pointer;
+      color:var(--text-dark);
+      font-weight:500;
+      display:flex;align-items:center;gap:10px;
+      font-family:inherit;
+      transition:all .15s;
+      word-wrap:break-word;
+      overflow-wrap:break-word;
+    }
+    .option-btn:focus-visible{outline:none;box-shadow:var(--focus-ring);}
+    .opt-letter{width:24px;height:24px;border-radius:50%;background:var(--surface-3);color:var(--text-medium);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;flex-shrink:0;}
+    .option-btn.selected{border-color:var(--text-dark);background:rgba(62,39,35,.08);}
+    .option-btn.correct{border-color:var(--success);background:var(--success-light);}
+    .option-btn.correct .opt-letter{background:var(--success);color:#fff;}
+    .option-btn.incorrect{border-color:var(--error);background:var(--error-light);}
+    .option-btn.incorrect .opt-letter{background:var(--error);color:#fff;}
+    .option-btn:disabled{cursor:default;}
+    .question-feedback{margin-top:10px;padding:10px 12px;border-radius:var(--radius-xs);font-size:.85rem;font-weight:600;display:none;line-height:1.7;}
+    .question-feedback.show{display:block;}
+    .question-feedback.correct{background:var(--success-light);color:var(--success);border-left:4px solid var(--success);}
+    .question-feedback.incorrect{background:var(--error-light);color:var(--error);border-left:4px solid var(--error);}
+    .check-btn{display:none !important;}
+    .match-container{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+    .match-col{display:flex;flex-direction:column;gap:6px;}
+    .match-item{
+      padding:10px 10px;
+      background:var(--surface-2);
+      border:2px solid var(--border-wood);
+      border-radius:var(--radius-xs);
+      cursor:pointer;
+      font-size:.85rem;
+      font-weight:600;
+      transition:all .12s;
+      text-align:center;
+      word-wrap:break-word;
+      overflow-wrap:break-word;
+      position:relative;
+      transform:translateY(0);
+      box-shadow:0 2px 0 var(--border-wood);
+    }
+    .match-item:hover:not(.matched){transform:translateY(-1px);box-shadow:0 3px 0 var(--border-wood);}
+    .match-item:active:not(.matched){transform:translateY(2px);box-shadow:0 0 0 var(--border-wood),inset 0 2px 4px rgba(0,0,0,.15);}
+    .match-item:focus-visible{outline:none;box-shadow:var(--focus-ring);}
+    .match-item.selected{border-color:var(--text-dark);background:rgba(62,39,35,.12);transform:translateY(1px);box-shadow:0 1px 0 var(--text-dark),inset 0 2px 4px rgba(62,39,35,.15);}
+    .match-item.matched{border-color:var(--success);background:var(--success-light);color:var(--success);cursor:default;opacity:.75;transform:translateY(0);box-shadow:none;}
+    .match-item.wrong{border-color:var(--error);background:var(--error-light);transform:translateY(1px);box-shadow:0 1px 0 var(--error),inset 0 2px 4px rgba(161,61,45,.2);}
+    .open-input{width:100%;min-height:80px;padding:10px 12px;border-radius:var(--radius-xs);border:2px solid var(--border-wood);background:var(--surface-2);color:var(--text-dark);font-size:.88rem;line-height:1.7;resize:vertical;font-family:inherit;}
+    .reveal-btn{margin-top:10px;padding:8px 16px;border-radius:30px;border:1.5px solid var(--accent-gold);background:var(--accent-gold);color:#1e1e1e;font-weight:700;font-size:.82rem;cursor:pointer;font-family:inherit;}
+    .sample-answer{margin-top:10px;padding:12px 14px;background:var(--surface-2);border-radius:var(--radius-xs);border-left:4px solid var(--accent-gold);font-size:.88rem;line-height:1.8;display:none;}
+    .sample-answer.show{display:block;}
+    .sample-answer .label{font-weight:800;color:var(--accent-gold);font-size:.72rem;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+    .tf-buttons{display:flex;gap:10px;margin:12px 0;}
+    .tf-btn{flex:1;padding:12px;border-radius:var(--radius-xs);border:2px solid var(--border-wood);background:var(--surface-2);font-size:.9rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;color:var(--text-dark);}
+    .tf-btn:focus-visible{outline:none;box-shadow:var(--focus-ring);}
+    .tf-btn.correct{border-color:var(--success);background:var(--success-light);color:var(--success);}
+    .tf-btn.incorrect{border-color:var(--error);background:var(--error-light);color:var(--error);}
+
+    .dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin:12px 0;}
+    .dash-item{background:var(--surface-2);border-radius:var(--radius-xs);padding:12px 8px;text-align:center;border:1px solid var(--border-wood);}
+    .dash-num{font-size:1.2rem;font-weight:800;color:var(--text-dark);word-wrap:break-word;}
+    .dash-lbl{font-size:.65rem;color:var(--text-medium);text-transform:uppercase;font-weight:700;margin-top:4px;}
+    .dash-bar-wrap{background:var(--surface-3);border-radius:8px;height:8px;overflow:hidden;margin-top:6px;}
+    .dash-bar{background:linear-gradient(90deg,var(--accent-gold),#8a5c0a);height:100%;border-radius:8px;transition:width .5s;}
+    .dash-bar.success{background:linear-gradient(90deg,var(--success),#1b5e20);}
+    .dash-bar.info{background:linear-gradient(90deg,#1976d2,#0d47a1);}
+    .dash-bar.warning{background:linear-gradient(90deg,#ef6c00,#e65100);}
+
+    .speak-area{display:flex;flex-direction:column;gap:12px;align-items:center;padding:8px 0;}
+    .mic-btn{
+      width:72px;height:72px;
+      border-radius:50%;
+      background:var(--text-dark);
+      border:4px solid var(--surface);
+      color:#fff;
+      font-size:1.8rem;
+      cursor:pointer;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 4px 20px rgba(62,39,35,.4);
+      transition:all .2s;
+    }
+    .mic-btn:hover,.mic-btn:focus-visible{transform:scale(1.05);outline:none;box-shadow:var(--focus-ring);}
+    .mic-btn.recording{background:var(--error);animation:pulse 1.2s infinite;}
+    @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(161,61,45,.5);}70%{box-shadow:0 0 0 18px rgba(161,61,45,0);}100%{box-shadow:0 0 0 0 rgba(161,61,45,0);}}
+    .mic-label{font-size:.85rem;color:var(--text-medium);font-weight:600;text-align:center;}
+    .speak-target{
+      background:linear-gradient(135deg,rgba(197,160,89,.15),rgba(93,64,55,.06));
+      border:2px solid var(--accent-gold);
+      border-radius:var(--radius-sm);
+      padding:14px;
+      text-align:center;
+      width:100%;
+    }
+    .speak-target .hint{font-size:.78rem;color:var(--text-medium);margin-top:6px;font-style:italic;}
+    .proclaim-verse{font-size:1rem;color:var(--text-dark);font-weight:800;line-height:1.6;margin-top:8px;}
+    .proclaim-label{font-size:.68rem;color:var(--text-medium);font-weight:800;text-transform:uppercase;letter-spacing:.5px;}
+    .proclaim-instruction{font-size:.82rem;color:var(--text-medium);text-align:center;font-style:italic;}
+    .transcript-box{background:var(--surface);border:1.5px solid var(--border-wood);border-radius:var(--radius-sm);padding:12px 14px;width:100%;min-height:50px;font-size:.9rem;line-height:1.7;text-align:left;}
+    .transcript-box .label{font-size:.72rem;text-transform:uppercase;color:var(--text-medium);font-weight:700;margin-bottom:6px;}
+    .speak-done-btn{
+      margin-top:12px;
+      padding:12px 26px;
+      border-radius:40px;
+      border:none;
+      background:var(--success);
+      color:#fff;
+      font-weight:800;
+      font-size:.95rem;
+      cursor:pointer;
+      font-family:inherit;
+      box-shadow:var(--shadow);
+      transition:all .15s;
+    }
+    .speak-done-btn:hover,.speak-done-btn:focus-visible{filter:brightness(1.1);outline:none;box-shadow:var(--focus-ring);transform:translateY(-2px);}
+    .speak-done-btn:active{transform:translateY(0);}
+    .speak-done-btn.done{background:var(--surface-3);color:var(--text-medium);cursor:default;box-shadow:none;transform:none;}
+
+    .hidden{display:none!important;}
+    .visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+    #loginSection{
+      padding:0!important;
+      overflow:hidden;
+      position:relative;
+      min-height:560px;
+      border-radius:22px;
+      border:1px solid rgba(197,160,89,.35);
+      isolation:isolate;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(212,175,106,.35), transparent 60%),
+        radial-gradient(900px 500px at 110% 110%, rgba(120,72,40,.55), transparent 65%),
+        linear-gradient(155deg, #2a1a10 0%, #4a2c1a 45%, #6b4423 100%);
+    }
+    #loginSection::before{
+      content:'';
+      position:absolute;inset:-2px;
+      background:
+        radial-gradient(600px 300px at 20% 20%, rgba(255,215,150,.18), transparent 70%),
+        radial-gradient(700px 400px at 85% 80%, rgba(255,180,90,.12), transparent 70%);
+      filter:blur(20px);
+      animation:loginGlow 12s ease-in-out infinite alternate;
+      z-index:0;
+      pointer-events:none;
+    }
+    @keyframes loginGlow{
+      0%{transform:translate3d(0,0,0) scale(1);opacity:.85;}
+      100%{transform:translate3d(0,-10px,0) scale(1.05);opacity:1;}
+    }
+    #loginSection::after{
+      content:'';
+      position:absolute;inset:0;
+      background-image:
+        radial-gradient(circle at 15% 30%, rgba(197,160,89,.10) 0 2px, transparent 3px),
+        radial-gradient(circle at 85% 70%, rgba(197,160,89,.08) 0 2px, transparent 3px),
+        radial-gradient(circle at 50% 50%, rgba(197,160,89,.05) 0 1px, transparent 2px);
+      background-size:120px 120px, 90px 90px, 60px 60px;
+      opacity:.55;
+      z-index:1;
+      pointer-events:none;
+    }
+    .login-content{
+      position:relative;
+      z-index:2;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:48px 24px;
+      min-height:560px;
+      gap:18px;
+    }
+    .login-glass{
+      width:100%;
+      max-width:420px;
+      background:rgba(255,246,232,.10);
+      border:1px solid rgba(212,175,106,.35);
+      border-radius:24px;
+      padding:34px 26px 28px;
+      backdrop-filter:blur(18px) saturate(140%);
+      -webkit-backdrop-filter:blur(18px) saturate(140%);
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.15);
+      position:relative;
+      overflow:hidden;
+    }
+    .login-glass::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      border-radius:24px;
+      padding:1px;
+      background:linear-gradient(135deg, rgba(212,175,106,.7), rgba(120,72,40,.15) 45%, rgba(212,175,106,.55));
+      -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite:xor;
+              mask-composite:exclude;
+      pointer-events:none;
+    }
+    .login-logo{
+      width:72px;height:72px;
+      border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 12px;
+      background:radial-gradient(circle at 30% 30%, #f4d79a, #b57c15 60%, #6b4423 100%);
+      box-shadow:
+        0 8px 24px rgba(212,175,106,.4),
+        inset 0 -3px 8px rgba(0,0,0,.25),
+        inset 0 3px 8px rgba(255,255,255,.35);
+      font-size:2rem;
+      animation:logoFloat 4s ease-in-out infinite;
+    }
+    @keyframes logoFloat{
+      0%,100%{transform:translateY(0) rotate(-2deg);}
+      50%{transform:translateY(-6px) rotate(2deg);}
+    }
+    .login-content h3{
+      font-size:1.25rem;
+      font-weight:800;
+      color:#fbe8c4;
+      text-shadow:0 2px 12px rgba(0,0,0,.5);
+      background:transparent;
+      padding:0;
+      margin:0 0 6px;
+      letter-spacing:.2px;
+      justify-content:center;
+      display:block;
+    }
+    .login-content .login-subtitle{
+      color:rgba(251,232,196,.78);
+      font-size:.85rem;
+      line-height:1.7;
+      max-width:360px;
+      margin:0 auto 18px;
+      text-shadow:0 1px 6px rgba(0,0,0,.5);
+    }
+    .login-content .login-verse{
+      font-style:italic;
+      font-size:.78rem;
+      color:#f5d27a;
+      font-weight:600;
+      text-shadow:0 1px 8px rgba(0,0,0,.7);
+      margin:0 0 20px;
+      padding:10px 16px;
+      border-left:3px solid var(--accent-gold);
+      border-right:3px solid var(--accent-gold);
+      border-radius:6px;
+      background:rgba(0,0,0,.28);
+      backdrop-filter:blur(6px);
+      line-height:1.7;
+    }
+    .login-input-wrap{display:flex;flex-direction:column;gap:14px;width:100%;}
+    .login-content input{
+      padding:15px 22px;
+      border-radius:40px;
+      border:1.5px solid rgba(212,175,106,.5);
+      background:rgba(255,246,232,.14);
+      color:#fbe8c4;
+      font-size:1rem;
+      width:100%;
+      text-align:center;
+      transition:all .25s;
+      font-weight:600;
+      font-family:inherit;
+      outline:none;
+      backdrop-filter:blur(6px);
+    }
+    .login-content input::placeholder{color:rgba(251,232,196,.45);font-weight:500;}
+    .login-content input:focus{
+      border-color:#e8c170;
+      background:rgba(255,246,232,.20);
+      box-shadow:0 0 0 4px rgba(212,175,106,.25), 0 8px 30px rgba(0,0,0,.35);
+    }
+    .login-content .btn-primary{
+      padding:15px 36px;
+      font-size:1rem;
+      border-radius:40px;
+      background:linear-gradient(135deg,#e8c170 0%, #b57c15 50%, #8a5c0a 100%);
+      border:none;
+      color:#2a1a10;
+      font-weight:800;
+      box-shadow:
+        0 10px 30px rgba(181,124,21,.45),
+        0 4px 12px rgba(0,0,0,.4),
+        inset 0 1px 0 rgba(255,255,255,.4);
+      letter-spacing:.3px;
+      transition:all .25s;
+      font-family:inherit;
+      cursor:pointer;
+    }
+    .login-content .btn-primary:hover{
+      transform:translateY(-2px);
+      box-shadow:
+        0 14px 36px rgba(181,124,21,.6),
+        0 6px 16px rgba(0,0,0,.5),
+        inset 0 1px 0 rgba(255,255,255,.5);
+      filter:brightness(1.05);
+    }
+    .login-content .btn-primary:active{transform:translateY(0);}
+    .login-footnote{
+      margin-top:18px;
+      font-size:.72rem;
+      color:rgba(251,232,196,.55);
+      text-align:center;
+      line-height:1.7;
+    }
+    .login-footnote strong{color:#e8c170;font-weight:700;}
+
+    [data-theme="dark"] #loginSection{
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(212,175,106,.18), transparent 60%),
+        radial-gradient(900px 500px at 110% 110%, rgba(80,50,30,.7), transparent 65%),
+        linear-gradient(155deg, #1a110a 0%, #2a1a10 45%, #3a2415 100%);
+    }
+
+    .home-hero{
+      background:linear-gradient(135deg,rgba(197,160,89,.12),rgba(93,64,55,.06));
+      border:2px solid var(--accent-gold);
+      border-radius:var(--radius);
+      padding:24px 20px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .home-hero::before{content:'📖';position:absolute;top:-20px;right:-10px;font-size:8rem;opacity:.08;transform:rotate(-15deg);}
+    .home-hero h2{font-size:1.5rem;font-weight:800;color:var(--text-dark);margin-bottom:10px;}
+    .home-hero p{font-size:.95rem;color:var(--text-medium);line-height:1.8;max-width:520px;margin:0 auto;}
+    .home-verse{
+      margin-top:16px;
+      padding:12px 16px;
+      background:var(--surface);
+      border-radius:12px;
+      border-left:4px solid var(--accent-gold);
+      font-size:.88rem;
+      color:var(--text-dark);
+      font-style:italic;
+      font-weight:600;
+      line-height:1.7;
+    }
+    .home-selector{
+      background:var(--surface-2);
+      border-radius:var(--radius);
+      padding:18px;
+      border:1px solid var(--border-wood);
+    }
+    .home-selector h3{margin-bottom:14px;font-size:1.05rem;}
+    .chain-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+    .chain-label{font-size:.68rem;font-weight:800;color:var(--accent-gold);text-transform:uppercase;margin-bottom:4px;display:block;}
+    .chain-select{width:100%;padding:10px 12px;border-radius:var(--radius-xs);border:1.5px solid var(--border-wood);background:var(--surface);color:var(--text-dark);font-size:.88rem;font-weight:600;font-family:inherit;cursor:pointer;}
+
+    #celebrationOverlay{position:fixed;inset:0;pointer-events:none;z-index:99999;overflow:hidden;}
+    .confetti-piece{position:absolute;width:10px;height:10px;opacity:0;animation:confettiFall 2.5s ease-out forwards;}
+    @keyframes confettiFall{0%{opacity:1;transform:translateY(-10vh) rotate(0deg) scale(1);}100%{opacity:0;transform:translateY(110vh) rotate(720deg) scale(0.5);}}
+    .cartoon-pop{position:fixed;font-size:4rem;z-index:100000;pointer-events:none;animation:cartoonPop 1.8s cubic-bezier(0.34,1.56,0.64,1) forwards;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3));}
+    @keyframes cartoonPop{0%{transform:scale(0) rotate(-30deg);opacity:0;}30%{transform:scale(1.4) rotate(10deg);opacity:1;}50%{transform:scale(1) rotate(-5deg);}70%{transform:scale(1.1) rotate(3deg);}100%{transform:scale(0.8) rotate(0deg) translateY(-30px);opacity:0;}}
+    .cartoon-float{position:fixed;font-size:2.5rem;z-index:100000;pointer-events:none;animation:cartoonFloat 2.5s ease-out forwards;}
+    @keyframes cartoonFloat{0%{transform:translateY(0) scale(1);opacity:1;}100%{transform:translateY(-150px) scale(0.3);opacity:0;}}
+    .sparkle-burst{position:fixed;pointer-events:none;z-index:100000;font-size:1.8rem;animation:sparkleOut 1.2s ease-out forwards;}
+    @keyframes sparkleOut{0%{transform:scale(1) rotate(0deg);opacity:1;}100%{transform:scale(0) rotate(180deg);opacity:0;}}
+    .praise-bubble{position:fixed;padding:12px 24px;border-radius:30px;font-weight:800;font-size:1.1rem;z-index:100001;pointer-events:none;animation:praiseBubble 2.2s cubic-bezier(0.34,1.56,0.64,1) forwards;box-shadow:0 8px 30px rgba(0,0,0,.25);border:3px solid #fff;text-align:center;max-width:90vw;}
+    @keyframes praiseBubble{0%{transform:scale(0) translateY(20px);opacity:0;}25%{transform:scale(1.15) translateY(0);opacity:1;}45%{transform:scale(1) translateY(-5px);}70%{transform:scale(1.05) translateY(-10px);opacity:1;}100%{transform:scale(0.9) translateY(-40px);opacity:0;}}
+    .emoji-rain{position:fixed;top:-60px;font-size:2rem;z-index:99998;pointer-events:none;animation:emojiRain 3s ease-in forwards;}
+    @keyframes emojiRain{0%{transform:translateY(0) rotate(0deg);opacity:1;}80%{opacity:1;}100%{transform:translateY(110vh) rotate(360deg);opacity:0;}}
+    .wrong-shake{animation:wrongShake 0.5s ease-out;}
+    @keyframes wrongShake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
+    .streak-fire{position:fixed;bottom:20px;right:20px;font-size:2rem;z-index:100002;pointer-events:none;animation:firePulse 1s ease-in-out infinite;filter:drop-shadow(0 0 10px rgba(255,150,0,.8));}
+    @keyframes firePulse{0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
+    .milestone-badge{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:100003;pointer-events:none;animation:milestonePop 3s cubic-bezier(0.34,1.56,0.64,1) forwards;text-align:center;}
+    @keyframes milestonePop{0%{transform:translate(-50%,-50%) scale(0);opacity:0;}20%{transform:translate(-50%,-50%) scale(1.2);opacity:1;}40%{transform:translate(-50%,-50%) scale(1);}70%{transform:translate(-50%,-50%) scale(1.05);opacity:1;}100%{transform:translate(-50%,-80%) scale(0.8);opacity:0;}}
+    .milestone-inner{background:linear-gradient(135deg,#ffd700,#ff8c00,#ffd700);padding:20px 40px;border-radius:20px;border:4px solid #fff;box-shadow:0 0 40px rgba(255,215,0,0.8),0 0 80px rgba(255,140,0,0.5);font-weight:900;font-size:1.5rem;color:#3e2723;text-shadow:0 1px 2px rgba(255,255,255,.5);}
+    .milestone-emoji{font-size:3rem;display:block;margin-bottom:8px;}
+
+    body.no-animations .confetti-piece,
+    body.no-animations .cartoon-pop,
+    body.no-animations .cartoon-float,
+    body.no-animations .sparkle-burst,
+    body.no-animations .praise-bubble,
+    body.no-animations .emoji-rain,
+    body.no-animations .milestone-badge,
+    body.no-animations .streak-fire,
+    body.no-animations .wrong-shake,
+    body.no-animations .slide-card,
+    body.no-animations .slide-card.back,
+    body.no-animations .mascot,
+    body.no-animations .mascot.cheering,
+    body.no-animations .mascot.sad,
+    body.no-animations .mascot.celebrating { animation: none !important; }
+    body.no-animations .confetti-piece,
+    body.no-animations .cartoon-pop,
+    body.no-animations .cartoon-float,
+    body.no-animations .sparkle-burst,
+    body.no-animations .praise-bubble,
+    body.no-animations .emoji-rain,
+    body.no-animations .milestone-badge { display: none !important; }
+
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--surface-2), var(--surface-3));
+      border: 2px solid var(--accent-gold);
+      color: var(--text-dark);
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 20px rgba(0,0,0,.25);
+      z-index: 9998;
+      transition: all .2s;
+      font-family: inherit;
+    }
+    .music-btn:hover, .music-btn:focus-visible { transform: scale(1.08); outline: none; box-shadow: 0 8px 26px rgba(197,160,89,.5); }
+    .music-btn.playing { background: linear-gradient(145deg, var(--accent-gold), #8a5c0a); color: #fff; animation: musicPulse 2s ease-in-out infinite; }
+    @keyframes musicPulse { 0%,100% { box-shadow: 0 6px 20px rgba(197,160,89,.4); } 50% { box-shadow: 0 6px 30px rgba(197,160,89,.8); } }
+    .music-btn .music-ico { display: inline-block; }
+    .music-btn.playing .music-ico { animation: musicSpin 3s linear infinite; }
+    @keyframes musicSpin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+
+    .mascot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 90px;
+      height: 90px;
+      z-index: 9997;
+      cursor: pointer;
+      transition: transform .3s;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.3));
+      animation: mascotIdle 3s ease-in-out infinite;
+      user-select: none;
+    }
+    @keyframes mascotIdle { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-8px) rotate(3deg); } }
+    .mascot-body { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; position: relative; }
+    .mascot-bubble {
+      position: absolute;
+      bottom: 105px;
+      right: 0;
+      background: #fff;
+      color: #3e2723;
+      padding: 10px 16px;
+      border-radius: 16px;
+      font-size: .82rem;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(0,0,0,.2);
+      border: 2px solid var(--accent-gold);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all .3s;
+      pointer-events: none;
+      max-width: 220px;
+      text-align: center;
+      line-height: 1.4;
+    }
+    .mascot-bubble.show { opacity: 1; transform: translateY(0); }
+    .mascot-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      right: 30px;
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid #fff;
+      filter: drop-shadow(0 2px 0 var(--accent-gold));
+    }
+    .mascot.cheering { animation: mascotCheer 0.8s ease-out; }
+    @keyframes mascotCheer { 0% { transform: scale(1) rotate(0); } 25% { transform: scale(1.3) rotate(-15deg); } 50% { transform: scale(1.4) rotate(15deg); } 75% { transform: scale(1.2) rotate(-8deg); } 100% { transform: scale(1) rotate(0); } }
+    .mascot.sad { animation: mascotSad 1s ease-out; }
+    @keyframes mascotSad { 0%,100% { transform: translateY(0) rotate(0); } 25% { transform: translateY(6px) rotate(-10deg); } 75% { transform: translateY(6px) rotate(10deg); } }
+    .mascot.celebrating { animation: mascotCelebrate 1.5s ease-in-out infinite; }
+    @keyframes mascotCelebrate { 0%,100% { transform: scale(1) rotate(-5deg) translateY(0); } 25% { transform: scale(1.15) rotate(5deg) translateY(-10px); } 50% { transform: scale(1.2) rotate(-5deg) translateY(-15px); } 75% { transform: scale(1.1) rotate(5deg) translateY(-8px); } }
+
+    .achievement-popup {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-150px);
+      background: linear-gradient(135deg, #FFD700, #FF8C00);
+      color: #3e2723;
+      padding: 14px 24px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: .9rem;
+      z-index: 100005;
+      box-shadow: 0 10px 40px rgba(255,140,0,.6), 0 0 0 4px #fff, 0 0 0 7px #FFD700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: transform .6s cubic-bezier(.34,1.56,.64,1);
+      max-width: 92vw;
+      pointer-events: none;
+    }
+    .achievement-popup.show { transform: translateX(-50%) translateY(0); }
+    .achievement-popup .ach-emoji { font-size: 1.8rem; animation: achBounce 0.7s ease-out; }
+    @keyframes achBounce { 0% { transform: scale(0) rotate(-180deg); } 60% { transform: scale(1.4) rotate(20deg); } 100% { transform: scale(1) rotate(0); } }
+    .achievement-popup .ach-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .achievement-popup .ach-title { font-size: .68rem; opacity: .75; letter-spacing: 1px; text-transform: uppercase; font-weight: 700; }
+    .achievement-popup .ach-name { font-size: .95rem; font-weight: 800; }
+
+    .weekly-chart { background: var(--surface-2); border-radius: var(--radius-sm); border: 1px solid var(--border-wood); padding: 14px 12px 10px; margin: 12px 0; }
+    .weekly-chart-title { font-size: .78rem; font-weight: 800; color: var(--accent-gold); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; text-align: center; }
+    .weekly-bars { display: flex; align-items: flex-end; justify-content: space-between; gap: 4px; height: 90px; padding: 0 4px; }
+    .weekly-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; justify-content: flex-end; }
+    .weekly-bar { width: 100%; max-width: 32px; background: linear-gradient(180deg, var(--accent-gold), #8a5c0a); border-radius: 6px 6px 2px 2px; min-height: 4px; transition: height .6s cubic-bezier(.34,1.56,.64,1); }
+    .weekly-bar.today { background: linear-gradient(180deg, #FFD700, #FF8C00); box-shadow: 0 0 12px rgba(255,140,0,.7); }
+    .weekly-bar-label { font-size: .58rem; font-weight: 800; color: var(--text-medium); text-transform: uppercase; }
+    .weekly-bar-value { font-size: .62rem; font-weight: 800; color: var(--text-dark); margin-bottom: 2px; }
+
+    .achievements-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; margin: 10px 0; }
+    .achievement-card { background: var(--surface-2); border: 2px solid var(--border-wood); border-radius: var(--radius-xs); padding: 10px 6px; text-align: center; transition: all .2s; }
+    .achievement-card.locked { opacity: .45; filter: grayscale(1); }
+    .achievement-card.unlocked { border-color: var(--accent-gold); background: linear-gradient(145deg, rgba(197,160,89,.2), rgba(197,160,89,.05)); box-shadow: 0 3px 10px rgba(197,160,89,.3); }
+    .achievement-card .ach-icon { font-size: 1.6rem; display: block; margin-bottom: 4px; }
+    .achievement-card .ach-lbl { font-size: .6rem; font-weight: 800; color: var(--text-dark); line-height: 1.2; }
+    .achievement-card .ach-date { font-size: .55rem; color: var(--text-medium); margin-top: 2px; }
+
+    @media (max-width:600px){
+      body{padding:6px;}
+      #app{padding:14px 10px;border-radius:16px;margin:4px 0;gap:10px;}
+      .hamburger-btn { width: 42px; height: 42px; font-size: 1.15rem; top: 16px; right: 16px; }
+      .app-header { padding-right: 52px; }
+      .app-header .app-title { font-size: .9rem; }
+      .chapter-timer { top: 16px; right: 68px; font-size: .65rem; padding: 5px 10px; }
+      .drawer { width: 300px; }
+      .match-container{grid-template-columns:1fr;}
+      .popup-modal{padding:20px 14px;}
+      .popup-icon{font-size:3rem;}
+      .popup-title{font-size:1.15rem;}
+      .mic-btn{width:64px;height:64px;font-size:1.5rem;}
+      .share-grid{grid-template-columns:repeat(3,1fr);}
+      .cert-modal{padding:20px 14px;}
+      .cert-title{font-size:1.3rem;}
+      .cert-name{font-size:1.5rem;}
+      .cert-text{font-size:.9rem;}
+      .slide-card{padding:14px 12px;}
+      .slide-title{font-size:.98rem;}
+      .study-content{padding:12px 14px;font-size:.88rem;max-height:400px;}
+      .verse-slide{padding:14px 12px;}
+      .verse-slide .verse-text{font-size:.94rem;}
+      .home-hero{padding:18px 14px;}
+      .home-hero h2{font-size:1.2rem;}
+      .home-hero p{font-size:.88rem;}
+      .cartoon-pop{font-size:3rem;}
+      .praise-bubble{font-size:.9rem;padding:10px 18px;}
+      .milestone-inner{padding:16px 28px;font-size:1.2rem;}
+      .milestone-emoji{font-size:2.2rem;}
+      .chain-row{grid-template-columns:1fr;}
+      .mascot { width: 65px; height: 65px; bottom: 14px; right: 14px; }
+      .mascot-body { font-size: 2.4rem; }
+      .mascot-bubble { font-size: .72rem; max-width: 170px; bottom: 78px; padding: 8px 12px; }
+      .music-btn { width: 44px; height: 44px; font-size: 1.15rem; bottom: 14px; left: 14px; }
+      #loginSection,.login-content{min-height:520px;}
+      .login-content{padding:30px 16px;}
+      .login-glass{padding:26px 18px 22px;}
+      .login-content h3{font-size:1.05rem;}
+      .login-content .login-subtitle{font-size:.78rem;}
+      .login-content .login-verse{font-size:.72rem;padding:8px 12px;}
+      .login-logo{width:60px;height:60px;font-size:1.6rem;}
+    }
+
+    #homeSection{display:none;flex-direction:column;gap:16px;}
+    #homeSection.visible{display:flex;}
+    #mainSection.hidden{display:none!important;}
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="corner-decoration top-right">🌿✙</div>
+  <div class="corner-decoration bottom-left">✙🌿</div>
+
+  <button class="hamburger-btn hidden" id="hamburgerBtn" aria-label="ምናሌ ክፈት">
+    ☰
+  </button>
+
+  <div class="app-header" id="appHeader">
+    <div class="app-title">🍞 የቃሉ ናፍቆት</div>
+    <div class="app-date" id="dateDisplay"></div>
+  </div>
+
+  <span class="chapter-timer" id="chapterTimer">⏱️ 00:00</span>
+
+  <div id="loginSection" class="card">
+    <div class="login-content">
+      <div class="login-glass">
+        <div class="login-logo">🍞</div>
+        <h3>🔑 በኢሜይል አድራሻዎት ይግቡ</h3>
+        <p class="login-subtitle">የይለፍ ቃል ወይም ፓስወርድ አያስፈልግዎትም። በኢሜይልዎ ብቻ ይግቡ።</p>
+        <div class="login-verse">"እኔ የሕይወት እንጀራ ነኝ፤ ወደ እኔ የሚመጣ ከቶ አይራብም።" — ዮሐንስ 6:35</div>
+        <div class="login-input-wrap">
+          <input type="email" id="emailInput" placeholder="email@gmail.com" aria-label="ኢሜይል">
+          <button class="btn btn-primary" id="loginBtn">🚀 ይቀጥሉ</button>
+        </div>
+        <div class="login-footnote">
+          📖 <strong>የቃሉ ናፍቆት</strong> · የመጽሐፍ ቅዱስ ጥልቅ ጥናት
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="homeSection">
+    <div class="home-hero">
+      <h2>📖 እንኳን ደህና መጡ!</h2>
+      <p>የቃሉ ናፍቆት የመጽሐፍ ቅዱስ ጥናት መተግበርያ ወደሚያስችልዎ የጥናት ጉዞ እንኳን በደህና መጡ። ከታች ካሉት አማራጮች ኪዳን፣ መጽሐፍና ምዕራፍ ይምረጡ።</p>
+      <div class="home-verse">"ቃልህ ለእግሬ መብራት፥ ለመንገዴም ብርሃን ነው።" — መዝሙር 119:105</div>
+    </div>
+
+    <div class="home-selector">
+      <h3>📚 የጥናት ምርጫ</h3>
+      <div class="chain-row">
+        <div>
+          <label class="chain-label" for="selTestament">📜 ኪዳን</label>
+          <select class="chain-select" id="selTestament">
+            <option value="">— ይምረጡ —</option>
+            <option value="OT">📖 ብሉይ ኪዳን</option>
+            <option value="NT">✝️ አዲስ ኪዳን</option>
+          </select>
+        </div>
+        <div>
+          <label class="chain-label" for="selBook">📕 መጽሐፍ</label>
+          <select class="chain-select" id="selBook" disabled><option value="">— መጽሐፉን ይምረጡ —</option></select>
+        </div>
+        <div>
+          <label class="chain-label" for="selChapter">📄 ምዕራፍ</label>
+          <select class="chain-select" id="selChapter" disabled><option value="">— ምዕራፉን ይምረጡ —</option></select>
+        </div>
+      </div>
+      <div style="margin-top:16px;display:flex;justify-content:center;">
+        <button class="nav-btn-main" id="startStudyBtn" disabled>🚀 ጥናቱን ጀምር</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="mainSection" class="hidden">
+    <div style="padding:0;border:none;background:transparent;">
+      <div id="curriculumHeader" style="margin-bottom:10px;">
+        <div style="font-size:.75rem;font-weight:800;color:var(--accent-gold);" id="curriculumUnit"></div>
+        <div style="font-size:1rem;font-weight:700;margin-top:2px;" id="curriculumTitle"></div>
+        <div style="font-size:.78rem;color:var(--text-medium);margin-top:4px;">
+          <span id="curriculumFocus"></span>
+        </div>
+      </div>
+
+      <div class="slide-stage">
+        <div class="slide-progress" id="slideProgress" aria-hidden="true"></div>
+        <p class="visually-hidden" id="slideAnnouncer" aria-live="polite" aria-atomic="true"></p>
+        <div id="slideContent"></div>
+      </div>
+    </div>
+
+    <div class="bottom-nav hidden" id="bottomNav">
+      <button class="btn" id="homeBtn">🏠 ወደ መነሻ</button>
+      <span class="nav-label" id="navChapterLabel"></span>
+      <button class="btn btn-accent" id="nextBtn">ወደ ሚቀጥለው ገጽ →</button>
+    </div>
+  </div>
+
+  <div class="footer-note">📖 የቃሉ ናፍቆት · የመጽሐፍ ቅዱስ ጥልቅ ጥናት · <span style="font-size:.6rem;opacity:.7;">Compiled by Mulualem Wossen.</span></div>
+</div>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="የማውጫ ምናሌ">
+  <div class="drawer-header">
+    <h2>⚙️ ማውጫና ቅንብሮች</h2>
+    <button class="drawer-close" id="drawerCloseBtn" aria-label="ዝጋ">✕</button>
+  </div>
+
+  <div class="drawer-user" id="drawerUser">
+    <div class="drawer-user-avatar" id="drawerUserAvatar">👤</div>
+    <div class="drawer-user-info">
+      <div class="drawer-user-name" id="drawerUserName">—</div>
+      <div class="drawer-user-email" id="drawerUserEmail">—</div>
+    </div>
+  </div>
+
+  <div class="drawer-section">
+    <div class="drawer-section-title">📖 የጥናት ተግባሮች</div>
+    <button class="drawer-btn" id="drawerHomeBtn"><span class="icon">🏠</span> ወደ መነሻ ገጽ</button>
+    <button class="drawer-btn" id="drawerSaveBtn"><span class="icon">💾</span> ሂደትን አስቀምጥ</button>
+    <button class="drawer-btn" id="drawerNameBtn"><span class="icon">👤</span> ሙሉ ስም አስተካክል</button>
+    <button class="drawer-btn" id="drawerShareBtn"><span class="icon">📤</span> መተግበርያውን አጋራ</button>
+    <button class="drawer-btn" id="drawerHelpBtn"><span class="icon">❓</span> የአጠቃቀም መመሪያ</button>
+  </div>
+
+  <div class="drawer-section">
+    <div class="drawer-section-title">🎛️ ቅንብሮች</div>
+
+    <div class="pref-row">
+      <div>
+        <div class="pref-label"><span class="icon">🔊</span> ድምጽ (Sound)</div>
+        <span class="pref-hint">የትክክል/ስህተት ድምጾች</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="prefSound" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="pref-row">
+      <div>
+        <div class="pref-label"><span class="icon">📳</span> ንዝረት (Vibration)</div>
+        <span class="pref-hint">በስልክ ላይ ንዝረት</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="prefHaptic" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="pref-row">
+      <div>
+        <div class="pref-label"><span class="icon">✨</span> እነማዎች (Animations)</div>
+        <span class="pref-hint">ኮንፌቲ፣ ካርቱን፣ ቡብል</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="prefAnimations" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="pref-row">
+      <div>
+        <div class="pref-label"><span class="icon">🎵</span> በዕረፍት ሙዚቃ</div>
+        <span class="pref-hint">ለስላሳ የአምልኮ ሙዚቃ</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="prefMusic">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="pref-row">
+      <div>
+        <div class="pref-label"><span class="icon">🕊️</span> ማስኮት (Dove)</div>
+        <span class="pref-hint">ርግብ አማካሪ</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="prefMascot" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="pref-row">
+      <div>
+        <div class="pref-label"><span class="icon">🌙</span> ጨለማ ገጽታ</div>
+        <span class="pref-hint">Dark mode</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="prefDark">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="drawer-section">
+    <div class="drawer-section-title">⚠️ አደገኛ ክፍል</div>
+    <button class="drawer-btn danger" id="drawerResetBtn"><span class="icon">♻️</span> ሂደትን አጥፋ</button>
+    <button class="drawer-btn danger" id="drawerLogoutBtn"><span class="icon">🚪</span> ከመተግበርያ ውጣ</button>
+  </div>
+
+  <div class="drawer-footer">
+    📖 <strong>የቃሉ ናፍቆት</strong><br>
+    የመጽሐፍ ቅዱስ ጥልቅ ጥናት መተግበርያ
+  </div>
+</aside>
+
+<button class="music-btn" id="musicBtn" aria-label="ሙዚቃ ቀይር" title="ሙዚቃ ቀይር" style="display:none;">
+  <span class="music-ico" id="musicIco">🎵</span>
+</button>
+
+<div class="mascot" id="mascot" role="img" aria-label="ማስኮት ርግብ" style="display:none;">
+  <div class="mascot-bubble" id="mascotBubble"></div>
+  <div class="mascot-body" id="mascotBody">🕊️</div>
+</div>
+
+<div class="achievement-popup" id="achievementPopup">
+  <div class="ach-emoji" id="achEmoji">🏅</div>
+  <div class="ach-text">
+    <div class="ach-title">🎉 አዲስ ስኬት!</div>
+    <div class="ach-name" id="achName">—</div>
+  </div>
+</div>
+
+<div id="celebrationOverlay"></div>
+
+<div class="popup-overlay" id="resetPopup" role="dialog" aria-modal="true">
+  <div class="popup-modal" style="max-width:480px;">
+    <span class="popup-icon" aria-hidden="true">♻️</span>
+    <div class="popup-title">ሂደትን ማጥፋት</div>
+    <div class="popup-text" style="margin-bottom:20px;">እባክዎ የሚፈልጉትን የማጥፋት አማራጭ ይምረጡ፦</div>
+    <div class="popup-actions" style="flex-direction:column;gap:12px;">
+      <button class="btn btn-primary" id="resetAllChaptersBtn" style="background:#a13d2d;font-size:.9rem;padding:14px;">🗑️ ሁሉንም ምዕራፎች አጥፋ</button>
+      <button class="btn" id="resetSelectedChapterBtn" style="background:var(--accent-gold);color:#1e1e1e;font-size:.9rem;padding:14px;">📄 የተመረጠውን ምዕራፍ ብቻ አጥፋ</button>
+      <button class="btn" id="resetCancelBtn" style="background:var(--surface-3);color:var(--text-dark);font-size:.85rem;padding:12px;">ተወው</button>
+    </div>
+  </div>
+</div>
+
+<div class="popup-overlay" id="chapterPopup" role="dialog" aria-modal="true">
+  <div class="popup-modal">
+    <span class="popup-icon" id="popupIcon" aria-hidden="true">🎉</span>
+    <div class="popup-title" id="popupTitle">ግሩም!</div>
+    <div class="popup-text" id="popupText"></div>
+    <div class="popup-stats">
+      <div class="popup-stat"><div class="num" id="popupCorrect">0</div><div class="lbl">✅ ትክክል</div></div>
+      <div class="popup-stat"><div class="num" id="popupTotal">0</div><div class="lbl">📝 ጥያቄዎች</div></div>
+      <div class="popup-stat"><div class="num" id="popupScore">0%</div><div class="lbl">🎯 ውጤት</div></div>
+    </div>
+    <div class="popup-verse" id="popupVerse"></div>
+    <div class="popup-actions">
+      <button class="btn btn-primary" id="popupCloseBtn">🏠 ወደ መነሻ</button>
+    </div>
+  </div>
+</div>
+
+<div class="popup-overlay" id="sharePopup" role="dialog" aria-modal="true">
+  <div class="popup-modal">
+    <span class="popup-icon" aria-hidden="true">📤</span>
+    <div class="popup-title" id="shareTitle">አጋራ</div>
+    <div class="popup-text">ይህን መተግበርያ ለጓደኛዎ ያጋሩ</div>
+    <div class="share-grid">
+      <a class="share-item" id="shareTelegram" target="_blank" rel="noopener"><span class="share-ico">✈️</span><span>Telegram</span></a>
+      <a class="share-item" id="shareWhatsapp" target="_blank" rel="noopener"><span class="share-ico">💬</span><span>WhatsApp</span></a>
+      <a class="share-item" id="shareFacebook" target="_blank" rel="noopener"><span class="share-ico">📘</span><span>Facebook</span></a>
+      <a class="share-item" id="shareEmail"><span class="share-ico">📧</span><span>Email</span></a>
+      <a class="share-item" id="shareSms"><span class="share-ico">📱</span><span>SMS</span></a>
+      <a class="share-item" id="shareQr"><span class="share-ico">🔳</span><span>QR Code</span></a>
+      <button class="share-item" id="shareNative" style="grid-column:1/-1;"><span class="share-ico">📲</span><span>የስልክ ማጋሪያ (All apps)</span></button>
+    </div>
+    <div id="qrContainer" class="qr-container hidden">
+      <div id="qrCode"></div>
+      <div class="qr-hint">🔳 በካሜራዎ ይቃኙ</div>
+    </div>
+    <button class="btn btn-primary" id="shareCloseBtn" style="margin-top:12px;">ዝጋ</button>
+  </div>
+</div>
+
+<div class="popup-overlay" id="helpPopup" role="dialog" aria-modal="true">
+  <div class="popup-modal" style="max-width:520px;">
+    <span class="popup-icon" aria-hidden="true">❓</span>
+    <div class="popup-title" id="helpTitle">የአጠቃቀም መመሪያ</div>
+    <div class="modal-text">
+      <p><strong>ወደ «የቃሉ ናፍቆት» እንኳን በደህና መጡ!</strong> ይህ መተግበርያ የመጽሐፍ ቅዱስን ጥልቅ ጥናት በየደረጃው እንዲያጠኑ የሚረዳ መሣሪያ ነው።</p>
+      <p><strong>📖 እንዴት እንደሚጠቀሙበት፦</strong></p>
+      <ul>
+        <li><strong>🔑 መግቢያ፦</strong> በኢሜይልዎ ብቻ ይግቡ። የይለፍ ቃል አያስፈልግም።</li>
+        <li><strong>☰ ማውጫ፦</strong> ከላይ ቀኝ ያለውን ምናሌ በመጫን ቅንብሮችንና ተግባሮችን ያገኛሉ።</li>
+        <li><strong>🏠 መነሻ ገጽ፦</strong> ኪዳን፣ መጽሐፍና ምዕራፍ ይምረጡ።</li>
+        <li><strong>🚀 ጥናት፦</strong> "ጥናቱን ጀምር" የሚለውን ቁልፍ ይጫኑ።</li>
+        <li><strong>❓ ጥያቄዎች፦</strong> መልስ ሲመርጡ ወዲያውኑ ውጤቱን ያያሉ።</li>
+        <li><strong>🎛️ ቅንብሮች፦</strong> ድምጽ፣ ንዝረት፣ እነማዎች፣ ሙዚቃ፣ ማስኮት ማብራት/ማጥፋት ይችላሉ።</li>
+        <li><strong>♻️ አጥፋ፦</strong> ሂደትዎን ከመጀመሪያ ለመጀመር ይህን ቁልፍ ይጠቀሙ።</li>
+      </ul>
+      <p style="text-align:center;font-style:italic;color:var(--text-dark);margin-top:16px;">"ቃልህ ለእግሬ መብራት፥ ለመንገዴም ብርሃን ነው።" — መዝሙር 119:105</p>
+    </div>
+    <button class="btn btn-primary" id="helpCloseBtn" style="margin-top:10px;">ተረዳሁ</button>
+  </div>
+</div>
+
+<div class="popup-overlay" id="namePopup" role="dialog" aria-modal="true">
+  <div class="popup-modal" style="max-width:420px;">
+    <span class="popup-icon" aria-hidden="true">👤</span>
+    <div class="popup-title" id="nameTitle">ሙሉ ስምዎን ያስገቡ</div>
+    <div class="popup-text" style="margin-bottom:14px;">ይህ ስም በምስክር ወረቀትዎ ላይ ይታያል።</div>
+    <input type="text" class="name-input" id="fullNameInput" placeholder="ለምሳሌ፡ ሙሉዓለም ወሰን" aria-label="ሙሉ ስም">
+    <div class="popup-actions" style="flex-direction:row;justify-content:center;gap:10px;">
+      <button class="btn" id="nameCancelBtn" style="flex:1;">ተወው</button>
+      <button class="btn btn-primary" id="nameSaveBtn" style="flex:1;">አስቀምጥ</button>
+    </div>
+  </div>
+</div>
+
+<div class="popup-overlay" id="bibleReadPopup" role="dialog" aria-modal="true">
+  <div class="popup-modal" style="max-width:480px;">
+    <span class="popup-icon" aria-hidden="true">📖</span>
+    <div class="popup-title" id="bibleReadTitle">በመጀመሪያ መጽሐፍ ቅዱስዎን ይክፈቱ</div>
+    <div class="popup-text" id="bibleReadText" style="text-align:left;">
+      <p>ውድ ተማሪ ሆይ፥ ከመጀመርዎ በፊት እባክዎ <strong>የራስዎን መጽሐፍ ቅዱስ</strong> ከፍተው የዛሬውን ክፍል በራስዎ ያንብቡ።</p>
+      <p style="margin-top:10px;"><strong>📖 የሚነበብ ክፍል፦</strong> <span id="bibleReadRef" style="color:var(--accent-gold);font-weight:800;">—</span></p>
+      <p style="margin-top:10px;font-size:.88rem;">ይህ መተግበርያ የጥናት ማስታወሻ ብቻ ነው። ቃሉን በራስዎ ማንበብ ለእምነትዎ ወሳኝ ነው።</p>
+      <p style="margin-top:10px;font-style:italic;color:var(--text-dark);font-weight:600;">"ቃልህ ለእግሬ መብራት፥ ለመንገዴም ብርሃን ነው።" — መዝሙር 119:105</p>
+    </div>
+    <div class="popup-actions" style="flex-direction:column;gap:10px;">
+      <button class="btn btn-primary" id="bibleReadConfirmBtn" style="font-size:.95rem;padding:14px;">✅ አንብቤያለሁ — ጥናቱን ጀምር</button>
+      <button class="btn" id="bibleReadCancelBtn" style="font-size:.85rem;">← ተመለስ</button>
+    </div>
+  </div>
+</div>
+
+<div class="cert-overlay" id="certOverlay" role="dialog" aria-modal="true">
+  <div class="cert-modal">
+    <div class="cert-title">🏆 የምስክር ወረቀት</div>
+    <div class="cert-subtitle">Certificate of Completion</div>
+    <div class="cert-text">ይህ ምስክር ወረቀት ለ</div>
+    <div class="cert-name" id="certName">—</div>
+    <div class="cert-text">የተሰጠው የመጽሐፍ ቅዱስ ጥናት ሙሉ በሙሉ ስላጠናቀቁ ነው።</div>
+    <div class="cert-book" id="certBook">—</div>
+    <div class="cert-date" id="certDate">—</div>
+    <div class="cert-stamp">✨ ተጠናቅቋል ✨</div>
+    <div class="cert-footer">የቃሉ ናፍቆት · የመጽሐፍ ቅዱስ ጥናት መተግበርያ</div>
+    <div class="cert-actions">
+      <button class="cert-close" id="certCloseBtn">ዝጋ</button>
+      <button class="cert-print" id="certPrintBtn">🖨️ አትም</button>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" id="inlineBibleData">
+{
+  "books": [
+    { "id":"genesis", "nameAm":"ዘፍጥረት", "testament":"OT", "chapters":50, "active":true },
+    { "id":"exodus", "nameAm":"ዘጸአት", "testament":"OT", "chapters":40, "active":false },
+    { "id":"leviticus", "nameAm":"ዘሌዋውያን", "testament":"OT", "chapters":27, "active":false },
+    { "id":"numbers", "nameAm":"ዘኍልቍ", "testament":"OT", "chapters":36, "active":false },
+    { "id":"deuteronomy", "nameAm":"ዘዳግም", "testament":"OT", "chapters":34, "active":false },
+    { "id":"joshua", "nameAm":"ኢያሱ", "testament":"OT", "chapters":24, "active":false },
+    { "id":"judges", "nameAm":"መሳፍንት", "testament":"OT", "chapters":21, "active":false },
+    { "id":"ruth", "nameAm":"ሩት", "testament":"OT", "chapters":4, "active":false },
+    { "id":"1samuel", "nameAm":"1ኛ ሳሙኤል", "testament":"OT", "chapters":31, "active":false },
+    { "id":"2samuel", "nameAm":"2ኛ ሳሙኤል", "testament":"OT", "chapters":24, "active":false },
+    { "id":"1kings", "nameAm":"1ኛ ነገሥታት", "testament":"OT", "chapters":22, "active":false },
+    { "id":"2kings", "nameAm":"2ኛ ነገሥታት", "testament":"OT", "chapters":25, "active":false },
+    { "id":"1chronicles", "nameAm":"1ኛ ዜና መዋዕል", "testament":"OT", "chapters":29, "active":false },
+    { "id":"2chronicles", "nameAm":"2ኛ ዜና መዋዕል", "testament":"OT", "chapters":36, "active":false },
+    { "id":"ezra", "nameAm":"ዕዝራ", "testament":"OT", "chapters":10, "active":false },
+    { "id":"nehemiah", "nameAm":"ነህምያ", "testament":"OT", "chapters":13, "active":false },
+    { "id":"esther", "nameAm":"አስቴር", "testament":"OT", "chapters":10, "active":false },
+    { "id":"job", "nameAm":"ኢዮብ", "testament":"OT", "chapters":42, "active":false },
+    { "id":"psalms", "nameAm":"መዝሙር", "testament":"OT", "chapters":150, "active":false },
+    { "id":"proverbs", "nameAm":"ምሳሌ", "testament":"OT", "chapters":31, "active":false },
+    { "id":"ecclesiastes", "nameAm":"መክብብ", "testament":"OT", "chapters":12, "active":false },
+    { "id":"songofsolomon", "nameAm":"መኃልየ መኃልይ", "testament":"OT", "chapters":8, "active":false },
+    { "id":"isaiah", "nameAm":"ኢሳይያስ", "testament":"OT", "chapters":66, "active":false },
+    { "id":"jeremiah", "nameAm":"ኤርምያስ", "testament":"OT", "chapters":52, "active":false },
+    { "id":"lamentations", "nameAm":"ሰቆቃው ኤርምያስ", "testament":"OT", "chapters":5, "active":false },
+    { "id":"ezekiel", "nameAm":"ሕዝቅኤል", "testament":"OT", "chapters":48, "active":false },
+    { "id":"daniel", "nameAm":"ዳንኤል", "testament":"OT", "chapters":12, "active":false },
+    { "id":"hosea", "nameAm":"ሆሴዕ", "testament":"OT", "chapters":14, "active":false },
+    { "id":"joel", "nameAm":"ኢዩኤል", "testament":"OT", "chapters":3, "active":false },
+    { "id":"amos", "nameAm":"አሞጽ", "testament":"OT", "chapters":9, "active":false },
+    { "id":"obadiah", "nameAm":"አብድዩ", "testament":"OT", "chapters":1, "active":false },
+    { "id":"jonah", "nameAm":"ዮናስ", "testament":"OT", "chapters":4, "active":false },
+    { "id":"micah", "nameAm":"ሚክያስ", "testament":"OT", "chapters":7, "active":false },
+    { "id":"nahum", "nameAm":"ናሆም", "testament":"OT", "chapters":3, "active":false },
+    { "id":"habakkuk", "nameAm":"ዕንባቆም", "testament":"OT", "chapters":3, "active":false },
+    { "id":"zephaniah", "nameAm":"ሶፎንያስ", "testament":"OT", "chapters":3, "active":false },
+    { "id":"haggai", "nameAm":"ሐጌ", "testament":"OT", "chapters":2, "active":false },
+    { "id":"zechariah", "nameAm":"ዘካርያስ", "testament":"OT", "chapters":14, "active":false },
+    { "id":"malachi", "nameAm":"ሚልክያስ", "testament":"OT", "chapters":4, "active":false },
+    { "id":"matthew", "nameAm":"ማቴዎስ", "testament":"NT", "chapters":28, "active":false },
+    { "id":"mark", "nameAm":"ማርቆስ", "testament":"NT", "chapters":16, "active":false },
+    { "id":"luke", "nameAm":"ሉቃስ", "testament":"NT", "chapters":24, "active":false },
+    { "id":"john", "nameAm":"ዮሐንስ", "testament":"NT", "chapters":21, "active":false },
+    { "id":"acts", "nameAm":"የሐዋርያት ሥራ", "testament":"NT", "chapters":28, "active":false },
+    { "id":"romans", "nameAm":"ሮሜ", "testament":"NT", "chapters":16, "active":false },
+    { "id":"1corinthians", "nameAm":"1ኛ ቆሮንቶስ", "testament":"NT", "chapters":16, "active":false },
+    { "id":"2corinthians", "nameAm":"2ኛ ቆሮንቶስ", "testament":"NT", "chapters":13, "active":false },
+    { "id":"galatians", "nameAm":"ገላትያ", "testament":"NT", "chapters":6, "active":false },
+    { "id":"ephesians", "nameAm":"ኤፌሶን", "testament":"NT", "chapters":6, "active":false },
+    { "id":"philippians", "nameAm":"ፊልጵስዩስ", "testament":"NT", "chapters":4, "active":false },
+    { "id":"colossians", "nameAm":"ቆላስይስ", "testament":"NT", "chapters":4, "active":false },
+    { "id":"1thessalonians", "nameAm":"1ኛ ተሰሎንቄ", "testament":"NT", "chapters":5, "active":false },
+    { "id":"2thessalonians", "nameAm":"2ኛ ተሰሎንቄ", "testament":"NT", "chapters":3, "active":false },
+    { "id":"1timothy", "nameAm":"1ኛ ጢሞቴዎስ", "testament":"NT", "chapters":6, "active":false },
+    { "id":"2timothy", "nameAm":"2ኛ ጢሞቴዎስ", "testament":"NT", "chapters":4, "active":false },
+    { "id":"titus", "nameAm":"ቲቶ", "testament":"NT", "chapters":3, "active":false },
+    { "id":"philemon", "nameAm":"ፊልሞና", "testament":"NT", "chapters":1, "active":false },
+    { "id":"hebrews", "nameAm":"ዕብራውያን", "testament":"NT", "chapters":13, "active":false },
+    { "id":"james", "nameAm":"ያዕቆብ", "testament":"NT", "chapters":5, "active":false },
+    { "id":"1peter", "nameAm":"1ኛ ጴጥሮስ", "testament":"NT", "chapters":5, "active":false },
+    { "id":"2peter", "nameAm":"2ኛ ጴጥሮስ", "testament":"NT", "chapters":3, "active":false },
+    { "id":"1john", "nameAm":"1ኛ ዮሐንስ", "testament":"NT", "chapters":5, "active":false },
+    { "id":"2john", "nameAm":"2ኛ ዮሐንስ", "testament":"NT", "chapters":1, "active":false },
+    { "id":"3john", "nameAm":"3ኛ ዮሐንስ", "testament":"NT", "chapters":1, "active":false },
+    { "id":"jude", "nameAm":"ይሁዳ", "testament":"NT", "chapters":1, "active":false },
+    { "id":"revelation", "nameAm":"ራእይ", "testament":"NT", "chapters":22, "active":false }
+  ],
+
+  "chapters": [
+    {
+      "id": "genesis_1",
+      "bookId": "genesis",
+      "bookNameAm": "ዘፍጥረት",
+      "chapter": 1,
+      "titleAm": "የሁሉም ነገር መጀመሪያ — የፍጥረት ግርማና የእግዚአብሔር ሉዓላዊነት",
+      "focusAm": "ፍጥረት፣ የእግዚአብሔር ሉዓላዊነት፣ የሰው ክብርና የዓላማ መነሻ",
+      "refAm": "ዘፍጥረት 1:1–31",
+      "verseAm": "በመጀመሪያ እግዚአብሔር ሰማይና ምድርን ፈጠረ። ምድርም ባዶና ጨለማ ነበረች፥ ጨለማም በጥልቁ ላይ ነበረ፤ የእግዚአብሔርም መንፈስ በውኃ ላይ ይንቀሳቀስ ነበር። እግዚአብሔርም፦ ብርሃን ይሁን አለ፤ ብርሃንም ሆነ። እግዚአብሔርም ብርሃኑ መልካም እንደሆነ አየ፥ ብርሃንንና ጨለማንም ለየ። እግዚአብሔርም ብርሃኑን ቀን ብሎ ጠራው፥ ጨለማውንም ሌሊት ብሎ ጠራው። ማታም ሆነ ጠዋትም ሆነ፥ አንድ ቀን።",
+      "proclaimWord": "ብርሃን ይሁን — እኔም የእግዚአብሔር ብርሃን ነኝ! ✨",
+      "proclaimHint": "“Let there be light” — በሕይወቴ ላይ የእግዚአብሔር ብርሃን ይብራ!",
+      "explanation": "<p><strong>📖 የምዕራፉ መግቢያና ዐውድ፡</strong> ዘፍጥረት 1 የመጽሐፍ ቅዱስ የመጀመሪያ ምዕራፍ ነው። ይህ ምዕራፍ የመጽሐፍ ቅዱስ መሠረት ነው — ስለ እግዚአብሔር ማንነት፣ ስለ ፍጥረት ባሕርይ፣ ስለ ሰው ክብርና ዓላማ የምናውቀው ከዚህ ምዕራፍ ነው። ዘፍጥረት ማለት “መጀመሪያ” ማለት ነው። ይህ መጽሐፍ ስለ ፍጥረት፣ ስለ ውድቀት፣ ስለ ቃል ኪዳን፣ እና ስለ እግዚአብሔር የመዳን ዕቅድ መሠረት ይጥላል።</p><p><strong>✨ የምዕራፉ ዋና መልእክት፡</strong> እግዚአብሔር ሉዓላዊ ፈጣሪ ነው። እርሱ ብቻ አምላክ ነው። ፍጥረቱ በፍጹም ሥርዓትና በዓላማ የተሠራ ነው። ሁሉም “እጅግ መልካም” ነው። ሰው ግን የፍጥረቱ አክሊል ነው — በእግዚአብሔር መልክ የተፈጠረ።</p><p><strong>📐 የምዕራፉ አወቃቀር (የቀናት አተራረክ)፡</strong> ምዕራፉ በስድስት ቀናት የተከፈለ ሲሆን ሁለት ትሪያዶች (triads) ይመሠርታል፦</p><ul><li><strong>ቀናት 1–3 (የመንግሥታት መለያየት)፦</strong> ቀን 1 — ብርሃንና ጨለማ ተለያዩ፤ ቀን 2 — ውኃና ጠፈር ተለያዩ፤ ቀን 3 — ደረቅ መሬትና ባሕር ተለያዩ፣ እፅዋትም ተፈጠሩ።</li><li><strong>ቀናት 4–6 (የመንግሥታት መሙላት)፦</strong> ቀን 4 — ፀሐይ፣ ጨረቃ፣ ከዋክብት ተፈጠሩ (ቀን 1ን ይሞላሉ)፤ ቀን 5 — ዓሦችና ወፎች ተፈጠሩ (ቀን 2ን ይሞላሉ)፤ ቀን 6 — እንስሳትና ሰው ተፈጠሩ (ቀን 3ን ይሞላሉ)።</li></ul><p>ይህ አወቃቀር የእግዚአብሔርን ፍጹም ሥርዓትና የፍጥረትን ሚዛን ያሳያል።</p><p><strong>🔑 ቁልፍ ሐረግ፦ “እግዚአብሔርም አለ” (וַיֹּאמֶר אֱלֹהִים)፡</strong> ይህ ሐረግ በምዕራፉ ውስጥ አሥር ጊዜ ይመጣል። እግዚአብሔር በቃሉ ብቻ ይፈጥራል — ወደ ምንም ነገር አይመለስም፣ አይታገልም፣ አይወዳደርም። ቃሉ ብቻ በቂ ነው። ይህ የእግዚአብሔርን ፍጹም ሉዓላዊነት ያሳያል።</p><p><strong>💚 “መልካም” (טוֹב — ጦብ) የሚለው ቃል፡</strong> በምዕራፉ ውስጥ ሰባት ጊዜ ይመጣል። ይህ ቁጥር በዕብራይስጥ ሥነ-ጽሑፍ ውስጥ ፍጹምነትን ያመለክታል። ከዚያም በቁጥር 31 ላይ “እጅግ መልካም” (טוֹב מְאֹד — ጦብ መኦድ) ይላል። ፍጥረቱ ሙሉ በሙሉ፣ ፍጹም በሆነ መንገድ መልካም ነበር።</p><p><strong>👑 “በእግዚአብሔር መልክ” (בְּצֶלֶם אֱלֹהִים — በጸለም ኤሎሂም)፡</strong> በቁጥር 26–27 ላይ ሰው በእግዚአብሔር መልክና አምሳል እንደተፈጠረ ይነገራል። ይህ ማለት፦ (1) ሰው የእግዚአብሔርን ባሕርያት ያንጸባርቃል — ፍቅር፣ ፍትሕ፣ ፈጠራ፣ አመራር። (2) ሰው በምድር ላይ የእግዚአብሔር ተወካይ ነው። (3) ሁሉም ሰው — ወንድና ሴት — እኩል ክብር አለው።</p><p><strong>🌍 የሰው ተልእኮ (ቁጥር 28)፡</strong> እግዚአብሔር ሰውን ባረከውና እንዲህ አለው፦ “ብዙ ተባዙ፥ ምድርንም ሙሉአት፥ ግዙአትም።” ይህ የሰው ተልእኮ ነው — ምድርን መግዛት፣ መንከባከብ፣ ማልማት። ይህ “የፍጥረት ባለቤትነት” (Creation Mandate) ይባላል።</p>",
+      "background": "<p><strong>🏛️ የጥንት ቅርብ ምሥራቅ ዳራ፡</strong> ዘፍጥረት 1 የተጻፈው በጥንት ቅርብ ምሥራቅ ባህል ውስጥ ነው። በዚያ ዘመን ብዙ የፍጥረት አፈ-ታሪኮች ነበሩ። ዋናዎቹ፦</p><ul><li><strong>ኤንማ ኤሊሽ (Enuma Elish)፦</strong> የባቢሎን የፍጥረት አፈ-ታሪክ። ማርዱክ የሚባል አምላክ ቲያማት የምትባል የባሕር ጭራቅን ገድሎ ከሥጋዋ ሰማይና ምድርን ሠራ። ሰው የተፈጠረው አማልክትን ለማገልገል ነው።</li><li><strong>አትራሃሲስ (Atrahasis)፦</strong> የአካድ አፈ-ታሪክ። አማልክት ከሥራ ለማረፍ ሰውን ፈጠሩ።</li></ul><p>ዘፍጥረት 1 ከእነዚህ አፈ-ታሪኮች በፍጹም ይለያል፦</p><ul><li><strong>አንድ አምላክ ብቻ፦</strong> ብዙ አማልክት የሉም። እግዚአብሔር ብቻ ፈጣሪ ነው።</li><li><strong>ጦርነት የለም፦</strong> ፍጥረት በጦርነት አይደለም። እግዚአብሔር በቃሉ ሰላማዊ አድርጎ ፈጠረ።</li><li><strong>ፀሐይና ጨረቃ አማልክት አይደሉም፦</strong> እነሱ “ብርሃናት” (מְאֹרֹת — መኦሮት) ተብለው ተጠርተዋል። ይህ የጸሐይ አምልኮን ይቃወማል።</li><li><strong>ሰው የፍጥረት አክሊል ነው፦</strong> ለአማልክት አገልጋይ ሆኖ አልተፈጠረም። እንደ እግዚአብሔር መልክ ተፈጠረ።</li></ul><p><strong>📜 የዕብራይስጥ ግጥማዊ አወቃቀር፡</strong> ዘፍጥረት 1 በዕብራይስጥ ግጥም የተጻፈ ነው። የሚደጋገሙ ሐረጎች፦ “እግዚአብሔርም አለ”፣ “መልካም እንደሆነ አየ”፣ “ማታም ሆነ ጠዋትም ሆነ”። ይህ የሊትርጂ (liturgy) ባሕርይ አለው — ለአምልኮ የተዘጋጀ ነው።</p><p><strong>🗓️ የሰንበት ግንኙነት፡</strong> የስድስቱ ቀናት አወቃቀር የሰባተኛውን ቀን (የሰንበት) ለማዘጋጀት ነው። የእስራኤላውያን የሰንበት ሕግ (ዘጸአት 20:8-11) ከዘፍጥረት 1 የቀናት አወቃቀር የተመሠረተ ነው።</p>",
+      "keywords": "<p><strong>🔑 የዕብራይስጥ ቁልፍ ቃላት፦</strong></p><ul><li><span class=\"keyword\">ብሬሺት (בְּרֵאשִׁית)</span> — “በመጀመሪያ”። የመጽሐፉ የመጀመሪያ ቃል። ከ “ራስ” (רֹאשׁ) ሥር የመጣ ሲሆን “የሁሉም ነገር ራስ” ወይም “የጊዜ መጀመሪያ” ማለት ነው። ይህ ቃል የእግዚአብሔርን የጊዜ ጌትነት ያሳያል።</li><li><span class=\"keyword\">ባራ (בָּרָא)</span> — “መፍጠር”። በመጽሐፍ ቅዱስ ውስጥ ሁልጊዜ እግዚአብሔር ብቻ ተጠሪ ነው። ከባዶ ተነስቶ መፍጠርን (creatio ex nihilo) ያሳያል። በዘፍጥረት 1 ውስጥ ሦስት ጊዜ ይመጣል (ቁጥር 1፣ 21፣ 27)።</li><li><span class=\"keyword\">ቶሁ ዋቦሁ (תֹהוּ וָבֹהוּ)</span> — “ባዶና ጨለማ”። “ቶሁ” ማለት “ቅርጸት የሌለው”፣ “ቦሁ” ማለት “የለሽነት” ማለት ነው። ይህ ገና ያልተዘጋጀ ሁኔታን ያሳያል። እግዚአብሔር ግን ከዚህ ሁኔታ ውስጥ ሥርዓትን አመጣ።</li><li><span class=\"keyword\">ሩዋሕ (רוּחַ)</span> — “መንፈስ/እስትንፋስ/ንፋስ”። በዕብራይስጥ ሦስቱንም ትርጉሞች ይሸፍናል። በዚህ ጥቅስ ውስጥ የእግዚአብሔር መንፈስ በውኃ ላይ ሲንቀሳቀስ ይታያል። ይህ የመንፈስ ቅዱስን የፍጥረት ሥራ ያሳያል።</li><li><span class=\"keyword\">ጸለም (צֶלֶם)</span> — “መልክ”። ሰው በእግዚአብሔር መልክ መፈጠሩ ልዩ ክብርን ያመለክታል። በጥንት ቅርብ ምሥራቅ ንጉሦች “የአምላክ መልክ” ይባሉ ነበር። ዘፍጥረት 1 ግን ሁሉም ሰው ይህ ክብር እንዳለው ያስተምራል።</li><li><span class=\"keyword\">ደሙት (דְּמוּת)</span> — “አምሳል”። “ጸለም” ከሚለው ጋር ተዳምሮ ይመጣል። “መልክና አምሳል” ማለት ሰው እግዚአብሔርን የሚመስል መሆኑን ያሳያል።</li><li><span class=\"keyword\">ጦብ (טוֹב)</span> — “መልካም”። በምዕራፉ ውስጥ ሰባት ጊዜ ተደጋግሞ ይመጣል። “መኦድ” (מְאֹד — በጣም) ከሚለው ጋር ሲደመር “እጅግ መልካም” ይሆናል።</li><li><span class=\"keyword\">ራዲድ (רָקִיעַ)</span> — “ጠፈር/ሰማይ”። በቁጥር 6–8 ይመጣል። “የተዘረጋ” ማለት ሲሆን ውኃን ከውኃ የሚለይ ጠፈርን ያመለክታል።</li><li><span class=\"keyword\">ኦር (אוֹר)</span> — “ብርሃን”። በቁጥር 3–5 ይመጣል። ይህ የፀሐይ ብርሃን ሳይሆን የእግዚአብሔር ቀጥተኛ ብርሃን ነው። ብርሃን በመጽሐፍ ቅዱስ ውስጥ የእግዚአብሔርን ቅድስና፣ ሕይወት፣ እና መገኘት ያመለክታል።</li><li><span class=\"keyword\">ኤሎሂም (אֱלֹהִים)</span> — “አምላክ”። ብዙ ቁጥር ያለው ቃል ነው ግን አንድ አምላክን ያመለክታል። ይህ የሥላሴን ፍንጭ ይሰጣል (የአንድነትና የብዝሐ ምስጢር)።</li></ul>",
+      "crossref": "<p><strong>🔗 ተዛማጅ ጥቅሶች፦</strong></p><ul><li><span class=\"cross-ref\">ዮሐንስ 1:1-3</span> — “በመጀመሪያ ቃል ነበረ... ሁሉ በእርሱ ሆነ።” ክርስቶስ የፍጥረት ማዕከል ነው።</li><li><span class=\"cross-ref\">ቆላስይስ 1:15-17</span> — “በእርሱ ሁሉ ተፈጥሯል።” ክርስቶስ የሚታይና የማይታይ ሁሉ ፈጣሪ ነው።</li><li><span class=\"cross-ref\">ዕብራውያን 11:3</span> — “በእምነት ዓለማት በእግዚአብሔር ቃል እንደተሠሩ እንረዳለን።”</li><li><span class=\"cross-ref\">መዝሙር 33:6-9</span> — “በእግዚአብሔር ቃል ሰማያት ተሠሩ።”</li><li><span class=\"cross-ref\">መዝሙር 8:3-8</span> — ሰው በእግዚአብሔር መልክ ክብር እንደተሰጠው ይናገራል።</li><li><span class=\"cross-ref\">ኢሳይያስ 45:18</span> — “እግዚአብሔር ምድርን የፈጠረ... ባዶ አልፈጠረም።”</li><li><span class=\"cross-ref\">ራእይ 21:1-5</span> — አዲስ ሰማይና አዲስ ምድር — የዘፍጥረት 1 ፍጻሜ።</li><li><span class=\"cross-ref\">2 ቆሮንቶስ 5:17</span> — “በክርስቶስ ያለ ሁሉ አዲስ ፍጥረት ነው።”</li><li><span class=\"cross-ref\">ሮሜ 1:20</span> — “የእግዚአብሔር የማይታዩ ባሕርያት ከፍጥረት ጀምሮ ይታያሉ።”</li></ul>",
+      "theology": "<p><strong>🎓 ሥነ-መለኮታዊ ትንታኔ፦</strong></p><p><strong>1. የእግዚአብሔር ማንነት (Theology Proper)፦</strong></p><ul><li><strong>ሉዓላዊነት (Sovereignty)፦</strong> እግዚአብሔር ፍጹም ገዢ ነው። ወደ ምንም አይመለስም፣ ፈቃድ አይጠይቅም። ቃሉ ብቻ በቂ ነው።</li><li><strong>ሁሉን የሚችልነት (Omnipotence)፦</strong> “ብርሃን ይሁን” ማለቱ ብቻ ብርሃን ሆነ። ኃይሉ ወሰን የለውም።</li><li><strong>ሁሉን የሚያውቅነት (Omniscience)፦</strong> እያንዳንዱን የፍጥረት ደረጃ “መልካም እንደሆነ አየ።”</li><li><strong>ቅድስና (Holiness)፦</strong> ፍጥረቱ ከኃጢአት ነጻ ነበር። ኃጢአት ገና አልነበረም።</li><li><strong>ፍቅር (Love)፦</strong> እግዚአብሔር ፍጥረቱን “መልካም” አለው — ይህ የፍቅር መግለጫ ነው።</li></ul><p><strong>2. የፍጥረት ሥነ-መለኮት (Theology of Creation)፦</strong></p><ul><li><strong>ከባዶ መፍጠር (Creatio Ex Nihilo)፦</strong> እግዚአብሔር ከምንም ነገር ፈጠረ። ቀዳሚ ቁስ አልነበረም።</li><li><strong>ፍጥረቱ መልካም ነው፦</strong> ቁስ አካል ክፉ አይደለም። ይህ የግኖስቲክ አስተምህሮን ይቃወማል።</li><li><strong>ፍጥረቱ ዓላማ አለው፦</strong> ሁሉም የእግዚአብሔርን ክብር ለማሳየት ነው።</li><li><strong>ፍጥረቱ ሥርዓት አለው፦</strong> ቀናት 1–3 እና 4–6 ያለው ትይዩነት የእግዚአብሔርን ፍጹም ሥርዓት ያሳያል።</li></ul><p><strong>3. የሰው ሥነ-መለኮት (Theological Anthropology)፦</strong></p><ul><li><strong>ሰው በእግዚአብሔር መልክ ነው (Imago Dei)፦</strong> ይህ ልዩ ክብርን ይሰጣል። ሁሉም ሰው — ወንድና ሴት — እኩል ክብር አለው።</li><li><strong>ሰው ሁለት ክፍሎች አለው፦</strong> ሥጋ (ከመሬት) እና ነፍስ (ከእግዚአብሔር እስትንፋስ)።</li><li><strong>ሰው ተወካይ ነው፦</strong> በምድር ላይ የእግዚአብሔርን ሥልጣን ይወክላል።</li><li><strong>ሰው ማኅበራዊ ነው፦</strong> “ወንድና ሴት አደረጋቸው።” ከመጀመሪያው ጀምሮ ማኅበራዊ ፍጡር ነው።</li></ul><p><strong>4. የሥላሴ ፍንጭ፦</strong> “እግዚአብሔርም አለ” የሚለው ሐረግ ውስጥ “ኤሎሂም” ብዙ ቁጥር ያለው ቃል ነው። በተጨማሪም “ሰውን በመልኮታችን እንደ አምሳላችን እናድርግ” (ቁጥር 26) የሚለው “እናድርግ” የሥላሴን ብዝሐ ያሳያል። ዮሐንስ 1:1-3 እና ቆላስይስ 1:16 ክርስቶስ በፍጥረት ውስጥ እንደነበረ ያስተምራሉ።</p><p><strong>5. የክርስቶስ ሚና (Christology)፦</strong> ክርስቶስ የፍጥረት ማዕከል ነው። “በእርሱ ሁሉ ተፈጥሯል።” ክርስቶስ “የመጨረሻው አዳም” ነው (1 ቆሮንቶስ 15:45)። የመጀመሪያው አዳም በመታዘዝ የወደቀበትን ቦታ ክርስቶስ በመታዘዝ መለሰ።</p><p><strong>6. የመዳን ሥነ-መለኮት (Soteriology)፦</strong> ዘፍጥረት 1 የመዳንን ታሪክ መሠረት ይጥላል። ኃጢአት ገና አልነበረም። ፍጥረቱ ፍጹም ነበር። በክርስቶስ የሚመጣው አዲስ ፍጥረት (2 ቆሮንቶስ 5:17) የዚህን የመጀመሪያ ፍጹምነት መመለስ ነው።</p>",
+      "application": "<p><strong>🌱 ሊተገበር የሚገባ ዕውነት፦</strong></p><p><strong>1. ፍጥረቱን አክብሩ፦</strong> ሁሉም የእግዚአብሔር ሥራ ነው — ተፈጥሮ፣ እንስሳት፣ ሰዎች። ፍጥረቱን መጉዳት ፈጣሪውን አለማክበር ነው።</p><p><strong>2. የሰውን ክብር አውቁ፦</strong> ሁሉም ሰው የእግዚአብሔር መልክ ነው። ዘር፣ ጾታ፣ ዕድሜ፣ ማኅበራዊ ደረጃ ምንም ለውጥ የለውም። ሁሉም እኩል ክብር አለው።</p><p><strong>3. የሥራን ክብር አውቁ፦</strong> እግዚአብሔር ሠራ። ሥራ ከውድቀት በፊት የተሰጠ ቅዱስ ተግባር ነው። ሥራህ የእግዚአብሔርን ፈጣሪነት ያንጸባርቃል።</p><p><strong>4. በቃሉ ኃይል ይመሩ፦</strong> እግዚአብሔር በቃሉ ይፈጥራል። ቃሉ ኃይል አለው። በሕይወትህ ውስጥ “ብርሃን ይሁን” በማለት ጨለማን አስወግድ።</p><p><strong>5. የፍጥረት ተከባካቢ ሁን፦</strong> እግዚአብሔር ሰውን “ግዛ” ብሎ ጠራው። ይህ መግዛት ማለት መጨፍጨፍ ሳይሆን መንከባከብ ነው። ተፈጥሮን፣ ውኃን፣ አየርን፣ እንስሳትን መጠበቅ የእግዚአብሔር ትእዛዝ ነው።</p><p><strong>6. ሰንበትን አክብሩ፦</strong> የስድስቱ ቀናት አወቃቀር የሰባተኛውን ቀን ለማዘጋጀት ነው። በየሳምንቱ አንድ ቀን ለእግዚአብሔር መስጠት የፍጥረትን ሥርዓት ማክበር ነው።</p><p><strong>7. በክርስቶስ አዲስ ፍጡር ሁን፦</strong> “በክርስቶስ ያለ ሁሉ አዲስ ፍጥረት ነው።” (2 ቆሮንቶስ 5:17) የመጀመሪያው ፍጥረት በኃጢአት ተበላሸ። ክርስቶስ ግን አዲስ ፍጥረትን ያመጣል።</p>",
+      "rhema": "<p><strong>✨ የሬማ መልእክት (የግል መገለጥ)፦</strong></p><p>“እግዚአብሔርም፦ ብርሃን ይሁን አለ፤ ብርሃንም ሆነ።” — ዘፍጥረት 1:3</p><p>ይህ ቃል ዛሬም ሕያው ነው። እግዚአብሔር በሕይወትህ ውስጥ ያለውን ጨለማ ሊያስወግድ ይችላል። ጨለማ ምንም ያህል ጥልቅ ቢሆንም እግዚአብሔር “ብርሃን ይሁን” ሲል ብርሃን ይሆናል።</p><p><strong>🎯 ለሕይወትህ ተግባራዊ መልእክት፦</strong></p><ul><li><strong>በጨለማ ጊዜ፦</strong> ተስፋ አትቁረጥ። እግዚአብሔር “ብርሃን ይሁን” ይላል። ጨለማው ዘላለማዊ አይደለም።</li><li><strong>በፍርሃት ጊዜ፦</strong> እግዚአብሔር ፈጣሪህ ነው። የፈጠረህ አምላክ ይጠብቅሃል።</li><li><strong>በድካም ጊዜ፦</strong> ፍጥረቱ ሥርዓት አለው። እግዚአብሔር ሕይወትህንም በሥርዓት ያስተዳድራል።</li><li><strong>ስለ ማንነትህ፦</strong> አንተ በእግዚአብሔር መልክ ነህ። ይህን እውነት በየቀኑ ተናገር።</li></ul><p><strong>🙏 የግል ጸሎት፦</strong> “አባቴ ሆይ፥ በሕይወቴ ውስጥ ያለውን ጨለማ አስወግድ። ብርሃንህን አብራልኝ። አንተ ሉዓላዊ ፈጣሪ ነህ። በክርስቶስ አዲስ ፍጡር አድርገኝ። አሜን።”</p>",
+      "prayer": "<p><strong>🙏 የስብሰባው ጸሎት፦</strong></p><p>“ሰማይና ምድርን የፈጠረ አባታችን ሆይ፥ ስለ ፍጥረትህ ግርማ አመሰግንሃለን። አንተ ሉዓላዊ ፈጣሪ ነህ። በቃልህ ብቻ ሁሉን ፈጠርክ። ፍጥረትህ እጅግ መልካም ነው።</p><p>ጌታ ሆይ፥ በመልክህ ስለፈጠርከን አመሰግንሃለን። ይህን ክብር እንድናከብር እርዳን። ሁሉንም ሰው እንደ አንተ መልክ እንድናይ አድርገን።</p><p>ፍጥረትህን እንድንከባከብ፣ የሰጠኸንን ሥራ እንድንሠራ፣ እና በሰንበትህ እንድናርፍ አስተምረን።</p><p>በኢየሱስ ክርስቶስ ስም፥ አሜን።”</p>",
+      "exercises": [
+        { "type": "mcq", "qAm": "ዘፍጥረት 1 ስንት ቀናት ውስጥ ፍጥረትን ይገልጻል?", "optsAm": ["3 ቀናት", "6 ቀናት", "7 ቀናት", "40 ቀናት"], "correct": 1, "explAm": "እግዚአብሔር በስድስት ቀናት ፈጠረ፤ በሰባተኛው ቀን አረፈ (ዘፍጥረት 2:2)። ስድስቱ ቀናት ሁለት ትሪያዶች ናቸው — ቀናት 1–3 መንግሥታትን ይለያሉ፣ ቀናት 4–6 ይሞላሉ።" },
+        { "type": "mcq", "qAm": "“ባራ” (בָּרָא) የሚለው የዕብራይስጥ ቃል ምን ማለት ነው?", "optsAm": ["መሥራት", "መፍጠር", "መገንባት", "ማዘጋጀት"], "correct": 1, "explAm": "“ባራ” ማለት “መፍጠር” ማለት ነው። በመጽሐፍ ቅዱስ ውስጥ ሁልጊዜ እግዚአብሔር ብቻ ተጠሪ ነው። ከባዶ ተነስቶ መፍጠርን (creatio ex nihilo) ያሳያል።" },
+        { "type": "mcq", "qAm": "እግዚአብሔር ሰውን በምን መልክ ፈጠረው?", "optsAm": ["በመላእክት መልክ", "በእንስሳት መልክ", "በራሱ መልክ", "በከዋክብት መልክ"], "correct": 2, "explAm": "ዘፍጥረት 1:27 — “እግዚአብሔርም ሰውን በመልኩ ፈጠረ።” ይህ “ኢማጎ ዴይ” (Imago Dei) ይባላል። ሁሉም ሰው — ወንድና ሴት — እኩል ክብር አለው።" },
+        { "type": "mcq", "qAm": "ዘፍጥረት 1 ውስጥ “መልካም” (ጦብ) የሚለው ቃል ስንት ጊዜ ይመጣል?", "optsAm": ["3 ጊዜ", "5 ጊዜ", "7 ጊዜ", "10 ጊዜ"], "correct": 2, "explAm": "“ጦብ” በምዕራፉ ውስጥ ሰባት ጊዜ ይመጣል። ሰባት በዕብራይስጥ ሥነ-ጽሑፍ ውስጥ ፍጹምነትን ያመለክታል። በቁጥር 31 ላይ “እጅግ መልካም” (ጦብ መኦድ) ይላል።" },
+        { "type": "mcq", "qAm": "እግዚአብሔር ሰውን ምን እንዲያደርግ ባረከው?", "optsAm": ["እንዲያርፍ ብቻ", "እንዲባዛ፣ ምድርን እንዲሞላ፣ እንዲገዛ", "እንዲሠራ ብቻ", "እንዲዘምር ብቻ"], "correct": 1, "explAm": "ዘፍጥረት 1:28 — “ብዙ ተባዙ፥ ምድርንም ሙሉአት፥ ግዙአትም።” ይህ “የፍጥረት ባለቤትነት” (Creation Mandate) ይባላል። ሰው በምድር ላይ የእግዚአብሔር ተወካይ ነው።" },
+        { "type": "tf", "qAm": "እግዚአብሔር ሰውን በመልኩ ፈጠረ።", "correct": true, "explAm": "✅ ዘፍጥረት 1:27። ሰው በእግዚአብሔር መልክ ተፈጠረ። ይህ ልዩ ክብርን ይሰጣል። ሁሉም ሰው — ወንድና ሴት — እኩል ክብር አለው።" },
+        { "type": "tf", "qAm": "ዘፍጥረት 1 መሠረት ፀሐይና ጨረቃ አማልክት ናቸው።", "correct": false, "explAm": "❌ አይደሉም። እነሱ “ብርሃናት” (מְאֹרֹת — መኦሮት) ተብለው ተጠርተዋል። ይህ የጸሐይ አምልኮን ይቃወማል። በጥንት ቅርብ ምሥራቅ ፀሐይ፣ ጨረቃ፣ ከዋክብት አማልክት ተደርገው ይመለኩ ነበር። ዘፍጥረት 1 ግን እነሱ የእግዚአብሔር ፍጥረታት ብቻ እንደሆኑ ያስተምራል።" },
+        { "type": "tf", "qAm": "እግዚአብሔር ፍጥረቱን “እጅግ መልካም” አለው።", "correct": true, "explAm": "✅ ዘፍጥረት 1:31። “እግዚአብሔርም ያደረገውን ሁሉ አየ፥ እነሆም እጅግ መልካም ነበረ።” ይህ የግኖስቲክ አስተምህሮን (ቁስ አካል ክፉ ነው የሚለውን) ይቃወማል። ፍጥረቱ በመጀመሪያ ፍጹም ነበር።" },
+        { "type": "tf", "qAm": "ዘፍጥረት 1 መሠረት እግዚአብሔር ፍጥረቱን በጦርነት ፈጠረ።", "correct": false, "explAm": "❌ አይደለም። እግዚአብሔር በቃሉ ሰላማዊ አድርጎ ፈጠረ። “እግዚአብሔርም አለ” ማለቱ ብቻ በቂ ነበር። ይህ ከባቢሎናዊው ኤንማ ኤሊሽ አፈ-ታሪክ (ማርዱክ ቲያማትን ገድሎ የፈጠረበት) በፍጹም ይለያል።" },
+        { "type": "match", "qAm": "የዕብራይስጥ ቃላትን ከትርጉም ጋር ያገናኙ፡", "pairs": [{ "left": "ብሬሺት", "right": "በመጀመሪያ 🌅" }, { "left": "ባራ", "right": "መፍጠር ✨" }, { "left": "ቶሁ ዋቦሁ", "right": "ባዶና ጨለማ 🌑" }, { "left": "ጸለም", "right": "መልክ 👤" }, { "left": "ጦብ", "right": "መልካም 💚" }, { "left": "ሩዋሕ", "right": "መንፈስ 🌬️" }] },
+        { "type": "match", "qAm": "የቀናትን ፍጥረት ያገናኙ፡", "pairs": [{ "left": "ቀን 1", "right": "ብርሃንና ጨለማ 💡" }, { "left": "ቀን 2", "right": "ጠፈርና ውኃ ☁️" }, { "left": "ቀን 3", "right": "ደረቅ መሬትና እፅዋት 🌿" }, { "left": "ቀን 4", "right": "ፀሐይ፣ ጨረቃ፣ ከዋክብት ☀️" }, { "left": "ቀን 5", "right": "ዓሦችና ወፎች 🐟" }, { "left": "ቀን 6", "right": "እንስሳትና ሰው 👤" }] },
+        { "type": "open", "qAm": "“ሰው በእግዚአብሔር መልክ ተፈጠረ” የሚለው ስለ ሰው ክብርና ኃላፊነት ምን ያስተምራል? ዝርዝር መልስ ይስጡ።", "sampleAm": "ሰው በእግዚአብሔር መልክ መፈጠሩ ልዩ ክብርንና ኃላፊነትን ያሳያል። (1) ክብር፦ ሁሉም ሰው — ወንድና ሴት፣ ዘር፣ ዕድሜ፣ ማኅበራዊ ደረጃ ምንም ለውጥ የለውም — እኩል ክብር አለው። ማንንም ማክበር የእግዚአብሔርን መልክ ማክበር ነው። (2) ኃላፊነት፦ ሰው በምድር ላይ የእግዚአብሔር ተወካይ ነው። ምድርን መግዛት፣ መንከባከብ፣ ማልማት የተሰጠው ተልእኮ ነው። (3) ግንኙነት፦ ሰው ከእግዚአብሔር ጋር ግንኙነት እንዲኖረው ተፈጠረ። ይህ የሰውን ልዩ ዋጋ ያሳያል። (4) ፈጠራ፦ ሰው የእግዚአብሔርን የፈጠራ ባሕርይ ያንጸባርቃል። ሥነ-ጥበብ፣ ሙዚቃ፣ ቴክኖሎጂ ሁሉም የዚህ መግለጫዎች ናቸው።" },
+        { "type": "open", "qAm": "ዘፍጥረት 1 ከጥንት ቅርብ ምሥራቅ አፈ-ታሪኮች (ኤንማ ኤሊሽ፣ አትራሃሲስ) ምን ልዩነት አለው? ለምን ይህ ልዩነት አስፈለገ?", "sampleAm": "ዘፍጥረት 1 ከጥንት ቅርብ ምሥራቅ አፈ-ታሪኮች በአራት ዋና ነጥቦች ይለያል፦ (1) አንድ አምላክ ብቻ፦ በኤንማ ኤሊሽ ብዙ አማልክት ነበሩ። ዘፍጥረት 1 ግን አንድ አምላክ ብቻ ያቀርባል። (2) ሰላማዊ ፍጥረት፦ በኤንማ ኤሊሽ ማርዱክ ቲያማትን ገድሎ ፈጠረ። ዘፍጥረት 1 ግን እግዚአብሔር በቃሉ ሰላማዊ አድርጎ ፈጠረ። (3) የሰው ክብር፦ በአትራሃሲስ ሰው ለአማልክት አገልጋይ ሆኖ ተፈጠረ። ዘፍጥረት 1 ግን ሰው በእግዚአብሔር መልክ ተፈጠረ። (4) ፀሐይና ጨረቃ፦ በጥንት ቅርብ ምሥራቅ ፀሐይ፣ ጨረቃ፣ ከዋክብት አማልክት ነበሩ። ዘፍጥረት 1 ግን እነሱ “ብርሃናት” ብቻ እንደሆኑ ያስተምራል። ይህ ልዩነት አስፈለገ ምክንያቱም እስራኤላውያን በግብፅና በባቢሎን ባህል ውስጥ ነበሩ። የእግዚአብሔርን ልዩ ማንነት ማስተማር ያስፈለገ ነበር።" },
+        { "type": "open", "qAm": "ዘፍጥረት 1 ስለ እግዚአብሔር ሉዓላዊነት ምን ያስተምራል? ለሕይወትዎስ ምን ትርጉም አለው?", "sampleAm": "ዘፍጥረት 1 ስለ እግዚአብሔር ሉዓላዊነት የሚያስተምረው፦ (1) እግዚአብሔር ፍጹም ገዢ ነው። ወደ ምንም አይመለስም፣ ፈቃድ አይጠይቅም። ቃሉ ብቻ በቂ ነው። (2) እግዚአብሔር ሁሉን የሚችል ነው። “ብርሃን ይሁን” ማለቱ ብቻ ብርሃን ሆነ። (3) እግዚአብሔር ሁሉን የሚያውቅ ነው። እያንዳንዱን የፍጥረት ደረጃ “መልካም እንደሆነ አየ።” (4) እግዚአብሔር ፍቅር ነው። ፍጥረቱን “መልካም” አለው — ይህ የፍቅር መግለጫ ነው። ለሕይወቴ ትርጉሙ፦ (1) በጨለማ ጊዜ ተስፋ አለኝ። እግዚአብሔር “ብርሃን ይሁን” ይላል። (2) በፍርሃት ጊዜ መታመን እችላለሁ። የፈጠረኝ አምላክ ይጠብቀኛል። (3) ስለ ማንነቴ ጥርጥር የለኝም። እኔ በእግዚአብሔር መልክ ነኝ። (4) ሕይወቴ ዓላማ አለው። እግዚአብሔር ሁሉን በሥርዓት ያስተዳድራል።" },
+        { "type": "open", "qAm": "ክርስቶስ በፍጥረት ውስጥ ያለው ሚና ምንድነው? ዮሐንስ 1:1-3 እና ቆላስይስ 1:16 ይጠቅሱ።", "sampleAm": "ክርስቶስ የፍጥረት ማዕከል ነው። ዮሐንስ 1:1-3 — “በመጀመሪያ ቃል ነበረ... ሁሉ በእርሱ ሆነ።” ይህ “ቃል” (ሎጎስ) ኢየሱስ ክርስቶስ ነው። ሁሉ በእርሱ ተፈጠረ። ቆላስይስ 1:16 — “በእርሱ ሁሉ ተፈጥሯል፥ በሰማይና በምድር ያሉት፥ የሚታዩትና የማይታዩት... ሁሉ በእርሱና ለእርሱ ተፈጥሯል።” ይህ ማለት፦ (1) ክርስቶስ የዘላለም አምላክ ነው። ፍጥረት ከመፈጠሩ በፊት ነበረ። (2) ክርስቶስ የፍጥረት ወኪል ነው። አብ በክርስቶስ ፈጠረ። (3) ክርስቶስ የፍጥረት ግብ ነው። “ሁሉ ለእርሱ ተፈጥሯል።” (4) ክርስቶስ “የመጨረሻው አዳም” ነው (1 ቆሮንቶስ 15:45)። የመጀመሪያው አዳም በመታዘዝ የወደቀበትን ቦታ ክርስቶስ በመታዘዝ መለሰ። ይህ የመዳን ዕቅድ መሠረት ነው።" }
+      ],
+      "sessionOverviewAm": "ይህ ስብሰባ የመጽሐፍ ቅዱስን የመጀመሪያ ምዕራፍ በጥልቀት ይመረምራል። እግዚአብሔር ሉዓላዊ ፈጣሪ መሆኑን፣ ፍጥረቱ እጅግ መልካም መሆኑን፣ እና ሰው በእግዚአብሔር መልክ ተፈጥሮ ልዩ ክብርና ተልእኮ እንደተሰጠው እንማራለን። ይህ ምዕራፍ ስለ እግዚአብሔር ማንነት፣ ስለ ፍጥረት ባሕርይ፣ እና ስለ ሰው ዓላማ መሠረታዊ ትምህርት ይሰጣል።",
+      "learningObjectivesAm": [
+        "የዘፍጥረት 1 አወቃቀርንና የቀናት 1–3 እና 4–6 አተራረክን መለየት።",
+        "“ባራ”፣ “ጸለም”፣ “ቶሁ ዋቦሁ”፣ “ሩዋሕ” የመሳሰሉ ቁልፍ የዕብራይስጥ ቃላትን ትርጉምና ጠቀሜታ መረዳት።",
+        "እግዚአብሔር በቃሉ ሁሉን እንደፈጠረና ፍጥረቱን “እጅግ መልካም” እንደሆነ ማወቅ።",
+        "ሰው በእግዚአብሔር መልክ መፈጠሩ ምን ትርጉም እንዳለው ማብራራት።",
+        "ዘፍጥረት 1 ከጥንት ቅርብ ምሥራቅ አፈ-ታሪኮች እንዴት እንደሚለይ መለየት።",
+        "የክርስቶስን ሚና በፍጥረት ውስጥ መረዳት (ዮሐንስ 1:1-3፣ ቆላስይስ 1:16)።",
+        "የፍጥረት ተከባካቢነትንና የሥራን ክብር መረዳት።"
+      ],
+      "keyQuestionAm": "እግዚአብሔር ማን ነው? ፍጥረትስ ምንድነው? ሰውስ ምን ዓላማ አለው?",
+      "sessionSignificanceAm": "ዘፍጥረት 1 የመጽሐፍ ቅዱስ መሠረት ነው። ስለ እግዚአብሔር ማንነት፣ ስለ ፍጥረት ባሕርይ፣ ስለ ሰው ክብርና ዓላማ የምናውቀው ከዚህ ምዕራፍ ነው። ይህን ምዕራፍ መረዳት ሌሎቹን የመጽሐፍ ቅዱስ ክፍሎች ለመረዳት መሠረት ይሆናል። በተለይም የሰውን ክብር፣ የሥራን ክብር፣ እና የፍጥረትን አስተዳደር ስለምንመለከትበት ወቅታዊ ጉዳዮች መሠረታዊ መልስ ይሰጣል።",
+      "outlineAm": [
+        { "section": "ቁጥር 1–2", "titleAm": "የፍጥረት መጀመሪያ — ባዶና ጨለማ", "summaryAm": "እግዚአብሔር ሰማይና ምድርን ፈጠረ። ምድር ባዶና ጨለማ ነበረች። የእግዚአብሔር መንፈስ በውኃ ላይ ይንቀሳቀስ ነበር።" },
+        { "section": "ቁጥር 3–5", "titleAm": "የብርሃን ፍጥረት — ቀን አንድ", "summaryAm": "እግዚአብሔር “ብርሃን ይሁን” አለ። ብርሃንና ጨለማ ተለያዩ። ብርሃን “ቀን”፣ ጨለማ “ሌሊት” ተባሉ።" },
+        { "section": "ቁጥር 6–8", "titleAm": "የጠፈር ፍጥረት — ቀን ሁለት", "summaryAm": "እግዚአብሔር ጠፈርን ሠርቶ ውኃን ከውኃ ለየ።" },
+        { "section": "ቁጥር 9–13", "titleAm": "የምድርና የእፅዋት ፍጥረት — ቀን ሦስት", "summaryAm": "ውኃ ተሰብስቦ ደረቅ መሬት ታየ። ምድር እፅዋትን አወጣች።" },
+        { "section": "ቁጥር 14–19", "titleAm": "የፀሐይ፣ የጨረቃና የከዋክብት ፍጥረት — ቀን አራት", "summaryAm": "ብርሃናት ተፈጠሩ — ቀንና ሌሊትን ለመለየት፣ ለምልክት፣ ለወቅቶች፣ ለቀናትና ለዓመታት።" },
+        { "section": "ቁጥር 20–23", "titleAm": "የዓሦችና የወፎች ፍጥረት — ቀን አምስት", "summaryAm": "ውኃ ሕያዋን ፍጡራንን አወጣች። ወፎችም ተፈጠሩ።" },
+        { "section": "ቁጥር 24–31", "titleAm": "የእንስሳትና የሰው ፍጥረት — ቀን ስድስት", "summaryAm": "እንስሳት ተፈጠሩ። ሰው በእግዚአብሔር መልክ — ወንድና ሴት — ተፈጠረ። እግዚአብሔር ፍጥረቱን “እጅግ መልካም” አለው።" }
+      ],
+      "keyTermsAm": [
+        { "term": "ብሬሺት", "transliteration": "Bereshit", "meaningAm": "በመጀመሪያ", "significanceAm": "የመጽሐፍ ቅዱስ የመጀመሪያ ቃል። “ራስ” ከሚለው ሥር የመጣ ሲሆን “የሁሉም ነገር ራስ” ወይም “የጊዜ መጀመሪያ” ማለት ነው። ይህ ቃል የመጽሐፍ ቅዱስን መጀመሪያና የእግዚአብሔርን የጊዜ ጌትነት ያሳያል።" },
+        { "term": "ባራ", "transliteration": "bara", "meaningAm": "መፍጠር", "significanceAm": "በመጽሐፍ ቅዱስ ውስጥ ሁልጊዜ እግዚአብሔር ብቻ ተጠሪ ነው። ከባዶ ተነስቶ መፍጠርን (creatio ex nihilo) ያሳያል። ይህ የእግዚአብሔርን ልዩ የፈጣሪነት ኃይል ያጎላል።" },
+        { "term": "ቶሁ ዋቦሁ", "transliteration": "tohu wabohu", "meaningAm": "ባዶና ጨለማ", "significanceAm": "“ቶሁ” ማለት “ቅርጸት የሌለው”፣ “ቦሁ” ማለት “የለሽነት” ማለት ነው። ይህ ገና ያልተዘጋጀ ሁኔታን ያሳያል። እግዚአብሔር ግን ከዚህ ሁኔታ ውስጥ ሥርዓትን አመጣ።" },
+        { "term": "ሩዋሕ", "transliteration": "ruach", "meaningAm": "መንፈስ/እስትንፋስ/ንፋስ", "significanceAm": "በዕብራይስጥ “ሩዋሕ” ሦስቱንም ትርጉሞች ይሸፍናል። በዚህ ጥቅስ ውስጥ የእግዚአብሔር መንፈስ በውኃ ላይ ሲንቀሳቀስ ይታያል። ይህ የመንፈስ ቅዱስን የፍጥረት ሥራ ያሳያል።" },
+        { "term": "ጸለም", "transliteration": "tselem", "meaningAm": "መልክ", "significanceAm": "ሰው በእግዚአብሔር መልክ መፈጠሩ ልዩ ክብርን ያመለክታል። ይህ ክብር በሥነ-ምግባር፣ በተፈጥሮ፣ እና በተልእኮ ይገለጻል። ይህ የሰውን ልዩ ዋጋ የሚያስተምር መሠረታዊ ትምህርት ነው።" },
+        { "term": "ደሙት", "transliteration": "demut", "meaningAm": "አምሳል", "significanceAm": "“ጸለም” ከሚለው ጋር ተዳምሮ ይመጣል። “መልክና አምሳል” ማለት ሰው እግዚአብሔርን የሚመስል መሆኑን ያሳያል። ይህ የሰውን ክብርና ኃላፊነት ያጎላል።" },
+        { "term": "ጦብ", "transliteration": "tov", "meaningAm": "መልካም", "significanceAm": "በምዕራፉ ውስጥ ሰባት ጊዜ ተደጋግሞ ይመጣል። ይህ የእግዚአብሔርን ፍጥረት ፍጹምነት ያጎላል። “መኦድ” (በጣም) ከሚለው ጋር ሲደመር “እጅግ መልካም” ይሆናል።" },
+        { "term": "ራዲድ", "transliteration": "raqia", "meaningAm": "ጠፈር/ሰማይ", "significanceAm": "በቁጥር 6–8 ይመጣል። “የተዘረጋ” ማለት ሲሆን ውኃን ከውኃ የሚለይ ጠፈርን ያመለክታል። ይህ የእግዚአብሔርን የሥርዓት ፈጣሪነት ያሳያል።" },
+        { "term": "ኦር", "transliteration": "or", "meaningAm": "ብርሃን", "significanceAm": "በቁጥር 3–5 ይመጣል። ይህ የፀሐይ ብርሃን ሳይሆን የእግዚአብሔር ቀጥተኛ ብርሃን ነው። ብርሃን በመጽሐፍ ቅዱስ ውስጥ የእግዚአብሔርን ቅድስና፣ ሕይወት፣ እና መገኘት ያመለክታል።" },
+        { "term": "ኤሎሂም", "transliteration": "Elohim", "meaningAm": "አምላክ", "significanceAm": "ብዙ ቁጥር ያለው ቃል ነው ግን አንድ አምላክን ያመለክታል። ይህ የሥላሴን ፍንጭ ይሰጣል (የአንድነትና የብዝሐ ምስጢር)።" }
+      ],
+      "redemptiveHistoricalAm": "ዘፍጥረት 1 የመጽሐፍ ቅዱስ የመጀመሪያ ምዕራፍ ነው። የመጽሐፍ ቅዱስ ታሪክ መጀመሪያ ነው። እግዚአብሔር ፍጥረቱን ፈጠረ፣ ሰውን በመልኩ ፈጠረ፣ እና ሁሉንም “እጅግ መልካም” አለው። ይህ ምዕራፍ የወደቀውን ዓለም እንዴት እንደሚመለስ የሚናገረውን የመጽሐፍ ቅዱስን ታሪክ መሠረት ይጥላል። በራእይ 21–22 የምናየው አዲስ ሰማይና አዲስ ምድር የዘፍጥረት 1 ፍጻሜ ነው። የመዳን ታሪክ ሦስት ዋና ደረጃዎች አሉ፦ (1) ፍጥረት — ፍጹም፣ (2) ውድቀት — የተበላሸ፣ (3) መዳን — በክርስቶስ የሚመለስ።",
+      "christConnectionAm": "ዮሐንስ 1:1-3 ኢየሱስን የፍጥረት ማዕከል አድርጎ ያቀርባል። “በመጀመሪያ ቃል ነበረ... ሁሉ በእርሱ ሆነ።” ቆላስይስ 1:16 “በእርሱ ሁሉ ተፈጥሯል” ይላል። ስለዚህ ዘፍጥረት 1 የክርስቶስን የፍጥረት ሥራ ያሳያል። ክርስቶስ የአዲስ ፍጥረትም ማዕከል ነው — 2 ቆሮንቶስ 5:17 “በክርስቶስ ያለ ሁሉ አዲስ ፍጥረት ነው።” ክርስቶስ “የመጨረሻው አዳም” ነው (1 ቆሮንቶስ 15:45)። የመጀመሪያው አዳም በመታዘዝ የወደቀበትን ቦታ ክርስቶስ በመታዘዝ መለሰ።",
+      "commonMisconceptionsAm": [
+        "❌ “ዘፍጥረት 1 ሳይንሳዊ የመማሪያ መጽሐፍ ነው።” — አይደለም። ይህ ሥነ-መለኮታዊ ግጥም ነው፣ ሳይንሳዊ መግለጫ አይደለም። ስለ ማን እንደሆነ እንጂ ስለ እንዴት አይናገርም።",
+        "❌ “እግዚአብሔር ፍጥረቱን በጦርነት ፈጠረ።” — አይደለም። እግዚአብሔር በቃሉ ሰላማዊ አድርጎ ፈጠረ። ይህ ከባቢሎናዊው ኤንማ ኤሊሽ አፈ-ታሪክ ይለያል።",
+        "❌ “ፀሐይና ጨረቃ አማልክት ናቸው።” — አይደሉም። እነሱ “ብርሃናት” (ማኦር) ተብለው ተጠርተዋል፣ አማልክት አይደሉም። ይህ የጸሐይ አምልኮን ይቃወማል።",
+        "❌ “ቁስ አካል ክፉ ነው።” — አይደለም። እግዚአብሔር ፍጥረቱን “እጅግ መልካም” አለው። ይህ የግኖስቲክ አስተምህሮን ይቃወማል።",
+        "❌ “ሰው ከእንስሳት ጋር ተመሳሳይ ደረጃ አለው።” — አይደለም። ሰው በእግዚአብሔር መልክ ስለተፈጠረ ልዩ ክብርና ተልእኮ አለው።",
+        "❌ “ዘፍጥረት 1 እና 2 ሁለት የተለያዩ የፍጥረት ታሪኮች ናቸው።” — አይደሉም። ዘፍጥረት 2 የዘፍጥረት 1 ዝርዝር ማብራሪያ ነው።"
+      ],
+      "discussionQuestionsAm": [
+        "እግዚአብሔር በቃሉ ሁሉን መፍጠሩ ስለ እግዚአብሔር ኃይልና ሉዓላዊነት ምን ያስተምራል?",
+        "“ሰው በእግዚአብሔር መልክ ተፈጠረ” የሚለው አባባል ስለ ሰው ክብርና ኃላፊነት ምን ይናገራል?",
+        "ዘፍጥረት 1 ከጥንት ቅርብ ምሥራቅ አፈ-ታሪኮች ሲነጻጸር ምን ልዩነት አለው? ይህ ልዩነት ለምን አስፈለገ?",
+        "“እጅግ መልካም” የሚለው አባባል ስለ ፍጥረት ባሕርይ ምን ያስተምራል? ዛሬ ያለው ዓለም ግን ለምን ክፉ ሆነ?",
+        "እግዚአብሔር ሰውን በፍጥረት ላይ ሾመው። ይህ የተፈጥሮን መጠበቅ ግዴታችን መሆኑን እንዴት ያሳያል?",
+        "ክርስቶስ በፍጥረት ውስጥ ያለው ሚና ምንድነው? (ዮሐንስ 1:1-3፣ ቆላስይስ 1:16)",
+        "የቀናት 1–3 እና 4–6 አተራረክ ስለ እግዚአብሔር ሥርዓት ምን ያስተምራል?",
+        "“ኤሎሂም” ብዙ ቁጥር የሆነው ለምንድነው? ይህ ስለ ሥላሴ ምን ያሳያል?"
+      ],
+      "memoryVerseAm": "ዘፍጥረት 1:27 — “እግዚአብሔርም ሰውን በመልኩ ፈጠረ፤ በእግዚአብሔር መልክ ፈጠረው፤ ወንድና ሴት አደረጋቸው።”",
+      "sessionDurationMinutes": 60,
+      "preparationNotesAm": "ለስብሰባው ዝግጅት፦ (1) ዘፍጥረት 1 ሙሉውን ምዕራፍ በጸሎት አንብብ። (2) የምዕራፉን አወቃቀር (ቀናት 1–3 እና 4–6) ላይ ምልክት አድርግ። (3) ቁልፍ የዕብራይስጥ ቃላትን (ባራ፣ ጸለም፣ ቶሁ ዋቦሁ፣ ሩዋሕ) ትርጉም አጥና። (4) የምዕራፉን የሥነ-መለኮት ጭብጦች አስብ። (5) ለውይይት ጥያቄዎች መልስ አዘጋጅ። (6) የጸሎት ነጥቦችን አስተካክል።",
+      "takeawayAm": "እግዚአብሔር ሉዓላዊ ፈጣሪ ነው፤ ፍጥረቱ እጅግ መልካም ነው፤ ሰው በእግዚአብሔር መልክ ተፈጥሮ ልዩ ክብርና ተልእኮ ተሰጥቶታል። ክርስቶስ የፍጥረት ማዕከል ነው።"
+    },
+    {
+      "id": "genesis_2",
+      "bookId": "genesis",
+      "bookNameAm": "ዘፍጥረት",
+      "chapter": 2,
+      "titleAm": "የሰው ፍጥረት፣ የዔደን ገነት፣ የሥራ ክብርና የጋብቻ ቅድስና",
+      "focusAm": "የሰው ፍጥረት፣ የሥራ ክብር፣ የጋብቻ ቅድስና፣ የዕረፍት ትርጉም",
+      "refAm": "ዘፍጥረት 2:1–25",
+      "verseAm": "እግዚአብሔር አምላክም ሰውን ከመሬት ዐፈር አደረገ፥ በአፍንጫውም የሕይወት እስትንፋስ እፍ ብሎ ተነፈሰበት፥ ሰውም ሕያው ነፍስ ሆነ። እግዚአብሔር አምላክም በዔደን በምሥራቅ ገነትን ተከለ፥ የፈጠረውን ሰውም በዚያ አኖረው።",
+      "proclaimWord": "እግዚአብሔር ሰውን ከመሬት ዐፈር ፈጠረ — እኔም የእግዚአብሔር ልጅ ነኝ! 🙌",
+      "proclaimHint": "“The Lord God formed man” — የእግዚአብሔር እጅ ሠራች!",
+      "explanation": "<p><strong>📖 የምዕራፉ ዐውድና ዓላማ፡</strong> ዘፍጥረት 2 የዘፍጥረት 1 ዝርዝር ማብራሪያ ነው። ዘፍጥረት 1 አጠቃላይ እይታን (macro view) ሲሰጥ፣ ዘፍጥረት 2 ዝርዝር እይታን (micro view) ይሰጣል። በተለይም ስለ ሰው ፍጥረት፣ ስለ ዔደን ገነት፣ ስለ ሥራ፣ ስለ ጋብቻ፣ እና ስለ ዕረፍት ጥልቅ ትምህርት ይሰጣል። ይህ ምዕራፍ የሰውን ዓላማ፣ የጋብቻን መሠረት፣ እና የእግዚአብሔርን ቅርብ እንክብካቤ ያሳያል።</p><p><strong>👑 “ያህዌ ኤሎሂም” — የቅርብ ግንኙነት ስም፡</strong> በዘፍጥረት 2 ውስጥ እግዚአብሔር “ያህዌ ኤሎሂም” (יְהוָה אֱלֹהִים — ጌታ አምላክ) ተብሎ ይጠራል። በዘፍጥረት 1 ውስጥ “ኤሎሂም” (አምላክ) ብቻ ነበር — ይህ የእግዚአብሔርን ኃያልነትና ሉዓላዊነት ያሳያል። በዘፍጥረት 2 ግን “ያህዌ” (ጌታ) ተጨምሮ ይመጣል — ይህ የእግዚአብሔርን የግል ስም፣ የቅርብ ግንኙነት፣ እና የቃል ኪዳን ታማኝነት ያሳያል። እግዚአብሔር ሩቅ አምላክ ብቻ ሳይሆን ቅርብ አባትም ነው።</p><p><strong>👤 የሰው ፍጥረት (2:7) — የሁለት ክፍሎች ውህደት፡</strong> እግዚአብሔር ሰውን ከመሬት ዐፈር (עָפָר — ዐፋር) ፈጠረ። በአፍንጫውም የሕይወት እስትንፋስ (נִשְׁמַת חַיִּים — ኒሽማት ሓይይም) ተነፈሰበት። ሰውም ሕያው ነፍስ (נֶפֶשׁ חַיָּה — ናፍሽ ሓይያ) ሆነ። ይህ ሁለት ነገሮችን ያሳያል፦ (1) ሰው ከመሬት የተገኘ ነው — ትሑት መነሻ አለው። (2) ሰው ከእግዚአብሔር እስትንፋስ የተቀበለ ነው — ልዩ ክብር አለው። ይህ ሁለቱም የሰውን ባሕርይ ያሳያሉ።</p><p><strong>🌳 የዔደን ገነት (2:8-14) — የእግዚአብሔር መገኘት ቦታ፡</strong> እግዚአብሔር ገነትን በዔደን ተከለ። “ዔደን” (עֵדֶן) ማለት “ደስታ” ወይም “በረከት” ማለት ነው። ገነቱ ውስጥ ሁለት ልዩ ዛፎች ነበሩ፦ (1) የሕይወት ዛፍ (עֵץ הַחַיִּים — ኤጽ ሓይይም) — የዘላለም ሕይወት ምልክት። (2) የመልካምና ክፉን ማወቅ ዛፍ (עֵץ הַדַּעַת טוֹב וָרָע — ኤጽ ሓዳዓት ጦብ ዋራ) — የሥነ-ምግባር ምርጫ ምልክት። አራት ወንዞች ከገነቱ ይፈሱ ነበር፦ ጲሶን፣ ጊሖን፣ ጤግሮስ (ሒደቀል)፣ ኤፍራጥስ። ይህ የገነቱን በረከትና ምቹነት ያሳያል።</p><p><strong>💼 የሰው ተልእኮና ትእዛዝ (2:15-17)፡</strong> እግዚአብሔር አዳምን ገነቱን “እንዲሠራና እንዲጠብቅ” (לְעָבְדָהּ וּלְשָׁמְרָהּ — ለዓብዳህ ኡልሻምራህ) አስቀመጠው። ይህ ሁለት ቃላት አሉ፦ (1) “ዓባድ” (עָבַד) — መሥራት፣ ማገልገል። (2) “ሻማር” (שָׁמַר) — መጠበቅ፣ መንከባከብ። ይህ የሥራን ክብር ያሳያል — ሥራ ከውድቀት በፊት የተሰጠ ቅዱስ ተግባር ነው። ከዚያም እግዚአብሔር አንድ ትእዛዝ ሰጠው፦ “ከመልካምና ከክፉ ማወቅ ዛፍ አትብላ።” ይህ የነጻ ፈቃድን እውነታ ያሳያል — ሰው መታዘዝ ወይም አለመታዘዝ ይችላል።</p><p><strong>💑 የጋብቻ ቅድስና (2:18-25)፡</strong> እግዚአብሔር “ሰው ብቻውን መሆኑ መልካም አይደለም” አለ። ይህ በፍጥረት ውስጥ የመጀመሪያው “መልካም አይደለም” ነው። እግዚአብሔር ሔዋንን ከአዳም አጥንት ፈጠረች። አዳም “ይህች አጥንት ከአጥንቴ፣ ሥጋም ከሥጋዬ ናት” አለ። ይህ የእኩልነትንና የአንድነትን መግለጫ ነው። ቁጥር 24 “ስለዚህ ሰው አባቱንና እናቱን ይተዋል፥ ከሚስቱም ጋር ይጣበቃል፥ ሁለቱም አንድ ሥጋ ይሆናሉ።” ይህ የጋብቻ መሠረታዊ ሕግ ነው — መተው፣ መጣበቅ፣ አንድ መሆን።</p>",
+      "background": "<p><strong>🏛️ የጥንት ቅርብ ምሥራቅ ዳራ፡</strong> ዘፍጥረት 2 የተጻፈው በጥንት ቅርብ ምሥራቅ ባህል ውስጥ ነው። በዚያ ዘመን ሰው ከመሬት ዐፈር ተሠርቶ የአምላክ እስትንፋስ እንደተነፈሰበት የሚናገሩ ታሪኮች ነበሩ። ለምሳሌ፦</p><ul><li><strong>የግብፅ የአትም አፈ-ታሪክ፦</strong> አትም ከውኃ ወይም ከመሬት ሰውን ሠራ።</li><li><strong>የሱመር አፈ-ታሪክ፦</strong> ኤንኪ ከሸክላ ሰውን ሠራ።</li></ul><p>ዘፍጥረት 2 ግን በሁለት ዋና ነጥቦች ይለያል፦ (1) ሰው ለአማልክት አገልጋይ ሆኖ አልተፈጠረም። ከእግዚአብሔር ጋር ግንኙነት እንዲኖረው ተፈጠረ። (2) ሰው ከመሬት ዐፈር ቢሠራም የእግዚአብሔር እስትንፋስ ተነፍሶበታል — ይህ ልዩ ክብር ነው።</p><p><strong>📜 “ያህዌ ኤሎሂም” ስም፦</strong> “ያህዌ” (יְהוָה) የእግዚአብሔር የግል ስም ነው። ይህ ስም ከ “ሐይህ” (הָיָה — መሆን) ሥር የመጣ ሲሆን “ያለሁ” ወይም “ሁልጊዜ የሚኖር” ማለት ነው። በዘጸአት 3:14 እግዚአብሔር ሙሴን “እኔ ያለሁዋለሁ” (אֶהְיֶה אֲשֶׁר אֶהְיֶה) ብሎ ተናገረ። ይህ ስም የእግዚአብሔርን ዘላለማዊነት፣ ታማኝነት፣ እና የቅርብ ግንኙነት ያሳያል።</p><p><strong>🌳 የዔደን ገነት አካባቢ፦</strong> የዔደን ገነት ትክክለኛ ቦታ አይታወቅም። አራቱ ወንዞች — ጲሶን፣ ጊሖን፣ ጤግሮስ (ሒደቀል)፣ ኤፍራጥስ — የሚጠቁሙት በሜሶጶጣሚያ አካባቢ ነበር። ጤግሮስና ኤፍራጥስ ዛሬም ይታወቃሉ። ጲሶንና ጊሖን ግን አይታወቁም — ምናልባት በጎርፍ ጊዜ ተለውጠው ይሆናል።</p><p><strong>💍 የጋብቻ ባህል፦</strong> በጥንት ቅርብ ምሥራቅ ጋብቻ የተለያዩ ሥርዓቶች ነበሩት። ዘፍጥረት 2:24 ግን የጋብቻን መሠረታዊ ሕግ ይሰጣል — ከወላጆች መለየት፣ ከባል/ሚስት ጋር መጣበቅ፣ አንድ ሥጋ መሆን። ይህ የጋብቻን ቅድስና፣ ዘላለማዊነት፣ እና ሙሉ ውህደት ያሳያል።</p>",
+      "keywords": "<p><strong>🔑 የዕብራይስጥ ቁልፍ ቃላት፦</strong></p><ul><li><span class=\"keyword\">ያህዌ ኤሎሂም (יְהוָה אֱלֹהִים)</span> — “ጌታ አምላክ”። “ያህዌ” የእግዚአብሔር የግል ስም ነው — የቅርብ ግንኙነትንና የቃል ኪዳን ታማኝነትን ያሳያል። “ኤሎሂም” ደግሞ “አምላክ” ማለት ነው። ሁለቱ አንድ ላይ “ጌታ አምላክ” ይሆናሉ — ይህ የእግዚአብሔርን ሁለት ገጽታዎች ያሳያል፦ ሉዓላዊ ገዢ (ኤሎሂም) እና ቅርብ አባት (ያህዌ)።</li><li><span class=\"keyword\">ኒሽማት ሓይይም (נִשְׁמַת חַיִּים)</span> — “የሕይወት እስትንፋስ”። “ኒሽማት” ማለት “እስትንፋስ”፣ “ሓይይም” ማለት “ሕይወት” ማለት ነው። ይህ የእግዚአብሔር ቀጥተኛ ስጦታ ነው። ሰው ሕያው የሚሆነው በዚህ ነው። ሕይወት ከእግዚአብሔር የሚመጣ ስጦታ እንጂ የሰው ራስ ምርት አይደለም።</li><li><span class=\"keyword\">ዔደን (עֵדֶן)</span> — “ደስታ” ወይም “በረከት”። የእግዚአብሔር መገኘት ደስታን ያመጣል። ዔደን የእግዚአብሔርን ፍጹም ፍቅርና እንክብካቤ የሚያሳይ ቦታ ነበር።</li><li><span class=\"keyword\">ዔዘር ከነግዶ (עֵזֶר כְּנֶגְדּוֹ)</span> — “የሚመች ረዳት”። “ዔዘር” ማለት “ረዳት”፣ “ከነግዶ” ማለት “የሚመጣጠን” ወይም “የሚመች” ማለት ነው። ሚስት ለባል የሚመች ረዳት ናት። ይህ ቃል ስለ ሴት ክብርና ሚና ያስተምራል። “ዔዘር” በመጽሐፍ ቅዱስ ውስጥ እግዚአብሔርንም ለመግለጽ ይውላል (መዝሙር 121:2) — ስለዚህ የሴትን ረዳትነት ማክበር የእግዚአብሔርን ረዳትነት ማክበር ነው።</li><li><span class=\"keyword\">ናፍሽ (נֶפֶשׁ)</span> — “ነፍስ” ወይም “ሕያው ፍጡር”። “ናፍሽ ሓይያ” (נֶפֶשׁ חַיָּה) ማለት “ሕያው ነፍስ” ማለት ነው። ሰው ሙሉ ሕያው ፍጡር ሆነ። ይህ ሰው ሥጋና ነፍስ ብቻ ሳይሆን አንድ ሙሉ ሕያው አካል መሆኑን ያሳያል። ሰው ሁለት ክፍሎች ያሉት አንድ አካል ነው — አካላዊም መንፈሳዊም።</li><li><span class=\"keyword\">አዳም (אָדָם)</span> — “ሰው”። ከ “አዳማ” (אֲדָמָה) “መሬት” ከሚለው ቃል የመጣ ነው። ሰው ከመሬት የተገኘ ነው። ይህ የሰውን ከመሬት ጋር ያለውን ግንኙነት ያሳያል። ይህ የቃላት ጨዋታ (wordplay) ሰው ከመሬት የተገኘ መሆኑንና ወደ መሬት እንደሚመለስ ያሳያል (ዘፍጥረት 3:19)።</li><li><span class=\"keyword\">ሻባት (שַׁבָּת)</span> — “ዕረፍት”። በዘፍጥረት 2:2-3 ይመጣል። እግዚአብሔር ከሥራው ያረፈበት ቀን ነው። ዕረፍት ማለት ከሥራ መቆም ሳይሆን በእግዚአብሔር ሥራ መደሰት ነው። ይህ ቃል ከ “ሻባት” (שָׁבַת) “ማረፍ” ከሚለው ሥር የመጣ ነው።</li><li><span class=\"keyword\">ዓባድ (עָבַד)</span> — “መሥራት” ወይም “ማገልገል”። በዘፍጥረት 2:15 ይመጣል። “ገነቱን እንዲሠራ” ማለት “ለዓብዳህ” ነው። ይህ ቃል ለአምልኮም ይውላል — ሥራ አምልኮ ነው።</li><li><span class=\"keyword\">ሻማር (שָׁמַר)</span> — “መጠበቅ” ወይም “መንከባከብ”። በዘፍጥረት 2:15 ይመጣል። “እንዲጠብቅ” ማለት “ኡልሻምራህ” ነው። ይህ ቃል የኃላፊነትንና የጥንቃቄን ስሜት ያሳያል።</li><li><span class=\"keyword\">ዳባቅ (דָּבַק)</span> — “መጣበቅ”። በዘፍጥረት 2:24 ይመጣል። “ከሚስቱም ጋር ይጣበቃል” ማለት “ወደባቅ” ነው። ይህ ጠንካራ ትስስርን ያሳያል — ሁለቱ አንድ ይሆናሉ። ይህ ቃል በሩት 1:14 ሩት ከናዖሚ ጋር ስትጣበቅም ይውላል።</li></ul>",
+      "crossref": "<p><strong>🔗 ተዛማጅ ጥቅሶች፦</strong></p><ul><li><span class=\"cross-ref\">1 ቆሮንቶስ 15:45</span> — “የመጀመሪያው አዳም ሕያው ነፍስ ሆነ፥ የመጨረሻው አዳም ሕያው የሚያደርግ መንፈስ ሆነ።” ክርስቶስ “የመጨረሻው አዳም” ነው።</li><li><span class=\"cross-ref\">ኤፌሶን 5:31-32</span> — ጳውሎስ ዘፍጥረት 2:24ን ጠቅሶ ስለ ክርስቶስና ስለ ቤተ ክርስቲያን ግንኙነት ያስተምራል። “ይህ ጥልቅ ምስጢር ነው፤ እኔ ግን ስለ ክርስቶስና ስለ ቤተ ክርስቲያን እናገራለሁ።”</li><li><span class=\"cross-ref\">ራእይ 22:1-2</span> — የሕይወት ዛፍ በአዲሲቱ ኢየሩሳሌም ውስጥ ይመለሳል። ይህ የዔደን ገነት ፍጻሜ ነው።</li><li><span class=\"cross-ref\">ዕብራውያን 4:9-10</span> — “ለእግዚአብሔር ሕዝብ የሰንበት ዕረፍት ቀርቷል።” የዕረፍት ጥልቅ ትርጉም።</li><li><span class=\"cross-ref\">ማቴዎስ 19:4-6</span> — ኢየሱስ ዘፍጥረት 2:24ን ጠቅሶ ስለ ጋብቻ ያስተምራል። “የእግዚአብሔር አንድ ያደረገውን ሰው አይለየው።”</li><li><span class=\"cross-ref\">ማርቆስ 2:27</span> — “ሰንበት ለሰው ተሠርቶአል፥ ሰውም ለሰንበት አልተሠራም።”</li><li><span class=\"cross-ref\">ቆላስይስ 1:16-17</span> — ክርስቶስ የፍጥረት ማዕከልና ደጋፊ ነው።</li><li><span class=\"cross-ref\">መዝሙር 127:1</span> — “እግዚአብሔር ቤትን ካልሠራ ሠራተኞቹ በከንቱ ይደክማሉ።”</li><li><span class=\"cross-ref\">ምሳሌ 18:22</span> — “ሚስትን ያገኘ ሰው መልካም ነገርን አገኘ።”</li><li><span class=\"cross-ref\">1 ጴጥሮስ 3:7</span> — “እናንተ ባሎች ሆይ፥ እንዲሁ ከሚስቶቻችሁ ጋር በአንድነት ኑሩ።”</li></ul>",
+      "theology": "<p><strong>🎓 ሥነ-መለኮታዊ ትንታኔ፦</strong></p><p><strong>1. የሰው ሥነ-መለኮት (Theological Anthropology)፦</strong></p><ul><li><strong>የሰው ሁለት ክፍሎች፦</strong> ሰው ከመሬት ዐፈር (ሥጋ) እና ከእግዚአብሔር እስትንፋስ (ነፍስ/መንፈስ) የተሠራ ነው። ይህ የሰውን ሁለት ገጽታዎች ያሳያል — አካላዊም መንፈሳዊም። ሰው ከእንስሳት ይለያል ምክንያቱም የእግዚአብሔር እስትንፋስ አለው።</li><li><strong>የሰው ክብር፦</strong> ሰው ከመሬት ዐፈር ቢሠራም የእግዚአብሔር እስትንፋስ ተነፍሶበታል። ይህ ልዩ ክብር ነው። ሰው “ሕያው ነፍስ” (ናፍሽ ሓይያ) ሆነ።</li><li><strong>የሰው ማኅበራዊነት፦</strong> “ሰው ብቻውን መሆኑ መልካም አይደለም።” ሰው ከመጀመሪያው ጀምሮ ማኅበራዊ ፍጡር ነው። ነጠላነት የእግዚአብሔር ፈቃድ አይደለም።</li></ul><p><strong>2. የሥራ ሥነ-መለኮት (Theology of Work)፦</strong></p><ul><li><strong>ሥራ ከውድቀት በፊት ነበር፦</strong> አዳም ገና ከመውደቁ በፊት ገነቱን እንዲሠራና እንዲጠብቅ ተጠርቶ ነበር (2:15)። ሥራ ቅጣት አይደለም — ቅዱስ ተግባር ነው።</li><li><strong>ሥራ አምልኮ ነው፦</strong> “ዓባድ” (መሥራት) የሚለው ቃል ለአምልኮም ይውላል። ሥራህ አምልኮህ ነው።</li><li><strong>ሥራ ኃላፊነት ነው፦</strong> “ሻማር” (መጠበቅ) የሚለው ቃል የተፈጥሮን መንከባከብ ግዴታ ያሳያል።</li></ul><p><strong>3. የጋብቻ ሥነ-መለኮት (Theology of Marriage)፦</strong></p><ul><li><strong>ጋብቻ የእግዚአብሔር ተቋም ነው፦</strong> እግዚአብሔር ሔዋንን ፈጠረ፣ ወደ አዳምም አመጣት። ጋብቻ የሰው ፈጠራ አይደለም — የእግዚአብሔር ስጦታ ነው።</li><li><strong>“አንድ ሥጋ” መሆን፦</strong> ይህ ሙሉ ውህደትን ያመለክታል — አካላዊ፣ ስሜታዊ፣ መንፈሳዊ። ጋብቻ ሁለት ሰዎች አንድ የሚሆኑበት ምስጢር ነው።</li><li><strong>የክርስቶስና የቤተ ክርስቲያን ምሳሌ፦</strong> ኤፌሶን 5:31-32 ጋብቻ የክርስቶስና የቤተ ክርስቲያንን ግንኙነት የሚያመለክት ምስጢር ነው።</li><li><strong>የእኩልነት መሠረት፦</strong> ሔዋን ከአዳም አጥንት ተሠርታ እኩል ክብር አላት። “ዔዘር ከነግዶ” የሚለው ቃል እኩልነትንና አጋዥነትን ያሳያል።</li></ul><p><strong>4. የዕረፍት ሥነ-መለኮት (Theology of Rest)፦</strong></p><ul><li><strong>ዕረፍት የእግዚአብሔር ምሳሌ ነው፦</strong> እግዚአብሔር በሰባተኛው ቀን አረፈ። ሰውም ማረፍ አለበት — ይህ የእግዚአብሔርን ምሳሌ መከተል ነው።</li><li><strong>ዕረፍት ማለት መደሰት ነው፦</strong> ዕረፍት ከሥራ መቆም ብቻ አይደለም — በእግዚአብሔር ሥራ መደሰት ነው።</li><li><strong>የሰንበት መሠረት፦</strong> የእስራኤላውያን የሰንበት ሕግ (ዘጸአት 20:8-11) ከዘፍጥረት 2:2-3 የተመሠረተ ነው።</li></ul><p><strong>5. የክርስቶስ ሚና (Christology)፦</strong></p><ul><li><strong>ክርስቶስ “የመጨረሻው አዳም” ነው፦</strong> 1 ቆሮንቶስ 15:45። የመጀመሪያው አዳም በመታዘዝ የወደቀበትን ቦታ ክርስቶስ በመታዘዝ መለሰ።</li><li><strong>ክርስቶስ የሕይወት ዛፍ ነው፦</strong> በራእይ 22:2 የሕይወት ዛፍ በአዲሲቱ ኢየሩሳሌም ይመለሳል። ክርስቶስ የዘላለም ሕይወት ምንጭ ነው።</li><li><strong>ክርስቶስ የሰንበት ጌታ ነው፦</strong> ማቴዎስ 12:8። እውነተኛው ዕረፍት በክርስቶስ ውስጥ ይገኛል።</li><li><strong>ክርስቶስ ሙሽራ ነው፦</strong> ኤፌሶን 5:25-27። ክርስቶስ ለቤተ ክርስቲያን ራሱን አሳልፎ ሰጠ።</li></ul>",
+      "application": "<p><strong>🌱 ሊተገበር የሚገባ ዕውነት፦</strong></p><p><strong>1. ሥራን አክብሩ፦</strong> ሥራ ከውድቀት በፊት የተሰጠ ቅዱስ ተግባር ነው። ሥራህ የእግዚአብሔርን ፈጣሪነት ያንጸባርቃል። ሥራህን እንደ አምልኮ ተመልከት። “ዓባድ” (መሥራት) እና “ዓባድ” (ማምለክ) አንድ ቃል ናቸው።</p><p><strong>2. ጋብቻን አክብሩ፦</strong> ጋብቻ የእግዚአብሔር ቅዱስ ተቋም ነው። “አንድ ሥጋ” መሆን ሙሉ ውህደትን ያመለክታል። ጋብቻን እንደ የክርስቶስና የቤተ ክርስቲያን ምሳሌ ተመልከት። ባልና ሚስት እኩል ክብር አላቸው።</p><p><strong>3. ዕረፍትን ይለማመዱ፦</strong> እግዚአብሔር አረፈ። አንተም ማረፍ አለብህ። ዕረፍት ማለት በእግዚአብሔር ሥራ መደሰት ነው። በየሳምንቱ አንድ ቀን ለእግዚአብሔር ስጥ።</p><p><strong>4. የተፈጥሮን አስተዳድር፦</strong> እግዚአብሔር ሰውን “ግዛ” ብሎ ጠራው። ይህ መግዛት ማለት መንከባከብ ነው። ተፈጥሮን፣ ውኃን፣ አየርን፣ እንስሳትን መጠበቅ የእግዚአብሔር ትእዛዝ ነው።</p><p><strong>5. ብቻነትን አታድን፦</strong> እግዚአብሔር “ሰው ብቻውን መሆኑ መልካም አይደለም” አለ። ማኅበራዊ ግንኙነት የእግዚአብሔር ፈቃድ ነው። ቤተ ክርስቲያን፣ ጓደኝነት፣ ቤተሰብ ሁሉም አስፈላጊ ናቸው።</p><p><strong>6. በክርስቶስ እውነተኛውን ዕረፍት ፈልግ፦</strong> ዕብራውያን 4:9-10 “ለእግዚአብሔር ሕዝብ የሰንበት ዕረፍት ቀርቷል።” እውነተኛው ዕረፍት በክርስቶስ ውስጥ ይገኛል — ከሥራ ሳይሆን ከጸጋ።</p><p><strong>7. ሕይወትህን አዲስ ፍጥረት አድርግ፦:</strong> “በክርስቶስ ያለ ሁሉ አዲስ ፍጥረት ነው።” (2 ቆሮንቶስ 5:17) የመጀመሪያው ፍጥረት በኃጢአት ተበላሸ። ክርስቶስ ግን አዲስ ፍጥረትን ያመጣል።</p>",
+      "rhema": "<p><strong>✨ የሬማ መልእክት (የግል መገለጥ)፦</strong></p><p>“እግዚአብሔር አምላክም ሰውን ከመሬት ዐፈር አደረገ፥ በአፍንጫውም የሕይወት እስትንፋስ እፍ ብሎ ተነፈሰበት፥ ሰውም ሕያው ነፍስ ሆነ።” — ዘፍጥረት 2:7</p><p>ይህ ቃል ዛሬም ሕያው ነው። ሕይወትህ ከእግዚአብሔር የመጣ ስጦታ ነው። አንተ ከመሬት ዐፈር የተሠራህ ቢሆንም የእግዚአብሔር እስትንፋስ ተነፍሶብሃል። ይህ ልዩ ክብር ነው።</p><p><strong>🎯 ለሕይወትህ ተግባራዊ መልእክት፦</strong></p><ul><li><strong>ስለ ማንነትህ፦</strong> አንተ የእግዚአብሔር እስትንፋስ ያለህ ፍጡር ነህ። ሕይወትህ ዋጋ አለው።</li><li><strong>ስለ ሥራህ፦</strong> ሥራህ ቅዱስ ነው። ገነቱን እንድትሠራና እንድትጠብቅ ተጠርተሃል።</li><li><strong>ስለ ጋብቻህ፦</strong> ጋብቻ የእግዚአብሔር ስጦታ ነው። “አንድ ሥጋ” መሆን ቅዱስ ጥሪ ነው።</li><li><strong>ስለ ዕረፍትህ፦</strong> ማረፍ የእግዚአብሔርን ምሳሌ መከተል ነው። በእግዚአብሔር ሥራ ተደሰት።</li></ul><p><strong>🙏 የግል ጸሎት፦</strong> “አባቴ ሆይ፥ ሕይወቴን ስለሰጠኸኝ አመሰግንሃለሁ። የእስትንፋስህ ባለቤት ነኝ። ሥራዬን፣ ጋብቻዬን፣ እና ዕረፍቴን ቀድስልኝ። በክርስቶስ አዲስ ፍጡር አድርገኝ። አሜን።”</p>",
+      "prayer": "<p><strong>🙏 የስብሰባው ጸሎት፦</strong></p><p>“ሕይወትን የምትሰጥ አባታችን ሆይ፥ ስለ ሕይወት ስጦታህ አመሰግንሃለን። አንተ ሰውን ከመሬት ዐፈር ፈጥረህ የሕይወት እስትንፋስህን ነፈስክበት።</p><p>ጌታ ሆይ፥ ሥራችንን ባርክልን። ሥራ ከውድቀት በፊት የተሰጠ ቅዱስ ተግባር መሆኑን እንድንረዳ እርዳን። ገነቱን እንደ ሠራንና እንደ ጠበቅን ሁሉ ሥራችንንም እንድንሠራና እንድንጠብቅ አድርገን።</p><p>ጋብቻን ቀድስልን። ባሎች ሚስቶቻቸውን እንደ ራሳቸው አካል እንዲወዱ፣ ሚስቶችም ባሎቻቸውን እንዲያከብሩ እርዳን። ቤተሰቦችን ባርክ።</p><p>የዕረፍትን ስጦታ አስተምረን። በየሳምንቱ አንድ ቀን ለአንተ እንድንሰጥና በሥራህ እንድንደሰት አድርገን።</p><p>በኢየሱስ ክርስቶስ ስም፥ አሜን።”</p>",
+      "exercises": [
+        { "type": "mcq", "qAm": "እግዚአብሔር ሰውን ከምን ፈጠረው?", "optsAm": ["ከውኃ", "ከመሬት ዐፈር", "ከእሳት", "ከከዋክብት"], "correct": 1, "explAm": "ዘፍጥረት 2:7 — እግዚአብሔር ሰውን ከመሬት ዐፈር (ዐፋር) ፈጠረ። በአፍንጫውም የሕይወት እስትንፋስ (ኒሽማት ሓይይም) ተነፈሰበት። ሰውም ሕያው ነፍስ (ናፍሽ ሓይያ) ሆነ። ይህ የሰውን ሁለት ክፍሎች ያሳያል — ሥጋ (ከመሬት) እና ነፍስ (ከእግዚአብሔር)።" },
+        { "type": "mcq", "qAm": "“ዔደን” የሚለው የዕብራይስጥ ቃል ምን ማለት ነው?", "optsAm": ["ገነት", "ደስታ", "ቅድስና", "በረከት"], "correct": 1, "explAm": "“ዔደን” ማለት “ደስታ” ወይም “በረከት” ማለት ነው። የእግዚአብሔር መገኘት ደስታን ያመጣል። ዔደን የእግዚአብሔርን ፍጹም ፍቅርና እንክብካቤ የሚያሳይ ቦታ ነበር።" },
+        { "type": "mcq", "qAm": "እግዚአብሔር አዳምን ገነቱን ምን እንዲያደርግ አስቀመጠው?", "optsAm": ["እንዲበላና እንዲያርፍ", "እንዲሠራና እንዲጠብቅ", "እንዲጸልይና እንዲዘምር", "እንዲያጠናና እንዲያስተምር"], "correct": 1, "explAm": "ዘፍጥረት 2:15 — “እግዚአብሔር አምላክም ሰውን አንሥቶ በዔደን ገነት አኖረው፥ ሊሠራትና ሊጠብቃትም።” “ዓባድ” (መሥራት) እና “ሻማር” (መጠበቅ) ሁለት ቁልፍ ቃላት ናቸው። ይህ የሥራን ክብር ያሳያል።" },
+        { "type": "mcq", "qAm": "እግዚአብሔር ሔዋንን ከምን ፈጠረች?", "optsAm": ["ከመሬት ዐፈር", "ከአዳም አጥንት", "ከውኃ", "ከኮከብ"], "correct": 1, "explAm": "ዘፍጥረት 2:21-22 — እግዚአብሔር ከአዳም አጥንት ሔዋንን ፈጠረች። ይህ የእኩልነትንና የአንድነትን መግለጫ ነው። አዳም “ይህች አጥንት ከአጥንቴ፣ ሥጋም ከሥጋዬ ናት” አለ።" },
+        { "type": "mcq", "qAm": "ዘፍጥረት 2:24 ስለ ጋብቻ ምን ይላል?", "optsAm": ["ሰው አባቱንና እናቱን ይተዋል", "ከሚስቱ ጋር ይጣበቃል", "ሁለቱም አንድ ሥጋ ይሆናሉ", "ሁሉም ከላይ"], "correct": 3, "explAm": "ዘፍጥረት 2:24 ሦስቱንም ይጠቅሳል፦ “ስለዚህ ሰው አባቱንና እናቱን ይተዋል፥ ከሚስቱም ጋር ይጣበቃል፥ ሁለቱም አንድ ሥጋ ይሆናሉ።” ይህ የጋብቻ መሠረታዊ ሕግ ነው — መተው፣ መጣበቅ፣ አንድ መሆን።" },
+        { "type": "mcq", "qAm": "እግዚአብሔር በስድስቱ ቀናት ሥራውን ጨርሶ ምን አደረገ?", "optsAm": ["ተኛ", "አረፈ", "ተመለሰ", "ዘመረ"], "correct": 1, "explAm": "ዘፍጥረት 2:2-3 — “እግዚአብሔርም በሰባተኛው ቀን የሠራውን ሥራ ጨርሶ አረፈ።” ይህ የሰንበት መሠረት ነው። ዕረፍት ማለት ከሥራ መቆም ሳይሆን በእግዚአብሔር ሥራ መደሰት ነው።" },
+        { "type": "tf", "qAm": "የዔደን ገነት ውስጥ የሕይወት ዛፍ ነበረ።", "correct": true, "explAm": "✅ ዘፍጥረት 2:9። የሕይወት ዛፍና የመልካምና ክፉን ማወቅ ዛፍ በገነቱ ውስጥ ነበሩ። የሕይወት ዛፍ የዘላለም ሕይወት ምልክት ነው። በራእይ 22:2 ይመለሳል።" },
+        { "type": "tf", "qAm": "ዘፍጥረት 2 መሠረት ሥራ ከውድቀት በኋላ የተሰጠ ቅጣት ነው።", "correct": false, "explAm": "❌ አይደለም። አዳም ገና ከመውደቁ በፊት ገነቱን እንዲሠራና እንዲጠብቅ ተጠርቶ ነበር (2:15)። ሥራ ቅጣት አይደለም — ቅዱስ ተግባር ነው። “ዓባድ” (መሥራት) የሚለው ቃል ለአምልኮም ይውላል።" },
+        { "type": "tf", "qAm": "እግዚአብሔር “ሰው ብቻውን መሆኑ መልካም አይደለም” አለ።", "correct": true, "explAm": "✅ ዘፍጥረት 2:18። ይህ በፍጥረት ውስጥ የመጀመሪያው “መልካም አይደለም” ነው። ሰው ከመጀመሪያው ጀምሮ ማኅበራዊ ፍጡር ነው። ነጠላነት የእግዚአብሔር ፈቃድ አይደለም።" },
+        { "type": "tf", "qAm": "ዘፍጥረት 2 መሠረት ሴት ከወንድ ያነሰ ክብር አላት።", "correct": false, "explAm": "❌ አይደለም። ሔዋን ከአዳም አጥንት ተሠርታ እኩል ክብር አላት። “ዔዘር ከነግዶ” (የሚመች ረዳት) የሚለው ቃል እኩልነትንና አጋዥነትን ያሳያል። “ዔዘር” በመጽሐፍ ቅዱስ ውስጥ እግዚአብሔርንም ለመግለጽ ይውላል (መዝሙር 121:2)።" },
+        { "type": "match", "qAm": "የዕብራይስጥ ቃላትን ከትርጉም ጋር ያገናኙ፡", "pairs": [{ "left": "ኒሽማት ሓይይም", "right": "የሕይወት እስትንፋስ 🌬️" }, { "left": "ዔደን", "right": "ደስታ 🌳" }, { "left": "ዔዘር ከነግዶ", "right": "የሚመች ረዳት 💑" }, { "left": "ሻባት", "right": "ዕረፍት 🕊️" }, { "left": "ዓባድ", "right": "መሥራት 🔨" }, { "left": "ሻማር", "right": "መጠበቅ 🛡️" }] },
+        { "type": "match", "qAm": "የዔደን ገነት ወንዞችን ያገናኙ፡", "pairs": [{ "left": "ጲሶን", "right": "የመጀመሪያው ወንዝ 💧" }, { "left": "ጊሖን", "right": "የኢትዮጵያ ወንዝ 🌊" }, { "left": "ጤግሮስ", "right": "ሒደቀል 🏞️" }, { "left": "ኤፍራጥስ", "right": "ታላቁ ወንዝ 🌅" }] },
+        { "type": "open", "qAm": "ዘፍጥረት 2:24 ስለ ጋብቻ ምን ያስተምራል? ሦስቱን ዋና ነጥቦች ይዘርዝሩ።", "sampleAm": "ዘፍጥረት 2:24 ጋብቻ የእግዚአብሔር ቅዱስ ተቋም መሆኑን ያስተምራል። ሦስቱ ዋና ነጥቦች፦ (1) መተው (Leave)፦ “ሰው አባቱንና እናቱን ይተዋል።” ይህ ማለት ከቀድሞ ቤተሰብ ተለይቶ አዲስ ቤተሰብ መመሥረት ነው። ጋብቻ ቅድሚያ ይሰጠዋል። (2) መጣበቅ (Cleave)፦ “ከሚስቱም ጋር ይጣበቃል።” ይህ ጠንካራ ትስስርን ያሳያል — አካላዊ፣ ስሜታዊ፣ መንፈሳዊ። “ዳባቅ” የሚለው ቃል በሩት 1:14 ሩት ከናዖሚ ጋር ስትጣበቅም ይውላል። (3) አንድ መሆን (One Flesh)፦ “ሁለቱም አንድ ሥጋ ይሆናሉ።” ይህ ሙሉ ውህደትን ያመለክታል። ጋብቻ ሁለት ሰዎች አንድ የሚሆኑበት ምስጢር ነው። ኤፌሶን 5:31-32 ይህ የክርስቶስና የቤተ ክርስቲያንን ግንኙነት የሚያመለክት ምስጢር እንደሆነ ያስተምራል።" },
+        { "type": "open", "qAm": "“ሰው በእግዚአብሔር መልክ ተፈጠረ” የሚለው ስለ ሰው ክብርና ኃላፊነት ምን ያስተምራል? ዝርዝር መልስ ይስጡ።", "sampleAm": "ሰው በእግዚአብሔር መልክ መፈጠሩ ልዩ ክብርንና ኃላፊነትን ያሳያል። (1) ክብር፦ ሁሉም ሰው — ወንድና ሴት፣ ዘር፣ ዕድሜ፣ ማኅበራዊ ደረጃ ምንም ለውጥ የለውም — እኩል ክብር አለው። ማንንም ማክበር የእግዚአብሔርን መልክ ማክበር ነው። (2) ኃላፊነት፦ ሰው በምድር ላይ የእግዚአብሔር ተወካይ ነው። ምድርን መግዛት፣ መንከባከብ፣ ማልማት የተሰጠው ተልእኮ ነው። (3) ግንኙነት፦ ሰው ከእግዚአብሔር ጋር ግንኙነት እንዲኖረው ተፈጠረ። ይህ የሰውን ልዩ ዋጋ ያሳያል። (4) ፈጠራ፦ ሰው የእግዚአብሔርን የፈጠራ ባሕርይ ያንጸባርቃል። ሥነ-ጥበብ፣ ሙዚቃ፣ ቴክኖሎጂ ሁሉም የዚህ መግለጫዎች ናቸው። (5) ማኅበራዊነት፦ “ሰው ብቻውን መሆኑ መልካም አይደለም።” ሰው ማኅበራዊ ፍጡር ነው። ቤተሰብ፣ ጓደኝነት፣ ቤተ ክርስቲያን ሁሉም አስፈላጊ ናቸው።" },
+        { "type": "open", "qAm": "ዘፍጥረት 2 መሠረት የሥራ ክብር ምንድነው? ለሕይወትዎስ ምን ትርጉም አለው?", "sampleAm": "ዘፍጥረት 2 መሠረት የሥራ ክብር፦ (1) ሥራ ከውድቀት በፊት ነበር። አዳም ገና ከመውደቁ በፊት ገነቱን እንዲሠራና እንዲጠብቅ ተጠርቶ ነበር (2:15)። ሥራ ቅጣት አይደለም። (2) ሥራ አምልኮ ነው። “ዓባድ” (መሥራት) የሚለው ቃል ለአምልኮም ይውላል። ሥራህ አምልኮህ ነው። (3) ሥራ ኃላፊነት ነው። “ሻማር” (መጠበቅ) የሚለው ቃል የተፈጥሮን መንከባከብ ግዴታ ያሳያል። ለሕይወቴ ትርጉሙ፦ (1) ሥራዬን እንደ ቅዱስ ተግባር አየዋለሁ። (2) ሥራዬ የእግዚአብሔርን ፈጣሪነት ያንጸባርቃል። (3) ሥራዬን ሳሠራ እግዚአብሔርን አምልካለሁ። (4) ሥራዬ ለሌሎች ጥቅም ነው — የእግዚአብሔርን ፍቅር ያሳያል። (5) ሥራዬን በጥሩ ሁኔታ አከናውናለሁ — ይህ እግዚአብሔርን ያከብራል።" },
+        { "type": "open", "qAm": "ዘፍጥረት 2 መሠረት የዕረፍት ትርጉም ምንድነው? ዛሬ እንዴት ዕረፍትን ልናገኝ እንችላለን?", "sampleAm": "ዘፍጥረት 2 መሠረት የዕረፍት ትርጉም፦ (1) ዕረፍት የእግዚአብሔር ምሳሌ ነው። እግዚአብሔር በሰባተኛው ቀን አረፈ (2:2)። ሰውም ማረፍ አለበት — ይህ የእግዚአብሔርን ምሳሌ መከተል ነው። (2) ዕረፍት ማለት መደሰት ነው። ዕረፍት ከሥራ መቆም ብቻ አይደለም — በእግዚአብሔር ሥራ መደሰት ነው። (3) ዕረፍት ቅዱስ ነው። እግዚአብሔር ሰባተኛውን ቀን ባረከውና ቀደሰው (2:3)። ዛሬ ዕረፍትን ማግኘት የምንችልበት መንገዶች፦ (1) በየሳምንቱ አንድ ቀን ለእግዚአብሔር መስጠት። (2) በእግዚአብሔር ሥራ መደሰት — ጸሎት፣ አምልኮ፣ አንባቢ። (3) በክርስቶስ እውነተኛውን ዕረፍት መፈለግ። ዕብራውያን 4:9-10 “ለእግዚአብሔር ሕዝብ የሰንበት ዕረፍት ቀርቷል።” እውነተኛው ዕረፍት በክርስቶስ ውስጥ ይገኛል — ከሥራ ሳይሆን ከጸጋ።" }
+      ],
+      "sessionOverviewAm": "ይህ ስብሰባ የዘፍጥረት 2ን የሰው ፍጥረት ዝርዝር፣ የዔደን ገነትን፣ የሥራን ክብር፣ የጋብቻን ቅድስና፣ እና የዕረፍትን ትርጉም ይመረምራል። እግዚአብሔር ያህዌ ኤሎሂም (ጌታ አምላክ) ተብሎ በመጠራቱ የግል ቃል ኪዳን ግንኙነትን እናያለን። ይህ ምዕራፍ ስለ ሰው ዓላማ፣ ስለ ጋብቻ መሠረት፣ እና ስለ እግዚአብሔር ቅርብ እንክብካቤ ይናገራል።",
+      "learningObjectivesAm": [
+        "ዘፍጥረት 2 ከዘፍጥረት 1 ጋር ያለውን ግንኙነት መረዳት (አጠቃላይ እይታ vs. ዝርዝር እይታ)።",
+        "“ያህዌ ኤሎሂም” የሚለው ስም ምን ትርጉም እንዳለው ማወቅ።",
+        "የሰው ፍጥረት ሁለት ክፍሎች — ሥጋ (ከመሬት) እና ነፍስ (ከእግዚአብሔር) — መለየት።",
+        "የሥራን ክብር፣ የጋብቻን ቅድስና፣ እና የዕረፍትን ትርጉም ማብራራት።",
+        "ዘፍጥረት 2:24 ለጋብቻ ያለውን መሠረታዊ ጠቀሜታ መረዳት።",
+        "የክርስቶስን ሚና እንደ “የመጨረሻው አዳም” መረዳት (1 ቆሮንቶስ 15:45)።",
+        "የሥራን፣ የጋብቻን፣ እና የዕረፍትን ተግባራዊ አጠቃቀም መረዳት።"
+      ],
+      "keyQuestionAm": "እግዚአብሔር ሰውን እንዴት ፈጠረ? ለሰው ምን ዓላማ ሰጠው? ጋብቻና ዕረፍትስ ምን ትርጉም አላቸው?",
+      "sessionSignificanceAm": "ዘፍጥረት 2 ስለ ሰው ክብርና ዓላማ ጥልቅ ትምህርት ይሰጣል። ሰው ከመሬት ዐፈር ቢሠራም የእግዚአብሔር እስትንፋስ ተነፍሶበታል — ይህ ልዩ ክብር ነው። ይህ ምዕራፍ ስለ ሥራ፣ ስለ ጋብቻ፣ እና ስለ ዕረፍት ያለንን አመለካከት በእግዚአብሔር አስተምህሮ መሠረት ያስተካክላል።",
+      "outlineAm": [
+        { "section": "ቁጥር 1–3", "titleAm": "የሰባተኛው ቀን ዕረፍት", "summaryAm": "እግዚአብሔር ሥራውን ጨርሶ በሰባተኛው ቀን አረፈ። ሰባተኛውን ቀን ባረከውና ቀደሰው።" },
+        { "section": "ቁጥር 4–6", "titleAm": "የፍጥረት ማጠቃለያ", "summaryAm": "የሰማይና የምድር ታሪክ መግለጫ። ገና ዝናብ አልዘነበም ነበር።" },
+        { "section": "ቁጥር 7", "titleAm": "የሰው ፍጥረት", "summaryAm": "እግዚአብሔር ሰውን ከመሬት ዐፈር ፈጠረ። በአፍንጫው የሕይወት እስትንፋስ እፍ ብሎ ተነፈሰበት። ሰው ሕያው ነፍስ ሆነ።" },
+        { "section": "ቁጥር 8–14", "titleAm": "የዔደን ገነት", "summaryAm": "እግዚአብሔር ገነትን ተከለ። የሕይወት ዛፍና የመልካምና ክፉን ማወቅ ዛፍ በውስጡ ነበሩ። አራት ወንዞች ይፈሱ ነበር።" },
+        { "section": "ቁጥር 15–17", "titleAm": "የሰው ተልእኮና ትእዛዝ", "summaryAm": "አዳም ገነቱን እንዲሠራና እንዲጠብቅ ተቀመጠ። ከዛፉ እንዳይበላ ታዘዘ።" },
+        { "section": "ቁጥር 18–25", "titleAm": "የሕይወት ባልንጀራና ጋብቻ", "summaryAm": "እግዚአብሔር ሔዋንን ፈጠረ። አዳም “ይህች አጥንት ከአጥንቴ፣ ሥጋም ከሥጋዬ ናት” አለ። ሁለቱም አንድ ሥጋ ሆኑ።" }
+      ],
+      "keyTermsAm": [
+        { "term": "ያህዌ ኤሎሂም", "transliteration": "Yahweh Elohim", "meaningAm": "ጌታ አምላክ", "significanceAm": "“ያህዌ” የእግዚአብሔር የግል ስም ነው — የቅርብ ግንኙነትንና የቃል ኪዳን ታማኝነትን ያሳያል። “ኤሎሂም” ደግሞ “አምላክ” ማለት ነው። ሁለቱ አንድ ላይ “ጌታ አምላክ” ይሆናሉ — ይህ የእግዚአብሔርን ሁለት ገጽታዎች ያሳያል፦ ሉዓላዊ ገዢ (ኤሎሂም) እና ቅርብ አባት (ያህዌ)።" },
+        { "term": "ኒሽማት ሓይይም", "transliteration": "nishmat chayyim", "meaningAm": "የሕይወት እስትንፋስ", "significanceAm": "ይህ የእግዚአብሔር ቀጥተኛ ስጦታ ነው። ሰው ሕያው የሚሆነው በዚህ ነው። ሕይወት ከእግዚአብሔር የሚመጣ ስጦታ እንጂ የሰው ራስ ምርት አይደለም።" },
+        { "term": "ዔደን", "transliteration": "Eden", "meaningAm": "ደስታ", "significanceAm": "ስሙ “ደስታ” ወይም “በረከት” ማለት ነው። የእግዚአብሔር መገኘት ደስታን ያመጣል። ዔደን የእግዚአብሔርን ፍጹም ፍቅርና እንክብካቤ የሚያሳይ ቦታ ነበር።" },
+        { "term": "ዔዘር ከነግዶ", "transliteration": "ezer kenegdo", "meaningAm": "የሚመች ረዳት", "significanceAm": "“ዔዘር” ማለት “ረዳት”፣ “ከነግዶ” ማለት “የሚመጣጠን” ወይም “የሚመች” ማለት ነው። ሚስት ለባል የሚመች ረዳት ናት። ይህ ቃል ስለ ሴት ክብርና ሚና ያስተምራል። “ዔዘር” በመጽሐፍ ቅዱስ ውስጥ እግዚአብሔርንም ለመግለጽ ይውላል (መዝሙር 121:2) — ስለዚህ የሴትን ረዳትነት ማክበር የእግዚአብሔርን ረዳትነት ማክበር ነው።" },
+        { "term": "ናፍሽ", "transliteration": "nephesh", "meaningAm": "ነፍስ/ሕያው ፍጡር", "significanceAm": "“ናፍሽ ሓይያ” (נֶפֶשׁ חַיָּה) ማለት “ሕያው ነፍስ” ማለት ነው። ሰው ሙሉ ሕያው ፍጡር ሆነ። ይህ ሰው ሥጋና ነፍስ ብቻ ሳይሆን አንድ ሙሉ ሕያው አካል መሆኑን ያሳያል።" },
+        { "term": "አዳም", "transliteration": "Adam", "meaningAm": "ሰው", "significanceAm": "ከ “አዳማ” (אֲדָמָה) “መሬት” ከሚለው ቃል የመጣ ነው። ሰው ከመሬት የተገኘ ነው። ይህ የሰውን ከመሬት ጋር ያለውን ግንኙነት ያሳያል።" },
+        { "term": "ሻባት", "transliteration": "Shabbat", "meaningAm": "ዕረፍት", "significanceAm": "በዘፍጥረት 2:2-3 ይመጣል። እግዚአብሔር ከሥራው ያረፈበት ቀን ነው። ዕረፍት ማለት ከሥራ መቆም ሳይሆን በእግዚአብሔር ሥራ መደሰት ነው።" },
+        { "term": "ዓባድ", "transliteration": "abad", "meaningAm": "መሥራት/ማገልገል", "significanceAm": "በዘፍጥረት 2:15 ይመጣል። “ገነቱን እንዲሠራ” ማለት “ለዓብዳህ” ነው። ይህ ቃል ለአምልኮም ይውላል — ሥራ አምልኮ ነው።" },
+        { "term": "ሻማር", "transliteration": "shamar", "meaningAm": "መጠበቅ/መንከባከብ", "significanceAm": "በዘፍጥረት 2:15 ይመጣል። “እንዲጠብቅ” ማለት “ኡልሻምራህ” ነው። ይህ ቃል የኃላፊነትንና የጥንቃቄን ስሜት ያሳያል።" },
+        { "term": "ዳባቅ", "transliteration": "dabaq", "meaningAm": "መጣበቅ", "significanceAm": "በዘፍጥረት 2:24 ይመጣል። “ከሚስቱም ጋር ይጣበቃል” ማለት “ወደባቅ” ነው። ይህ ጠንካራ ትስስርን ያሳያል — ሁለቱ አንድ ይሆናሉ። ይህ ቃል በሩት 1:14 ሩት ከናዖሚ ጋር ስትጣበቅም ይውላል።" }
+      ],
+      "redemptiveHistoricalAm": "ዘፍጥረት 2 የፍጥረት ታሪክ ዝርዝር ነው። እግዚአብሔር ሰውን ፈጥሮ በዔደን ገነት አስቀመጠው። ይህ የሰው መጀመሪያ ሁኔታ ነበር — ከእግዚአብሔር ጋር ፍጹም ግንኙነት፣ ከተፈጥሮ ጋር ሰላም፣ እና ከሌሎች ሰዎች ጋር አንድነት። ይህ ምዕራፍ የውድቀትን (ዘፍጥረት 3) አስቀድሞ ያዘጋጃል። በክርስቶስ የሚመጣው አዲስ ፍጥረት የዚህን የመጀመሪያ ሁኔታ ፍጻሜ ነው። የመዳን ታሪክ ሦስት ዋና ደረጃዎች አሉ፦ (1) ፍጥረት — ፍጹም፣ (2) ውድቀት — የተበላሸ፣ (3) መዳን — በክርስቶስ የሚመለስ። ዘፍጥረት 2 የመጀመሪያውን ደረጃ ያሳያል።",
+      "christConnectionAm": "ክርስቶስ “የመጨረሻው አዳም” ነው (1 ቆሮንቶስ 15:45)። አዳም በመታዘዝ የወደቀበትን ቦታ ክርስቶስ በመታዘዝ መለሰ። ኤፌሶን 5:31-32 ጳውሎስ ዘፍጥረት 2:24ን ጠቅሶ ስለ ክርስቶስና ስለ ቤተ ክርስቲያን ግንኙነት ያስተምራል። ክርስቶስ ለቤተ ክርስቲያን ራሱን አሳልፎ ሰጠ። የሕይወት ዛፍ በራእይ 22:2 ይመለሳል — በክርስቶስ የሚገኝ ዘላለማዊ ሕይወት። ክርስቶስ የሰንበት ጌታ ነው (ማቴዎስ 12:8)። እውነተኛው ዕረፍት በክርስቶስ ውስጥ ይገኛል።",
+      "commonMisconceptionsAm": [
+        "❌ “ሥራ ከውድቀት በኋላ የተሰጠ ቅጣት ነው።” — አይደለም። አዳም ገና ከመውደቁ በፊት ገነቱን እንዲሠራና እንዲጠብቅ ተጠርቶ ነበር (2:15)። ሥራ ቅዱስ ተግባር ነው።",
+        "❌ “ዘፍጥረት 2 የተለየ የፍጥረት ታሪክ ነው።” — አይደለም። ይህ የዘፍጥረት 1 ዝርዝር ማብራሪያ ነው። ዘፍጥረት 1 አጠቃላይ እይታን ሲሰጥ፣ ዘፍጥረት 2 ዝርዝር እይታን ይሰጣል።",
+        "❌ “ሴት ከወንድ ያነሰ ክብር አላት።” — አይደለም። ሔዋን ከአዳም አጥንት ተሠርታ እኩል ክብር አላት። “ዔዘር ከነግዶ” የሚለው ቃል እኩልነትንና አጋዥነትን ያሳያል። “ዔዘር” በመጽሐፍ ቅዱስ ውስጥ እግዚአብሔርንም ለመግለጽ ይውላል (መዝሙር 121:2)።",
+        "❌ “ዕረፍት ማለት ምንም ሥራ አለመሥራት ነው።” — አይደለም። ዕረፍት ማለት በእግዚአብሔር ሥራ መደሰትና በእርሱ ላይ መታመን ነው። “ሻባት” ማለት “ማረፍ” ማለት ነው — ይህ ከሥራ መቆም ሳይሆን በእግዚአብሔር ሥራ መደሰት ነው።",
+        "❌ “ጋብቻ የሰው ፈጠራ ነው።” — አይደለም። እግዚአብሔር ሔዋንን ፈጥሮ ወደ አዳም አመጣት። ጋብቻ የእግዚአብሔር ቅዱስ ተቋም ነው።",
+        "❌ “ሰው ብቻውን መሆን ይችላል።” — አይደለም። እግዚአብሔር “ሰው ብቻውን መሆኑ መልካም አይደለም” አለ (2:18)። ማኅበራዊ ግንኙነት የእግዚአብሔር ፈቃድ ነው።"
+      ],
+      "discussionQuestionsAm": [
+        "“ያህዌ ኤሎሂም” የሚለው ስም ከ “ኤሎሂም” የሚለየው እንዴት ነው? ይህ ልዩነት ለምን አስፈለገ?",
+        "ሰው ከመሬት ዐፈር ተሠርቶ የእግዚአብሔር እስትንፋስ መነፈሱ ስለ ሰው ባሕርይ ምን ያስተምራል?",
+        "እግዚአብሔር አዳምን ገነቱን “እንዲሠራና እንዲጠብቅ” መጥራቱ ስለ ሥራ ምን ያስተምራል?",
+        "ዘፍጥረት 2:24 “አንድ ሥጋ” መሆንን የሚናገረው ምን ዓይነት ውህደትን ነው?",
+        "እግዚአብሔር “ሰው ብቻውን መሆኑ መልካም አይደለም” ማለቱ ስለ ማህበራዊ ግንኙነት ምን ያስተምራል?",
+        "ዕረፍት ማለት ምን ማለት እንደሆነ በራስዎ ቃላት ይግለጹ። ዛሬ እንዴት ዕረፍትን ልናገኝ እንችላለን?",
+        "“ዔዘር ከነግዶ” የሚለው ቃል ስለ ሴት ክብርና ሚና ምን ያስተምራል?",
+        "ክርስቶስ “የመጨረሻው አዳም” መሆኑ ምን ትርጉም አለው? (1 ቆሮንቶስ 15:45)"
+      ],
+      "memoryVerseAm": "ዘፍጥረት 2:7 — “እግዚአብሔር አምላክም ሰውን ከመሬት ዐፈር አደረገ፥ በአፍንጫውም የሕይወት እስትንፋስ እፍ ብሎ ተነፈሰበት፥ ሰውም ሕያው ነፍስ ሆነ።”",
+      "sessionDurationMinutes": 50,
+      "preparationNotesAm": "ለስብሰባው ዝግጅት፦ (1) ዘፍጥረት 2 ሙሉውን ምዕራፍ በጸሎት አንብብ። (2) የምዕራፉን አወቃቀር ላይ ምልክት አድርግ። (3) ቁልፍ የዕብራይስጥ ቃላትን (ኒሽማት ሓይይም፣ ዔዘር ከነግዶ፣ ናፍሽ፣ ዓባድ፣ ሻማር) ትርጉም አጥና። (4) ዘፍጥረት 1 እና 2 መካከል ያለውን ግንኙነት አስብ። (5) ስለ ሥራ፣ ጋብቻ፣ እና ዕረፍት ያሉ ተግባራዊ ጥያቄዎችን አዘጋጅ። (6) የጸሎት ነጥቦችን አስተካክል።",
+      "takeawayAm": "እግዚአብሔር ሰውን ከመሬት ዐፈር ፈጥሮ የሕይወት እስትንፋሱን ነፈሰበት፤ ሰው ሕያው ነፍስ ሆነ። ሥራ፣ ጋብቻ፣ እና ዕረፍት ሁሉም የእግዚአብሔር ቅዱስ ስጦታዎች ናቸው። ክርስቶስ “የመጨረሻው አዳም” ነው።"
+    }
+  ]
+}
+</script>
+
+<script>
+(function(){
+"use strict";
+
+const $ = (id) => document.getElementById(id);
+const $$ = (sel) => document.querySelectorAll(sel);
+const createEl = (tag, opts = {}) => Object.assign(document.createElement(tag), opts);
+
+/* ============================================================
+   ⚙️ PREFERENCES MANAGER
+   ============================================================ */
+const PREFS_KEY = 'cfmb_prefs_v1';
+const DEFAULT_PREFS = {
+  sound: true,
+  haptic: true,
+  animations: true,
+  music: false,
+  mascot: true,
+  dark: false
+};
+let PREFS = { ...DEFAULT_PREFS };
+
+function loadPrefs(){
+  try {
+    const raw = localStorage.getItem(PREFS_KEY);
+    if (raw) PREFS = { ...DEFAULT_PREFS, ...JSON.parse(raw) };
+  } catch (e) { PREFS = { ...DEFAULT_PREFS }; }
+  applyPrefs();
+}
+function savePrefs(){
+  try { localStorage.setItem(PREFS_KEY, JSON.stringify(PREFS)); } catch (e) {}
+}
+function applyPrefs(){
+  Sound.enabled = PREFS.sound;
+  Haptic.enabled = PREFS.haptic;
+  document.body.classList.toggle('no-animations', !PREFS.animations);
+  applyTheme(PREFS.dark ? 'dark' : 'light');
+  const mascot = $('mascot');
+  if (mascot) mascot.style.display = PREFS.mascot ? 'flex' : 'none';
+  const musicBtn = $('musicBtn');
+  if (musicBtn) musicBtn.style.display = PREFS.music ? 'flex' : 'none';
+  if (PREFS.music && !Music.playing) Music.start();
+  if (!PREFS.music && Music.playing) Music.stop();
+  const set = (id, v) => { const el = $(id); if (el) el.checked = v; };
+  set('prefSound', PREFS.sound);
+  set('prefHaptic', PREFS.haptic);
+  set('prefAnimations', PREFS.animations);
+  set('prefMusic', PREFS.music);
+  set('prefMascot', PREFS.mascot);
+  set('prefDark', PREFS.dark);
+}
+function updatePref(key, value){
+  PREFS[key] = value;
+  savePrefs();
+  applyPrefs();
+  Sound.click();
+  Haptic.light();
+}
+
+/* ============================================================
+   🔊 SOUND ENGINE
+   ============================================================ */
+const Sound = {
+  ctx: null, enabled: true,
+  init() {
+    if (this.ctx) return;
+    try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { this.enabled = false; }
+  },
+  _tone(freq, dur, type = 'sine', vol = 0.15, delay = 0) {
+    if (!this.enabled || !this.ctx) return;
+    const t = this.ctx.currentTime + delay;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, t);
+    gain.gain.setValueAtTime(0, t);
+    gain.gain.linearRampToValueAtTime(vol, t + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+    osc.connect(gain); gain.connect(this.ctx.destination);
+    osc.start(t); osc.stop(t + dur + 0.05);
+  },
+  correct() { this.init(); this._tone(523.25,0.15,'sine',0.18,0); this._tone(659.25,0.15,'sine',0.18,0.08); this._tone(783.99,0.20,'sine',0.18,0.16); this._tone(1046.50,0.30,'sine',0.20,0.24); },
+  wrong() { this.init(); this._tone(392.00,0.20,'sine',0.14,0); this._tone(329.63,0.35,'sine',0.14,0.15); },
+  click() { this.init(); this._tone(880,0.05,'sine',0.06); },
+  milestone() { this.init(); [523.25,659.25,783.99,1046.50,783.99,1046.50].forEach((f,i)=>this._tone(f,0.22,'triangle',0.16,i*0.13)); },
+  chapterDone() { this.init(); [523.25,659.25,783.99,1046.50].forEach((f,i)=>this._tone(f,0.3,'sine',0.18,i*0.14)); this._tone(1318.51,0.6,'triangle',0.18,0.6); }
+};
+
+const Haptic = {
+  enabled: true,
+  light() { if (this.enabled && navigator.vibrate) navigator.vibrate(20); },
+  medium() { if (this.enabled && navigator.vibrate) navigator.vibrate(50); },
+  success() { if (this.enabled && navigator.vibrate) navigator.vibrate([30, 40, 30]); },
+  error() { if (this.enabled && navigator.vibrate) navigator.vibrate([80, 40, 80]); },
+  celebrate() { if (this.enabled && navigator.vibrate) navigator.vibrate([50, 30, 50, 30, 100]); }
+};
+
+/* ============================================================
+   🏅 ACHIEVEMENTS
+   ============================================================ */
+const ACHIEVEMENTS = {
+  first_correct: { emoji: '🎯', name: 'የመጀመሪያ ትክክል', desc: 'የመጀመሪያ ጥያቄዎን በትክክል መለሱ' },
+  streak_3:      { emoji: '🔥', name: '3 ተከታታይ',    desc: '3 ጥያቄዎችን በተከታታይ በትክክል መለሱ' },
+  streak_5:      { emoji: '⚡', name: '5 ተከታታይ',    desc: '5 ጥያቄዎችን በተከታታይ በትክክል መለሱ' },
+  streak_10:     { emoji: '👑', name: '10 ተከታታይ',   desc: '10 ጥያቄዎችን በተከታታይ በትክክል መለሱ' },
+  perfect_chapter:{ emoji: '💯', name: 'ፍጹም ውጤት',   desc: 'ምዕራፍን በ100% ጨርሱ' },
+  first_chapter: { emoji: '📖', name: 'የመጀመሪያ ምዕራፍ', desc: 'የመጀመሪያ ምዕራፍዎን ጨርሱ' },
+  chapter_master:{ emoji: '🏆', name: 'የመጽሐፍ ባለሙያ', desc: 'ሁሉንም ምዕራፎች ጨርሱ' },
+  week_warrior:  { emoji: '⭐', name: 'የሳምንት ተዋጊ',  desc: '7 ቀናት በተከታታይ አጥኑ' },
+  scripture_scholar:{ emoji: '🎓', name: 'የቃሉ ምሁር', desc: '50 ጥያቄዎችን መለሱ' },
+  night_owl:     { emoji: '🦉', name: 'የሌሊት ጉጉት',   desc: 'ከምሽቱ 10 በኋላ አጥኑ' },
+  early_bird:    { emoji: '🐦', name: 'የጠዋት ወፍ',     desc: 'ከጠዋቱ 6 በፊት አጥኑ' }
+};
+function getUnlockedAchievements(){ try { const raw = localStorage.getItem('cfmb_achievements'); return raw ? JSON.parse(raw) : {}; } catch (e) { return {}; } }
+function saveUnlockedAchievements(obj){ try { localStorage.setItem('cfmb_achievements', JSON.stringify(obj)); } catch (e) {} }
+function unlockAchievement(key){
+  const unlocked = getUnlockedAchievements();
+  if (unlocked[key]) return false;
+  unlocked[key] = { date: new Date().toISOString() };
+  saveUnlockedAchievements(unlocked);
+  const ach = ACHIEVEMENTS[key];
+  if (ach) showAchievementPopup(ach.emoji, ach.name);
+  return true;
+}
+function showAchievementPopup(emoji, name){
+  const popup = $('achievementPopup');
+  if (!popup) return;
+  $('achEmoji').textContent = emoji;
+  $('achName').textContent = name;
+  popup.classList.add('show');
+  Sound.milestone(); Haptic.celebrate();
+  setTimeout(() => popup.classList.remove('show'), 3500);
+}
+function checkAchievements(isCorrect){
+  const unlocked = getUnlockedAchievements();
+  const stats = getStats();
+  if (isCorrect && !unlocked.first_correct) unlockAchievement('first_correct');
+  if (STATE.correctStreak === 3 && !unlocked.streak_3) unlockAchievement('streak_3');
+  if (STATE.correctStreak === 5 && !unlocked.streak_5) unlockAchievement('streak_5');
+  if (STATE.correctStreak === 10 && !unlocked.streak_10) unlockAchievement('streak_10');
+  if (stats.totalAnswered >= 50 && !unlocked.scripture_scholar) unlockAchievement('scripture_scholar');
+  const hour = new Date().getHours();
+  if (hour >= 22 && !unlocked.night_owl) unlockAchievement('night_owl');
+  if (hour < 6 && !unlocked.early_bird) unlockAchievement('early_bird');
+  if (STATE.completedChapters.size >= 1 && !unlocked.first_chapter) unlockAchievement('first_chapter');
+  if (STATE.completedChapters.size >= ALL_CHAPTERS.length && ALL_CHAPTERS.length > 0) {
+    if (!unlocked.chapter_master) unlockAchievement('chapter_master');
+  }
+  if (STATE.streak >= 7 && !unlocked.week_warrior) unlockAchievement('week_warrior');
+}
+
+function getStats(){
+  let totalAnswered = 0, totalCorrect = 0;
+  ALL_CHAPTERS.forEach(c => {
+    const store = STATE.exerciseAnswers[c.id] || {};
+    Object.keys(store).forEach(k => {
+      if (store[k] && store[k].checked) { totalAnswered++; if (store[k].correct) totalCorrect++; }
+    });
+  });
+  return { totalAnswered, totalCorrect };
+}
+
+function renderWeeklyChart(){
+  const today = new Date();
+  const days = [];
+  for (let i = 6; i >= 0; i--){
+    const d = new Date(today); d.setDate(d.getDate() - i);
+    const key = d.toDateString();
+    days.push({ date: d, label: ['እሁ','ሰኞ','ማክ','ረቡ','ሐሙ','አር','ቅዳ'][d.getDay()], count: STATE.readingHistory[key] || 0, isToday: i === 0 });
+  }
+  const max = Math.max(1, ...days.map(d => d.count));
+  let html = '<div class="weekly-chart"><div class="weekly-chart-title">📈 የሳምንት ንባብ ሂደት</div><div class="weekly-bars">';
+  days.forEach(d => {
+    const h = Math.round((d.count / max) * 100);
+    html += `<div class="weekly-bar-wrap"><div class="weekly-bar-value">${d.count}</div><div class="weekly-bar${d.isToday ? ' today' : ''}" style="height:${h}%"></div><div class="weekly-bar-label">${d.label}</div></div>`;
+  });
+  html += '</div></div>';
+  return html;
+}
+
+function renderAchievementsGrid(){
+  const unlocked = getUnlockedAchievements();
+  let html = '<div class="weekly-chart"><div class="weekly-chart-title">🏅 ስኬቶች</div><div class="achievements-grid">';
+  Object.keys(ACHIEVEMENTS).forEach(key => {
+    const a = ACHIEVEMENTS[key];
+    const isUnlocked = !!unlocked[key];
+    html += `<div class="achievement-card ${isUnlocked ? 'unlocked' : 'locked'}" title="${a.desc}"><span class="ach-icon">${a.emoji}</span><div class="ach-lbl">${a.name}</div>${isUnlocked ? `<div class="ach-date">${new Date(unlocked[key].date).toLocaleDateString('am-ET')}</div>` : ''}</div>`;
+  });
+  html += '</div></div>';
+  return html;
+}
+
+const MASCOT_LINES = {
+  idle: ['ሰላም! ዛሬ ምን እናጥና? 📖','ቃሉን መማር ደስ ይላል! ✨','በእምነት ቀጥል! 💪','እግዚአብሔር ይወድሃል! 💗','ዛሬም ትክክል ትሆናለህ! 🎯'],
+  correct: ['ግሩም! 🎉','ጎበዝ! ⭐','በጣም ጥሩ! 👏','አሪፍ! 🔥','ትክክል! 💎','ድንቅ! 🌟'],
+  wrong: ['አትሸነፍ! 💪','ይሞክሩ! 🌱','ተስፋ አትቁረጥ! ✨','ቀጥል! 📖','ትማራለህ! 🙏'],
+  celebrate: ['ግሩም! 🏆','ድንቅ ሥራ! 👑','ንጉሥ ነህ! 🎊','በጣም ጥሩ! 💯']
+};
+let mascotTimer = null;
+function showMascotBubble(text, duration = 2500){
+  if (!PREFS.mascot) return;
+  const bubble = $('mascotBubble'); if (!bubble) return;
+  bubble.textContent = text; bubble.classList.add('show');
+  clearTimeout(mascotTimer);
+  mascotTimer = setTimeout(() => bubble.classList.remove('show'), duration);
+}
+function mascotCheer(){ if (!PREFS.mascot || !PREFS.animations) return; const m = $('mascot'); if (!m) return; m.classList.remove('sad', 'celebrating'); m.classList.add('cheering'); const l = MASCOT_LINES.correct[Math.floor(Math.random()*MASCOT_LINES.correct.length)]; showMascotBubble(l, 2200); setTimeout(() => m.classList.remove('cheering'), 900); }
+function mascotSad(){ if (!PREFS.mascot || !PREFS.animations) return; const m = $('mascot'); if (!m) return; m.classList.remove('cheering', 'celebrating'); m.classList.add('sad'); const l = MASCOT_LINES.wrong[Math.floor(Math.random()*MASCOT_LINES.wrong.length)]; showMascotBubble(l, 2500); setTimeout(() => m.classList.remove('sad'), 1100); }
+function mascotCelebrate(){ if (!PREFS.mascot || !PREFS.animations) return; const m = $('mascot'); if (!m) return; m.classList.remove('cheering', 'sad'); m.classList.add('celebrating'); const l = MASCOT_LINES.celebrate[Math.floor(Math.random()*MASCOT_LINES.celebrate.length)]; showMascotBubble(l, 3200); setTimeout(() => m.classList.remove('celebrating'), 3500); }
+function initMascot(){
+  const m = $('mascot'); if (!m) return;
+  m.addEventListener('click', () => { const l = MASCOT_LINES.idle[Math.floor(Math.random()*MASCOT_LINES.idle.length)]; showMascotBubble(l, 2500); Sound.click(); Haptic.light(); });
+  setInterval(() => { if (!document.hidden && Math.random() < 0.15 && PREFS.mascot) { const l = MASCOT_LINES.idle[Math.floor(Math.random()*MASCOT_LINES.idle.length)]; showMascotBubble(l, 3000); } }, 45000);
+}
+
+const Music = {
+  ctx: null, playing: false, nodes: [],
+  init(){ if (this.ctx) return; try { this.ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} },
+  start(){
+    if (!PREFS.sound) return;
+    this.init(); if (!this.ctx || this.playing) return; this.playing = true;
+    const chords = [[261.63,329.63,392.00],[220.00,261.63,329.63],[174.61,220.00,261.63],[196.00,246.94,293.66]];
+    let chordIdx = 0;
+    const playChord = () => {
+      if (!this.playing) return;
+      const chord = chords[chordIdx % chords.length]; chordIdx++;
+      const t = this.ctx.currentTime;
+      chord.forEach(freq => {
+        const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
+        osc.type = 'sine'; osc.frequency.setValueAtTime(freq, t);
+        gain.gain.setValueAtTime(0, t); gain.gain.linearRampToValueAtTime(0.025, t + 1.5); gain.gain.linearRampToValueAtTime(0, t + 5);
+        osc.connect(gain); gain.connect(this.ctx.destination); osc.start(t); osc.stop(t + 5.2);
+        this.nodes.push({ osc, gain });
+      });
+      setTimeout(playChord, 5000);
+    };
+    playChord();
+  },
+  stop(){ this.playing = false; this.nodes.forEach(n => { try { n.osc.stop(); } catch(e){} }); this.nodes = []; },
+  toggle(){ if (this.playing) { this.stop(); return false; } else { this.start(); return true; } }
+};
+function initMusic(){
+  const btn = $('musicBtn'); if (!btn) return;
+  btn.addEventListener('click', () => {
+    const isPlaying = Music.toggle();
+    btn.classList.toggle('playing', isPlaying);
+    $('musicIco').textContent = isPlaying ? '🎶' : '🎵';
+    showToast(isPlaying ? '🎵 ሙዚቃ ተጀመረ' : '🔇 ሙዚቃ ቆመ');
+    Haptic.light();
+  });
+}
+
+function createCelebrationOverlay(){ if (!$('celebrationOverlay')) { const o = createEl('div', { id: 'celebrationOverlay' }); document.body.appendChild(o); } }
+function launchConfetti(count = 60){
+  if (!PREFS.animations) return;
+  createCelebrationOverlay(); const overlay = $('celebrationOverlay');
+  const colors = ['#FFD700','#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#FFEAA7','#DDA0DD','#98D8C8','#F7DC6F','#BB8FCE'];
+  const shapes = ['■','●','▲','★','♦','⬟'];
+  for (let i = 0; i < count; i++){
+    const p = createEl('div', { className: 'confetti-piece' });
+    const color = colors[Math.floor(Math.random()*colors.length)];
+    const shape = shapes[Math.floor(Math.random()*shapes.length)];
+    p.style.left = Math.random()*100+'vw'; p.style.backgroundColor = color; p.style.color = color;
+    p.style.animationDelay = Math.random()*1.5+'s'; p.style.animationDuration = (2+Math.random()*1.5)+'s';
+    p.style.width = (6+Math.random()*8)+'px'; p.style.height = (6+Math.random()*8)+'px'; p.textContent = shape;
+    if (Math.random() > 0.5) p.style.borderRadius = '50%';
+    overlay.appendChild(p); setTimeout(() => p.remove(), 4500);
+  }
+}
+function showCartoonPop(emoji, x, y){ if (!PREFS.animations) return; createCelebrationOverlay(); const overlay = $('celebrationOverlay'); const el = createEl('div', { className: 'cartoon-pop', textContent: emoji }); el.style.left = (x || window.innerWidth/2)+'px'; el.style.top = (y || window.innerHeight/2)+'px'; el.style.transform = 'translate(-50%, -50%)'; overlay.appendChild(el); setTimeout(() => el.remove(), 2000); }
+function showCartoonFloat(emoji, x, y){ if (!PREFS.animations) return; createCelebrationOverlay(); const overlay = $('celebrationOverlay'); const el = createEl('div', { className: 'cartoon-float', textContent: emoji }); el.style.left = (x || Math.random()*window.innerWidth)+'px'; el.style.top = (y || window.innerHeight*0.7)+'px'; overlay.appendChild(el); setTimeout(() => el.remove(), 2800); }
+function showSparkleBurst(x, y){
+  if (!PREFS.animations) return;
+  createCelebrationOverlay(); const overlay = $('celebrationOverlay');
+  const sparkles = ['✨','⭐','🌟','💫','⚡','🎇'];
+  for (let i = 0; i < 8; i++){
+    const el = createEl('div', { className: 'sparkle-burst', textContent: sparkles[Math.floor(Math.random()*sparkles.length)] });
+    const angle = (Math.PI*2*i)/8; const dist = 40+Math.random()*80;
+    el.style.left = (x+Math.cos(angle)*dist)+'px'; el.style.top = (y+Math.sin(angle)*dist)+'px'; el.style.animationDelay = (i*0.05)+'s';
+    overlay.appendChild(el); setTimeout(() => el.remove(), 1500);
+  }
+}
+function showPraiseBubble(text, x, y){ if (!PREFS.animations) return; createCelebrationOverlay(); const overlay = $('celebrationOverlay'); const el = createEl('div', { className: 'praise-bubble', textContent: text }); el.style.left = (x || window.innerWidth/2)+'px'; el.style.top = (y || window.innerHeight/2)+'px'; el.style.transform = 'translate(-50%, -50%)'; el.style.background = 'linear-gradient(135deg, #FFD700, #FF8C00)'; el.style.color = '#3e2723'; overlay.appendChild(el); setTimeout(() => el.remove(), 2500); }
+function showPraiseBubbleCustom(text, bg, color, x, y){ if (!PREFS.animations) return; createCelebrationOverlay(); const overlay = $('celebrationOverlay'); const el = createEl('div', { className: 'praise-bubble', textContent: text }); el.style.left = (x || window.innerWidth/2)+'px'; el.style.top = (y || window.innerHeight/2)+'px'; el.style.transform = 'translate(-50%, -50%)'; el.style.background = bg; el.style.color = color || '#fff'; overlay.appendChild(el); setTimeout(() => el.remove(), 2500); }
+function emojiRain(emoji, count = 20){
+  if (!PREFS.animations) return;
+  createCelebrationOverlay(); const overlay = $('celebrationOverlay');
+  for (let i = 0; i < count; i++){
+    const el = createEl('div', { className: 'emoji-rain', textContent: emoji });
+    el.style.left = Math.random()*100+'vw'; el.style.animationDelay = Math.random()*2+'s'; el.style.animationDuration = (2.5+Math.random()*2)+'s'; el.style.fontSize = (1.5+Math.random()*1.5)+'rem';
+    overlay.appendChild(el); setTimeout(() => el.remove(), 5500);
+  }
+}
+function showMilestoneBadge(emoji, text){ if (!PREFS.animations) return; createCelebrationOverlay(); const overlay = $('celebrationOverlay'); const el = createEl('div', { className: 'milestone-badge' }); el.innerHTML = `<div class="milestone-inner"><span class="milestone-emoji">${emoji}</span>${text}</div>`; overlay.appendChild(el); setTimeout(() => el.remove(), 3200); }
+function triggerCorrectCelebration(){
+  const praiseMessages = [
+    { text: '🎉 ግሩም!', emoji: '🌟' }, { text: '👏 በጣም ጥሩ!', emoji: '🎯' },
+    { text: '🔥 ትክክል!', emoji: '⭐' }, { text: '💪 ጎበዝ!', emoji: '🏆' },
+    { text: '🙌 አሪፍ!', emoji: '✨' }, { text: '🌟 እጅግ በጣም ጥሩ!', emoji: '💫' },
+    { text: '🎉 ድንቅ!', emoji: '🎊' }, { text: '👑 ንጉሥ!', emoji: '👑' },
+    { text: '🚀 አስደናቂ!', emoji: '🌠' }, { text: '💎 ግሩም ነህ!', emoji: '💎' }
+  ];
+  const pick = praiseMessages[Math.floor(Math.random()*praiseMessages.length)];
+  const x = window.innerWidth/2 + (Math.random()-0.5)*200;
+  const y = window.innerHeight/2 + (Math.random()-0.5)*100;
+  launchConfetti(50); showPraiseBubble(pick.text, x, y);
+  setTimeout(() => showCartoonPop(pick.emoji, x+60, y-60), 200);
+  setTimeout(() => showCartoonFloat(pick.emoji, x-80, y+40), 400);
+  setTimeout(() => showSparkleBurst(x, y), 300);
+  setTimeout(() => emojiRain(['🎉','⭐','✨','🌟','💫'][Math.floor(Math.random()*5)], 12), 500);
+  STATE.correctStreak++; STATE.totalCorrect++; STATE.totalAnswered++;
+  if (STATE.correctStreak === 3) setTimeout(() => showMilestoneBadge('🔥', '3 ተከታታይ ትክክል!'), 1500);
+  else if (STATE.correctStreak === 5) setTimeout(() => showMilestoneBadge('⚡', '5 ተከታታይ ትክክል! ድንቅ!'), 1500);
+  else if (STATE.correctStreak === 10) setTimeout(() => showMilestoneBadge('👑', '10 ተከታታይ ትክክል! ንጉሥ!'), 1500);
+  if (STATE.correctStreak >= 3) showStreakFire();
+}
+function triggerWrongAnswer(){
+  STATE.correctStreak = 0; STATE.totalAnswered++;
+  const wrongMessages = [
+    { text: '💪 አትሸነፍ!', emoji: '🌱' }, { text: '📖 ተማር!', emoji: '📚' },
+    { text: '✨ ተስፋ አትቁረጥ!', emoji: '🌟' }, { text: '🙏 ይሞክሩ!', emoji: '💗' }
+  ];
+  const pick = wrongMessages[Math.floor(Math.random()*wrongMessages.length)];
+  showPraiseBubbleCustom(pick.text+' '+pick.emoji, 'linear-gradient(135deg, #ef9a9a, #e57373)', '#fff', window.innerWidth/2, window.innerHeight/2-50);
+}
+function showStreakFire(){
+  if (!PREFS.animations) return;
+  const existing = document.querySelector('.streak-fire'); if (existing) existing.remove();
+  createCelebrationOverlay(); const overlay = $('celebrationOverlay');
+  const el = createEl('div', { className: 'streak-fire', textContent: '🔥' }); overlay.appendChild(el);
+  setTimeout(() => { if (el.parentNode) el.remove(); }, 4000);
+}
+function showChapterCompletionCelebration(pct){
+  launchConfetti(100); emojiRain('🎉', 20);
+  setTimeout(() => emojiRain('⭐', 15), 300);
+  setTimeout(() => emojiRain('✨', 12), 600);
+  if (pct >= 90) showMilestoneBadge('🏆', 'ግሩም! 90%+ ውጤት!');
+  else if (pct >= 75) showMilestoneBadge('🎉', 'በጣም ጥሩ! 75%+ ውጤት!');
+  else if (pct >= 60) showMilestoneBadge('👍', 'ጥሩ ሥራ! 60%+ ውጤት!');
+  else showMilestoneBadge('🌱', 'ጥሩ ጅምር! ይቀጥሉ!');
+  for (let i = 0; i < 6; i++){ setTimeout(() => { showCartoonPop(['🎉','🎊','🏆','⭐','✨','🌟'][i], Math.random()*window.innerWidth, Math.random()*window.innerHeight*0.7); }, i*250); }
+}
+function triggerMilestoneCelebration(){
+  const allDone = ALL_CHAPTERS.every(c => STATE.completedChapters.has(c.id));
+  if (allDone) setTimeout(() => { launchConfetti(150); emojiRain('🏆', 25); showMilestoneBadge('👑', 'ሁሉንም ምዕራፎች ጨርሰዋል! ንጉሥ!'); }, 1000);
+}
+
+function toEthiopian(date){
+  const d = new Date(date);
+  const ethMonthNames = ['መስከረም','ጥቅምት','ኅዳር','ታኅሣሥ','ጥር','የካቲት','መጋቢት','ሚያዝያ','ግንቦት','ሰኔ','ሐምሌ','ነሐሴ','ጳጉሜን'];
+  const gYear = d.getFullYear(); const gMonth = d.getMonth()+1; const gDay = d.getDate();
+  let ethYear; if (gMonth > 9 || (gMonth === 9 && gDay >= 11)) ethYear = gYear-7; else ethYear = gYear-8;
+  const dayOfYear = Math.floor((d - new Date(gYear, 0, 0)) / 86400000);
+  let ethDayOfYear; if (gMonth > 9 || (gMonth === 9 && gDay >= 11)) ethDayOfYear = dayOfYear-253; else ethDayOfYear = dayOfYear+112;
+  const ethMonth = Math.min(Math.floor(ethDayOfYear/30), 12);
+  const ethDay = (ethDayOfYear % 30)+1;
+  return `${ethMonthNames[ethMonth]} ${ethDay}፣ ${ethYear} ዓ.ም`;
+}
+
+const STATE = {
+  theme: 'light', email: '', fullName: '', isLoggedIn: false,
+  chapterIndex: 0, completedChapters: new Set(), exerciseAnswers: {},
+  streak: 0, lastActiveDate: null, sessionStart: Date.now(), sessionElapsed: 0,
+  timerId: null, readingHistory: {}, isRecording: false, speakDone: false,
+  slideIndex: 0, lastQuizResult: null, recognition: null, focusReturnEl: null,
+  waitTimerId: null, waitSecondsLeft: 0, waitTotalSeconds: 30,
+  inStudy: false, selectedChapterIndex: 0, correctStreak: 0, totalCorrect: 0, totalAnswered: 0
+};
+const STORAGE_KEY = 'cfmb_v11';
+let ALL_BOOKS = [];
+let ALL_CHAPTERS = [];
+const STEP_DEFS = [
+  { key: 'explanation', title: '📘 የምዕራፉ ማብራሪያ', field: 'explanation' },
+  { key: 'background',  title: '🏛️ የታሪኩ ዳራ',      field: 'background' },
+  { key: 'keywords',    title: '🔑 ቁልፍ ቃላት',        field: 'keywords' },
+  { key: 'crossref',    title: '🔗 ተዛማጅ ጥቅሶች',     field: 'crossref' },
+  { key: 'theology',    title: '🎓 ሥነ-መለኮታዊ ትንታኔ', field: 'theology' },
+  { key: 'application', title: '🌱 ሊተገበር የሚገባ ዕውነት', field: 'application' },
+  { key: 'rhema',       title: '✨ የሬማ መልእክትና ጸሎት', field: 'rhema' }
+];
+const TOTAL_DESC_STEPS = STEP_DEFS.length;
+const getChapter = () => ALL_CHAPTERS[STATE.chapterIndex];
+const getExercises = () => (getChapter()?.exercises) || [];
+const getQuestionSlideStart = () => 1 + TOTAL_DESC_STEPS;
+const getSpeakSlide = () => getQuestionSlideStart() + getExercises().length;
+const getDashboardSlide = () => getSpeakSlide() + 1;
+const getTotalSlides = () => getDashboardSlide() + 1;
+const isLastChapter = () => STATE.chapterIndex === ALL_CHAPTERS.length - 1;
+
+async function loadData(){
+  try {
+    // ✅ FIX: Use the same correct paths as the external app.js
+    const booksRes = await fetch('books.json', { cache: 'no-cache' });
+    if (!booksRes.ok) throw new Error('books.json not found');
+    const booksData = await booksRes.json();
+    ALL_BOOKS = booksData.books || [];
+
+    ALL_CHAPTERS = [];
+    const chapterPromises = [];
+    for (const book of ALL_BOOKS) {
+      if (!book.active) continue;
+      for (let ch = 1; ch <= book.chapters; ch++) {
+        const num = String(ch).padStart(2, '0');
+        const url = `chapter-${num}.json`;
+        if (book.id === 'genesis') { // Assuming only genesis is active for now
+          const promise = fetch(url, { cache: 'no-cache' })
+            .then(res => {
+              if (!res.ok) throw new Error(`Failed to fetch ${url}`);
+              return res.json();
+            })
+            .catch(err => {
+              console.warn(`⚠️ Could not load ${url}:`, err.message);
+              return null;
+            });
+          chapterPromises.push(promise);
+        }
+      }
+    }
+    
+    const chapterResults = await Promise.all(chapterPromises);
+    ALL_CHAPTERS = chapterResults.filter(ch => ch !== null);
+
+    if (!ALL_CHAPTERS.length) {
+      console.warn('⚠️ No chapter files found in root. Attempting to load inline data as a fallback.');
+      loadInlineData(); // Fallback to inline data if external files fail
+    } else {
+      console.log(`✅ Loaded ${ALL_CHAPTERS.length} chapter(s) from external files.`);
+    }
+  } catch (err) {
+    console.error('❌ Failed to load external data, falling back to inline data:', err);
+    loadInlineData();
+  }
+}
+function loadInlineData(){
+  try {
+    const inline = $('inlineBibleData'); if (!inline) return;
+    const data = JSON.parse(inline.textContent);
+    ALL_BOOKS = data.books || []; ALL_CHAPTERS = data.chapters || [];
+  } catch (err) { console.error('❌ Inline JSON parse failed:', err); }
+}
+
+function saveProgress(){
+  if (!STATE.email) return;
+  try {
+    const payload = { email: STATE.email, fullName: STATE.fullName, completedIds: [...STATE.completedChapters], exerciseAnswers: STATE.exerciseAnswers, streak: STATE.streak, lastActiveDate: STATE.lastActiveDate, chapterIndex: STATE.chapterIndex, readingHistory: STATE.readingHistory };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+  } catch (e) { }
+}
+function loadProgress(){
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY); if (!raw) return;
+    const d = JSON.parse(raw);
+    if (d.email) STATE.email = d.email;
+    if (d.fullName) STATE.fullName = d.fullName;
+    if (Array.isArray(d.completedIds)) STATE.completedChapters = new Set(d.completedIds);
+    if (d.exerciseAnswers) STATE.exerciseAnswers = d.exerciseAnswers;
+    if (typeof d.streak === 'number') STATE.streak = d.streak;
+    if (d.lastActiveDate) STATE.lastActiveDate = d.lastActiveDate;
+    if (typeof d.chapterIndex === 'number') STATE.chapterIndex = d.chapterIndex;
+    if (d.readingHistory) STATE.readingHistory = d.readingHistory;
+  } catch (e) { }
+}
+function resetAllChapters(){
+  STATE.completedChapters = new Set(); STATE.exerciseAnswers = {}; STATE.streak = 0;
+  STATE.lastActiveDate = null; STATE.readingHistory = {}; STATE.sessionStart = Date.now(); STATE.sessionElapsed = 0;
+  STATE.chapterIndex = 0; STATE.slideIndex = 0; STATE.correctStreak = 0; STATE.totalCorrect = 0; STATE.totalAnswered = 0;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e){}
+  saveProgress();
+  if (STATE.timerId) clearInterval(STATE.timerId);
+  $('chapterTimer').textContent = '⏱️ 00:00';
+  showToast('♻️ ሁሉም ምዕራፎች ተጠፍተዋል!');
+  if (STATE.inStudy) goHome();
+  populateChapters($('selBook').value);
+  updateStartBtn();
+}
+function resetSelectedChapter(){
+  const c = getChapter(); if (!c) { showToast('⚠️ ምንም የተመረጠ ምዕራፍ የለም።'); return; }
+  STATE.completedChapters.delete(c.id); delete STATE.exerciseAnswers[c.id];
+  saveProgress();
+  if (STATE.inStudy) { STATE.slideIndex = 0; renderSlide(); }
+  showToast(`♻️ ምዕራፍ ${c.chapter} ተጠፍቷል!`);
+  populateChapters($('selBook').value); updateStartBtn();
+}
+function recordActivity(){
+  const today = new Date().toDateString();
+  if (!STATE.readingHistory[today]) STATE.readingHistory[today] = 0;
+  STATE.readingHistory[today]++;
+  if (STATE.lastActiveDate !== today){
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    STATE.streak = (STATE.lastActiveDate === yesterday) ? STATE.streak+1 : 1;
+    STATE.lastActiveDate = today;
+  }
+  saveProgress();
+}
+
+function renderDashboard(){
+  const completedBooksCount = ALL_BOOKS.filter(b => { const ch = ALL_CHAPTERS.filter(c => c.bookId === b.id); return ch.length > 0 && ch.every(c => STATE.completedChapters.has(c.id)); }).length;
+  const totalBooks = ALL_BOOKS.filter(b => b.active).length;
+  const bookPct = totalBooks > 0 ? Math.round((completedBooksCount/totalBooks)*100) : 0;
+  const currentBook = getChapter()?.bookId;
+  const bookChapters = ALL_CHAPTERS.filter(c => c.bookId === currentBook);
+  const completedChaptersCount = bookChapters.filter(c => STATE.completedChapters.has(c.id)).length;
+  const chapterPct = bookChapters.length > 0 ? Math.round((completedChaptersCount/bookChapters.length)*100) : 0;
+  let totalAnswered = 0; let totalQuestions = 0;
+  ALL_CHAPTERS.forEach(c => { const ex = c.exercises || []; totalQuestions += ex.length; const store = STATE.exerciseAnswers[c.id] || {}; totalAnswered += Object.keys(store).filter(k => store[k] && store[k].checked).length; });
+  const questionPct = totalQuestions > 0 ? Math.round((totalAnswered/totalQuestions)*100) : 0;
+  const today = new Date().toDateString();
+  const todayVisits = STATE.readingHistory[today] || 0;
+  const todaySeconds = STATE.sessionElapsed;
+  const todayMinutes = Math.floor(todaySeconds/60);
+  const todayHours = Math.floor(todayMinutes/60);
+  const remainMin = todayMinutes % 60;
+  const dwellDisplay = todayHours > 0 ? `${todayHours} ሰዓ ${remainMin} ደቂቃ` : `${todayMinutes} ደቂቃ`;
+  const set = (id, v) => { const el = $(id); if (el) el.textContent = v; };
+  const setW = (id, v) => { const el = $(id); if (el) el.style.width = v+'%'; };
+  set('dashBooks', `${completedBooksCount} / ${totalBooks}`); setW('dashBooksBar', bookPct);
+  set('dashChapters', `${completedChaptersCount} / ${bookChapters.length}`); setW('dashChaptersBar', chapterPct);
+  set('dashQuestions', `${totalAnswered} / ${totalQuestions}`); setW('dashQuestionsBar', questionPct);
+  set('dashDwell', dwellDisplay); set('dashStreak', STATE.streak);
+  set('dashTodayVisits', todayVisits); set('dashOverall', bookPct+'%'); setW('dashOverallBar', bookPct);
+}
+
+function trapFocus(container){
+  const selectors = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
+  const nodes = container.querySelectorAll(selectors);
+  if (!nodes.length) return () => {};
+  const first = nodes[0]; const last = nodes[nodes.length-1];
+  function handler(e){
+    if (e.key !== 'Tab') return;
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  }
+  container.addEventListener('keydown', handler);
+  return () => container.removeEventListener('keydown', handler);
+}
+function openPopup(popupEl){
+  STATE.focusReturnEl = document.activeElement;
+  popupEl.classList.add('show');
+  const modal = popupEl.querySelector('.popup-modal') || popupEl.querySelector('.cert-modal');
+  const cleanup = trapFocus(modal); popupEl._focusCleanup = cleanup;
+  const focusable = modal.querySelector('button, [href], input'); if (focusable) focusable.focus();
+  const escHandler = (e) => { if (e.key === 'Escape'){ e.preventDefault(); closePopup(popupEl); } };
+  document.addEventListener('keydown', escHandler); popupEl._escHandler = escHandler;
+}
+function closePopup(popupEl){
+  popupEl.classList.remove('show');
+  if (popupEl._focusCleanup) popupEl._focusCleanup();
+  if (popupEl._escHandler) document.removeEventListener('keydown', popupEl._escHandler);
+  if (STATE.focusReturnEl && STATE.focusReturnEl.focus) STATE.focusReturnEl.focus();
+}
+function renderProgressPips(){
+  const pips = $('slideProgress'); pips.innerHTML = '';
+  const total = getTotalSlides();
+  for (let i = 0; i < total; i++){
+    const p = createEl('div', { className: 'pip' + (i === STATE.slideIndex ? ' active' : (i < STATE.slideIndex ? ' completed' : '')) });
+    pips.appendChild(p);
+  }
+}
+function announceSlide(title){ const a = $('slideAnnouncer'); if (a) a.textContent = title; }
+function getNextButtonLabel(){ if (STATE.slideIndex === getDashboardSlide()) return isLastChapter() ? '🏆 ምስክር ወረቀት' : 'ወደ ሚቀጥለው ምዕራፍ →'; return 'ወደ ሚቀጥለው ገጽ →'; }
+
+function renderIntroSlide(cardClass){
+  const c = getChapter();
+  return `<div class="${cardClass}"><div class="slide-step-badge">📖 መግቢያ ጥቅስ</div><div class="verse-slide"><span class="reference">📖 ${c.refAm}</span><div class="verse-text">${c.verseAm}</div></div><div class="slide-nav"><span class="spacer"></span><button class="nav-btn-main" id="nextSlideBtn">${getNextButtonLabel()}</button></div></div>`;
+}
+function renderDescriptionSlide(stepIdx, cardClass){
+  const c = getChapter(); const def = STEP_DEFS[stepIdx];
+  let bodyHTML;
+  if (def.key === 'rhema') bodyHTML = `<div class="rhema-content">${c.rhema || ''}</div><div class="prayer-content">${c.prayer || ''}</div>`;
+  else bodyHTML = `<div class="study-content">${c[def.field] || '<p>—</p>'}</div>`;
+  return `<div class="${cardClass}"><div class="slide-step-badge">ደረጃ ${stepIdx+1} ከ ${TOTAL_DESC_STEPS}</div><h2 class="slide-title">${def.title}</h2>${bodyHTML}<div class="slide-nav"><button class="nav-btn-sm" id="prevSlideBtn">← ወደኋላ</button><span class="spacer"></span><button class="nav-btn-main" id="nextSlideBtn" disabled>⏳ ቆይ 30 ሰከንድ...</button><button class="nav-btn-sm" id="skipWaitBtn" style="margin-left:6px;background:var(--surface-3);color:var(--text-medium);border-color:var(--border-wood);">ገጹን ዝለል ⏭️</button></div></div>`;
+}
+function renderQuestionSlide(qi, cardClass){
+  const ex = getExercises()[qi];
+  return `<div class="${cardClass}"><div class="slide-step-badge">❓ ጥያቄ ${qi+1} ከ ${getExercises().length}</div>${buildQuestionHTML(ex, qi)}<div class="slide-nav"><button class="nav-btn-sm" id="prevSlideBtn">← ወደኋላ</button><span class="spacer"></span><button class="nav-btn-main" id="nextSlideBtn">${getNextButtonLabel()}</button></div></div>`;
+}
+function renderSpeakSlide(cardClass){
+  const c = getChapter();
+  return `<div class="${cardClass}"><div class="slide-step-badge">📢 ማወጅ</div><h2 class="slide-title">📢 የዕለቱን የሬማ ቃል በእምነት ያውጁ</h2><p style="font-size:.85rem;color:var(--text-medium);margin-bottom:12px;">የዛሬውን የእግዚአብሔር ቃል በሕይወትዎ ላይ ለመናገር በእምነት ይዘጋጁ።</p><div class="speak-area"><div class="speak-target"><div class="proclaim-label">📢 የዕለቱ ቃል</div><div class="proclaim-verse">${c.proclaimWord || ''}</div><div class="hint">${c.proclaimHint || ''}</div></div><div class="proclaim-instruction">🗣️ “በኢየሱስ ክርስቶስ ስም አውጃለሁ፦ …”</div><button class="mic-btn" id="micBtn" aria-label="የድምጽ ቀረጻ ጀምር">🎤</button><div class="mic-label" id="micLabel" aria-live="polite">ለማወጅ ይንኩ</div><div class="transcript-box hidden" id="transcriptBox"><div class="label">🎯 የእርስዎ አዋጅ</div><div id="transcriptText"></div></div><button class="speak-done-btn" id="speakDoneBtn">✅ ቃሉን አውጄያለሁ</button></div><div class="slide-nav"><button class="nav-btn-sm" id="prevSlideBtn">← ወደኋላ</button><span class="spacer"></span><button class="nav-btn-main" id="nextSlideBtn">${getNextButtonLabel()}</button></div></div>`;
+}
+function renderDashboardSlide(cardClass){
+  const allDone = ALL_CHAPTERS.every(c => STATE.completedChapters.has(c.id));
+  const certBtn = allDone ? `<button class="nav-btn-main" id="certBtn" style="background:linear-gradient(135deg,#c5a059,#8a5c0a);">🏆 ምስክር ወረቀት</button>` : '';
+  return `<div class="${cardClass}"><div class="slide-step-badge">📊 ማጠቃለያ</div><h2 class="slide-title">📊 የጥናት ሂደትዎ ማጠቃለያ</h2><div class="dashboard-grid"><div class="dash-item"><div class="dash-num" id="dashBooks">0 / 1</div><div class="dash-lbl">📚 የተጠናቀቁ መጻሕፍት</div><div class="dash-bar-wrap"><div class="dash-bar success" id="dashBooksBar" style="width:0%"></div></div></div><div class="dash-item"><div class="dash-num" id="dashChapters">0 / 2</div><div class="dash-lbl">📖 የተጠናቀቁ ምዕራፎች</div><div class="dash-bar-wrap"><div class="dash-bar info" id="dashChaptersBar" style="width:0%"></div></div></div><div class="dash-item"><div class="dash-num" id="dashQuestions">0 / 0</div><div class="dash-lbl">❓ የተመለሱ ጥያቄዎች</div><div class="dash-bar-wrap"><div class="dash-bar warning" id="dashQuestionsBar" style="width:0%"></div></div></div><div class="dash-item"><div class="dash-num" id="dashDwell">0 ደቂቃ</div><div class="dash-lbl">⏱️ የቆይታ ጊዜ (ዛሬ)</div></div><div class="dash-item"><div class="dash-num" id="dashStreak">0</div><div class="dash-lbl">🔥 ተከታታይ ቀናት</div></div><div class="dash-item"><div class="dash-num" id="dashTodayVisits">0</div><div class="dash-lbl">📅 የዛሬ ጉብኝቶች</div></div><div class="dash-item" style="grid-column:1/-1;"><div class="dash-num" id="dashOverall">0%</div><div class="dash-lbl">🎯 አጠቃላይ ሂደት</div><div class="dash-bar-wrap"><div class="dash-bar" id="dashOverallBar" style="width:0%"></div></div></div></div>${renderWeeklyChart()}${renderAchievementsGrid()}<div class="slide-nav"><button class="nav-btn-sm" id="prevSlideBtn">← ወደኋላ</button><span class="spacer"></span>${certBtn}<button class="nav-btn-main" id="finishChapterBtn">🎉 ምዕራፉን ጨርስ</button></div></div>`;
+}
+
+function renderSlide(direction){
+  const container = $('slideContent');
+  const cardClass = 'slide-card' + (direction === 'back' ? ' back' : '') + (!PREFS.animations ? ' no-anim' : '');
+  const idx = STATE.slideIndex;
+  if (!getChapter()) { container.innerHTML = '<div class="slide-card"><p>⚠️ ምዕራፍ አልተጫነም።</p></div>'; return; }
+  const qStart = getQuestionSlideStart();
+  const qCount = getExercises().length;
+  const speakSlide = getSpeakSlide();
+  const dashSlide = getDashboardSlide();
+  const bottomNav = $('bottomNav');
+  if (bottomNav) { if (idx === dashSlide) bottomNav.classList.remove('hidden'); else bottomNav.classList.add('hidden'); }
+  renderProgressPips();
+  let html = ''; let announce = '';
+  if (idx === 0){ html = renderIntroSlide(cardClass); announce = 'መግቢያ ጥቅስ'; }
+  else if (idx >= 1 && idx <= TOTAL_DESC_STEPS){ html = renderDescriptionSlide(idx-1, cardClass); announce = STEP_DEFS[idx-1].title; }
+  else if (idx >= qStart && idx < qStart+qCount){ html = renderQuestionSlide(idx-qStart, cardClass); announce = `ጥያቄ ${idx-qStart+1} ከ ${qCount}`; }
+  else if (idx === speakSlide){ html = renderSpeakSlide(cardClass); announce = 'የማወጅ ክፍል'; }
+  else if (idx === dashSlide){ html = renderDashboardSlide(cardClass); announce = 'የማጠቃለያ ሪፖርት'; }
+  container.innerHTML = html;
+  announceSlide(announce);
+  if (STATE.waitTimerId) clearInterval(STATE.waitTimerId);
+  const nextBtn = $('nextSlideBtn');
+  if (nextBtn) nextBtn.addEventListener('click', () => { if (STATE.slideIndex === getDashboardSlide()){ if (isLastChapter()) showCertificate(); else goToChapter(STATE.chapterIndex+1); } else goToSlide(STATE.slideIndex+1, 'forward'); });
+  const prevBtn = $('prevSlideBtn');
+  if (prevBtn) prevBtn.addEventListener('click', () => goToSlide(STATE.slideIndex-1, 'back'));
+  const skipBtn = $('skipWaitBtn');
+  if (skipBtn) skipBtn.addEventListener('click', () => { if (STATE.waitTimerId) clearInterval(STATE.waitTimerId); goToSlide(STATE.slideIndex+1, 'forward'); });
+  if (idx >= 1 && idx <= TOTAL_DESC_STEPS && nextBtn && nextBtn.disabled) startWaitTimer(nextBtn, skipBtn);
+  if (idx >= qStart && idx < qStart+qCount){ bindQuestionEvents(getExercises()[idx-qStart], idx-qStart); restoreQuestionState(idx-qStart); }
+  else if (idx === speakSlide){ bindMic(); bindSpeakDone(); }
+  else if (idx === dashSlide){
+    renderDashboard();
+    const fb = $('finishChapterBtn');
+    if (fb) fb.addEventListener('click', () => {
+      const r = STATE.lastQuizResult || { correct: 0, total: getExercises().length, pct: 0 };
+      showChapterCompletionCelebration(r.pct);
+      setTimeout(() => showChapterPopup(r.correct, r.total, r.pct), 800);
+      const bn = $('bottomNav'); if (bn) { bn.classList.remove('hidden'); bn.scrollIntoView({ behavior: 'smooth', block: 'end' }); }
+    });
+    const certBtn = $('certBtn');
+    if (certBtn) certBtn.addEventListener('click', showCertificate);
+  }
+}
+function startWaitTimer(nextBtn, skipBtn){
+  STATE.waitSecondsLeft = STATE.waitTotalSeconds;
+  const update = () => {
+    if (STATE.waitSecondsLeft <= 0){ clearInterval(STATE.waitTimerId); nextBtn.disabled = false; nextBtn.textContent = getNextButtonLabel(); if (skipBtn) skipBtn.style.display = 'none'; return; }
+    nextBtn.textContent = `⏳ ቆይ ${STATE.waitSecondsLeft} ሰከንድ...`; STATE.waitSecondsLeft--;
+  };
+  update();
+  STATE.waitTimerId = setInterval(update, 1000);
+}
+function goToSlide(newIdx, direction){
+  const total = getTotalSlides();
+  if (newIdx < 0 || newIdx >= total) return;
+  if (STATE.waitTimerId) clearInterval(STATE.waitTimerId);
+  STATE.slideIndex = newIdx;
+  renderSlide(direction || 'forward');
+  recordActivity();
+  const stage = document.querySelector('.slide-stage');
+  if (stage) stage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function buildQuestionHTML(ex, qi){
+  const typeLabel = ex.type === 'mcq' ? '🔘 ምርጫ' : ex.type === 'tf' ? '✅ እውነት ወይም ሥህተት' : ex.type === 'match' ? '🔗 አዛምድ' : '✍️ ክፍት ጥያቄ';
+  let html = `<div class="question-block" data-qindex="${qi}">`;
+  html += `<div class="q-number">📝 ጥያቄ ${qi+1} <span class="q-type">${typeLabel}</span></div>`;
+  html += `<div class="q-text">${ex.qAm}</div>`;
+  if (ex.type === 'mcq'){
+    html += `<div class="options" data-qindex="${qi}" role="radiogroup" aria-label="ምርጫዎች">`;
+    ex.optsAm.forEach((opt, oi) => { html += `<button type="button" class="option-btn" data-optindex="${oi}" data-qindex="${qi}" role="radio" aria-checked="false"><span class="opt-letter" aria-hidden="true">${String.fromCharCode(65+oi)}</span><span>${opt}</span></button>`; });
+    html += `</div>`;
+    html += `<div class="question-feedback" id="feedback-${qi}" role="status" aria-live="polite"></div>`;
+  } else if (ex.type === 'tf'){
+    html += `<div class="tf-buttons" data-qindex="${qi}"><button type="button" class="tf-btn" data-tf="true" data-qindex="${qi}">✅ እውነት</button><button type="button" class="tf-btn" data-tf="false" data-qindex="${qi}">❌ ስህተት</button></div>`;
+    html += `<div class="question-feedback" id="feedback-${qi}" role="status" aria-live="polite"></div>`;
+  } else if (ex.type === 'match'){
+    html += `<div class="match-container" data-qindex="${qi}"><div class="match-col">`;
+    ex.pairs.forEach((p, pi) => { html += `<button type="button" class="match-item" data-side="left" data-pair="${pi}" data-qindex="${qi}">${p.left}</button>`; });
+    html += `</div><div class="match-col">`;
+    const rightItems = ex.pairs.map((p, pi) => ({ text: p.right, pair: pi }));
+    rightItems.sort(() => Math.random()-0.5);
+    rightItems.forEach(item => { html += `<button type="button" class="match-item" data-side="right" data-pair="${item.pair}" data-qindex="${qi}">${item.text}</button>`; });
+    html += `</div></div>`;
+    html += `<div class="question-feedback" id="feedback-${qi}" role="status" aria-live="polite"></div>`;
+  } else if (ex.type === 'open'){
+    html += `<textarea class="open-input" data-qindex="${qi}" aria-label="የእርስዎ መልስ" placeholder="✍️ ከዛሬው ትምህርት በመነሳት የእርስዎን ሐሳብ እዚህ ይጻፉ..."></textarea>`;
+    html += `<button type="button" class="reveal-btn" data-qindex="${qi}">💡 መልስ አሳይ</button>`;
+    html += `<div class="sample-answer" id="sample-${qi}"><div class="label">📖 ምሳሌ መልስ (ያነጻጽሩት)</div><div>${ex.sampleAm}</div></div>`;
+  }
+  html += `</div>`;
+  return html;
+}
+function getChapterAnswerStore(){ const c = getChapter(); if (!c) return {}; if (!STATE.exerciseAnswers[c.id]) STATE.exerciseAnswers[c.id] = {}; return STATE.exerciseAnswers[c.id]; }
+
+function restoreQuestionState(qi){
+  const store = getChapterAnswerStore();
+  const saved = store[qi]; if (!saved) return;
+  const ex = getExercises()[qi];
+  if (ex.type === 'mcq' && typeof saved.selected === 'number'){
+    const btns = $$(`.option-btn[data-qindex="${qi}"]`);
+    btns.forEach((b, oi) => {
+      b.disabled = true;
+      if (oi === ex.correct) b.classList.add('correct');
+      else if (oi === saved.selected) b.classList.add('incorrect');
+      if (oi === saved.selected) b.classList.add('selected');
+    });
+    const fb = $(`feedback-${qi}`);
+    if (fb){ fb.className = 'question-feedback show ' + (saved.correct ? 'correct' : 'incorrect'); fb.innerHTML = (saved.correct ? '✅ <strong>ትክክል!</strong> ' : '❌ <strong>ትክክል አይደለም።</strong> ') + ex.explAm; }
+  } else if (ex.type === 'tf' && typeof saved.selected === 'boolean'){
+    const btns = $$(`.tf-btn[data-qindex="${qi}"]`);
+    btns.forEach(b => {
+      b.disabled = true;
+      const bVal = b.dataset.tf === 'true';
+      if (bVal === ex.correct) b.classList.add('correct');
+      else if (bVal === saved.selected) b.classList.add('incorrect');
+    });
+    const fb = $(`feedback-${qi}`);
+    if (fb){ fb.className = 'question-feedback show ' + (saved.correct ? 'correct' : 'incorrect'); fb.innerHTML = (saved.correct ? '✅ <strong>ትክክል!</strong> ' : '❌ <strong>ትክክል አይደለም።</strong> ') + ex.explAm; }
+  } else if (ex.type === 'open' && saved.checked){
+    const sample = $(`sample-${qi}`);
+    const rb = document.querySelector(`.reveal-btn[data-qindex="${qi}"]`);
+    if (sample) sample.classList.add('show');
+    if (rb) rb.textContent = '🙈 መልስ ደብቅ';
+  }
+}
+function bindQuestionEvents(ex, qi){
+  if (ex.type === 'mcq') bindMCQ(ex, qi);
+  else if (ex.type === 'tf') bindTF(ex, qi);
+  else if (ex.type === 'match') bindMatch(ex, qi);
+  else if (ex.type === 'open') bindOpen(ex, qi);
+}
+function bindMCQ(ex, qi){
+  const btns = $$(`.option-btn[data-qindex="${qi}"]`);
+  btns.forEach(btn => {
+    btn.addEventListener('click', function(){
+      if (this.disabled) return;
+      const selIdx = parseInt(this.dataset.optindex, 10);
+      const isCorrect = selIdx === ex.correct;
+      btns.forEach(b => { b.classList.remove('selected'); b.setAttribute('aria-checked', 'false'); });
+      this.classList.add('selected'); this.setAttribute('aria-checked', 'true');
+      btns.forEach((b, oi) => {
+        b.disabled = true;
+        if (oi === ex.correct) b.classList.add('correct');
+        else if (oi === selIdx) b.classList.add('incorrect');
+      });
+      const fb = $(`feedback-${qi}`);
+      fb.className = 'question-feedback show ' + (isCorrect ? 'correct' : 'incorrect');
+      fb.innerHTML = (isCorrect ? '✅ <strong>ትክክል!</strong> ' : '❌ <strong>ትክክል አይደለም።</strong> ') + ex.explAm;
+      getChapterAnswerStore()[qi] = { selected: selIdx, correct: isCorrect, checked: true };
+      markExerciseDone(qi, isCorrect);
+      if (isCorrect){
+        const rect = this.getBoundingClientRect();
+        triggerCorrectCelebration();
+        showSparkleBurst(rect.left + rect.width/2, rect.top + rect.height/2);
+        Sound.correct(); Haptic.success(); mascotCheer(); checkAchievements(true);
+      } else {
+        triggerWrongAnswer();
+        if (PREFS.animations){ this.classList.add('wrong-shake'); setTimeout(() => this.classList.remove('wrong-shake'), 600); }
+        Sound.wrong(); Haptic.error(); mascotSad(); checkAchievements(false);
+      }
+    });
+  });
+}
+function bindTF(ex, qi){
+  const btns = $$(`.tf-btn[data-qindex="${qi}"]`);
+  btns.forEach(btn => {
+    btn.addEventListener('click', function(){
+      const selected = this.dataset.tf === 'true';
+      const isCorrect = selected === ex.correct;
+      btns.forEach(b => {
+        b.disabled = true;
+        const bVal = b.dataset.tf === 'true';
+        if (bVal === ex.correct) b.classList.add('correct');
+        else if (bVal === selected) b.classList.add('incorrect');
+      });
+      const fb = $(`feedback-${qi}`);
+      fb.className = 'question-feedback show ' + (isCorrect ? 'correct' : 'incorrect');
+      fb.innerHTML = (isCorrect ? '✅ <strong>ትክክል!</strong> ' : '❌ <strong>ትክክል አይደለም።</strong> ') + ex.explAm;
+      getChapterAnswerStore()[qi] = { selected, correct: isCorrect, checked: true };
+      markExerciseDone(qi, isCorrect);
+      if (isCorrect){
+        triggerCorrectCelebration();
+        const rect = this.getBoundingClientRect();
+        showSparkleBurst(rect.left + rect.width/2, rect.top + rect.height/2);
+        Sound.correct(); Haptic.success(); mascotCheer(); checkAchievements(true);
+      } else {
+        triggerWrongAnswer();
+        if (PREFS.animations){ this.classList.add('wrong-shake'); setTimeout(() => this.classList.remove('wrong-shake'), 600); }
+        Sound.wrong(); Haptic.error(); mascotSad(); checkAchievements(false);
+      }
+    });
+  });
+}
+function bindMatch(ex, qi){
+  const items = $$(`.match-item[data-qindex="${qi}"]`);
+  items.forEach(item => {
+    item.addEventListener('click', function(){
+      if (this.classList.contains('matched')) return;
+      const side = this.dataset.side;
+      const existing = document.querySelector(`.match-item[data-qindex="${qi}"][data-side="${side}"].selected`);
+      if (existing) existing.classList.remove('selected');
+      this.classList.add('selected');
+      const leftSel = document.querySelector(`.match-item[data-qindex="${qi}"][data-side="left"].selected`);
+      const rightSel = document.querySelector(`.match-item[data-qindex="${qi}"][data-side="right"].selected`);
+      if (leftSel && rightSel){
+        if (leftSel.dataset.pair === rightSel.dataset.pair){
+          leftSel.classList.add('matched'); leftSel.classList.remove('selected');
+          rightSel.classList.add('matched'); rightSel.classList.remove('selected');
+          const lRect = leftSel.getBoundingClientRect();
+          showSparkleBurst(lRect.left + lRect.width/2, lRect.top + lRect.height/2);
+          showCartoonPop('✨', lRect.left + lRect.width/2, lRect.top);
+          Sound.click(); Haptic.light();
+          checkMatchComplete(qi);
+        } else {
+          leftSel.classList.add('wrong'); rightSel.classList.add('wrong');
+          setTimeout(() => { leftSel.classList.remove('wrong', 'selected'); rightSel.classList.remove('wrong', 'selected'); }, 500);
+          Sound.wrong(); Haptic.error();
+        }
+      }
+    });
+  });
+}
+function checkMatchComplete(qi){
+  const lefts = document.querySelectorAll(`.match-item[data-qindex="${qi}"][data-side="left"]`);
+  const matched = document.querySelectorAll(`.match-item[data-qindex="${qi}"][data-side="left"].matched`);
+  if (lefts.length === matched.length){
+    const fb = $(`feedback-${qi}`);
+    fb.className = 'question-feedback show correct';
+    fb.innerHTML = '✅ <strong>ትክክል!</strong> ሁሉንም በትክክል አገናኝተዋል! 🎉';
+    getChapterAnswerStore()[qi] = { correct: true, checked: true };
+    markExerciseDone(qi, true);
+    triggerCorrectCelebration();
+    launchConfetti(40); emojiRain('🎯', 10);
+    Sound.correct(); Haptic.success(); mascotCheer(); checkAchievements(true);
+  }
+}
+function bindOpen(ex, qi){
+  const rb = document.querySelector(`.reveal-btn[data-qindex="${qi}"]`);
+  if (!rb) return;
+  rb.addEventListener('click', function(){
+    const sample = $(`sample-${qi}`);
+    if (sample.classList.contains('show')){ sample.classList.remove('show'); this.textContent = '💡 መልስ አሳይ'; }
+    else {
+      sample.classList.add('show'); this.textContent = '🙈 መልስ ደብቅ';
+      getChapterAnswerStore()[qi] = { correct: true, checked: true };
+      markExerciseDone(qi, true);
+      const rect = this.getBoundingClientRect();
+      showSparkleBurst(rect.left + rect.width/2, rect.top);
+      showCartoonPop('💡', rect.left + rect.width/2, rect.top - 20);
+      Sound.click(); Haptic.light();
+    }
+  });
+  const ta = document.querySelector(`.open-input[data-qindex="${qi}"]`);
+  if (ta) ta.addEventListener('input', () => { const store = getChapterAnswerStore(); store[qi] = store[qi] || {}; store[qi].text = ta.value; saveProgress(); });
+}
+function markExerciseDone(qi, isCorrect){
+  const total = getExercises().length;
+  const store = getChapterAnswerStore();
+  const done = Object.keys(store).filter(k => store[k] && store[k].checked).length;
+  if (done === total){
+    const correct = Object.keys(store).filter(k => store[k] && store[k].correct).length;
+    const pct = total > 0 ? Math.round((correct/total)*100) : 0;
+    if (pct >= 60 && !STATE.completedChapters.has(getChapter().id)){
+      STATE.completedChapters.add(getChapter().id);
+      recordActivity(); saveProgress(); triggerMilestoneCelebration();
+    }
+    STATE.lastQuizResult = { correct, total, pct };
+    if (pct >= 100) unlockAchievement('perfect_chapter');
+  }
+  saveProgress();
+}
+function bindMic(){ const mb = $('micBtn'); if (!mb) return; mb.addEventListener('click', () => { if (STATE.isRecording) stopRecording(); else startRecording(); }); }
+function startRecording(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR){ alert('⚠️ የንግግር መሳርያው አይሰራም። እባክዎ Chrome ወይም Edge ይጠቀሙ።'); return; }
+  const r = new SR(); r.lang = 'am-ET'; r.interimResults = false;
+  STATE.isRecording = true;
+  const mb = $('micBtn'); if (mb) mb.classList.add('recording');
+  const ml = $('micLabel'); if (ml) ml.textContent = '🎧 በማዳመጥ ላይ...';
+  const tb = $('transcriptBox'); if (tb) tb.classList.remove('hidden');
+  const tt = $('transcriptText'); if (tt) tt.innerHTML = '<em>🎤 አሁን ያውጁ...</em>';
+  r.onresult = (e) => { const txt = e.results[0][0].transcript; const tEl = $('transcriptText'); if (tEl) tEl.innerHTML = '🎯 <strong>የእርስዎ ዐዋጅ:</strong> ' + txt; const lEl = $('micLabel'); if (lEl) lEl.textContent = '✅ ተጠናቅቋል! ለመድገም ይንኩ።'; };
+  r.onerror = () => { const lEl = $('micLabel'); if (lEl) lEl.textContent = '⚠️ ስህተት። ለመድገም ይንኩ።'; STATE.isRecording = false; const mb2 = $('micBtn'); if (mb2) mb2.classList.remove('recording'); };
+  r.onend = () => { STATE.isRecording = false; const mb2 = $('micBtn'); if (mb2) mb2.classList.remove('recording'); };
+  r.start(); STATE.recognition = r;
+}
+function stopRecording(){ if (STATE.recognition) STATE.recognition.stop(); STATE.isRecording = false; const mb = $('micBtn'); if (mb) mb.classList.remove('recording'); }
+function bindSpeakDone(){
+  const btn = $('speakDoneBtn'); if (!btn) return;
+  btn.addEventListener('click', function(){
+    if (STATE.speakDone) return;
+    STATE.speakDone = true;
+    this.classList.add('done');
+    this.textContent = '✅ ተጠናቅቋል — እግዚአብሔር ይባርክዎ!';
+    this.disabled = true;
+    showToast('✅ ማወጅዎ ተመዝግቧል!');
+    launchConfetti(30);
+    showCartoonPop('🕊️', window.innerWidth/2, window.innerHeight/2);
+    Sound.correct(); Haptic.celebrate();
+  });
+}
+function showToast(msg){ const t = createEl('div', { textContent: msg }); t.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#2e7d32;color:#fff;padding:10px 22px;border-radius:30px;font-weight:700;z-index:99999;box-shadow:0 4px 16px rgba(0,0,0,.3);font-size:.9rem;'; document.body.appendChild(t); setTimeout(() => t.remove(), 2000); }
+
+function renderChapter(){
+  const c = getChapter(); if (!c) return;
+  $('curriculumUnit').textContent = `${c.bookNameAm} · ምዕራፍ ${c.chapter}`;
+  $('curriculumTitle').textContent = '📖 ' + c.titleAm;
+  $('curriculumFocus').textContent = '🎯 ' + c.focusAm;
+  $('navChapterLabel').textContent = `${c.bookNameAm} · ምዕራፍ ${c.chapter}`;
+  STATE.slideIndex = 0; STATE.speakDone = false; STATE.lastQuizResult = null; STATE.correctStreak = 0;
+  STATE.sessionStart = Date.now(); STATE.sessionElapsed = 0;
+  if (STATE.timerId) clearInterval(STATE.timerId);
+  startTimer();
+  $('chapterTimer').classList.add('visible');
+  $('nextBtn').textContent = isLastChapter() ? '🏆 ምስክር ወረቀት' : 'ወደ ሚቀጥለው ምዕራፍ →';
+  renderSlide(); recordActivity(); saveProgress();
+}
+function goToChapter(idx){
+  if (idx < 0) idx = 0;
+  if (idx >= ALL_CHAPTERS.length) idx = ALL_CHAPTERS.length - 1;
+  STATE.chapterIndex = idx;
+  renderChapter();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function populateTestament(){ const sel = $('selTestament'); sel.innerHTML = '<option value="">— ይምረጡ —</option><option value="OT">📖 ብሉይ ኪዳን</option><option value="NT">✝️ አዲስ ኪዳን</option>'; }
+function populateBooks(testament){
+  const sel = $('selBook');
+  sel.innerHTML = '<option value="">— መጽሐፉን ይምረጡ —</option>';
+  if (!testament){ sel.disabled = true; return; }
+  ALL_BOOKS.filter(b => b.testament === testament).forEach(b => { const o = createEl('option', { value: b.id, textContent: (b.active ? '📗 ' : '📖 ') + b.nameAm + ' (' + b.chapters + ')' }); sel.appendChild(o); });
+  sel.disabled = false;
+}
+function populateChapters(bookId){
+  const sel = $('selChapter');
+  sel.innerHTML = '<option value="">— ምዕራፉን ይምረጡ —</option>';
+  if (!bookId){ sel.disabled = true; return; }
+  const book = ALL_BOOKS.find(b => b.id === bookId);
+  if (!book){ sel.disabled = true; return; }
+  for (let i = 1; i <= book.chapters; i++){
+    const idx = ALL_CHAPTERS.findIndex(v => v.bookId === bookId && v.chapter === i);
+    const done = idx >= 0 && STATE.completedChapters.has(ALL_CHAPTERS[idx].id);
+    const hasContent = idx >= 0;
+    const icon = hasContent ? (done ? '✅' : '📄') : '🔒';
+    const o = createEl('option', { value: idx >= 0 ? String(idx) : '', textContent: `${icon} ምዕራፍ ${i}${done ? ' ✅' : (hasContent ? '' : ' (በቅርቡ)')}` });
+    if (!hasContent) o.disabled = true;
+    sel.appendChild(o);
+  }
+  sel.disabled = false;
+}
+function updateStartBtn(){ const btn = $('startStudyBtn'); if (!btn) return; btn.disabled = $('selChapter').value === ''; }
+function showChapterPopup(correct, total, pct){
+  const c = getChapter();
+  let icon, title, text;
+  if (pct >= 90){ icon = '🏆'; title = 'ግሩም! በጣም ጥሩ!'; text = 'እጅግ በጣም ጥሩ ውጤት አግኝተዋል! 🌟'; }
+  else if (pct >= 75){ icon = '🎉'; title = 'በጣም ጥሩ!'; text = 'በጣም ጥሩ ውጤት ነው! 📖'; }
+  else if (pct >= 60){ icon = '👍'; title = 'ጥሩ ሥራ!'; text = 'ጥሩ ውጤት ነው! 💪'; }
+  else { icon = '🌱'; title = 'ጥሩ ጅምር!'; text = 'ይህ ጅምር ነው። 🙏'; }
+  $('popupIcon').textContent = icon;
+  $('popupTitle').textContent = title;
+  $('popupText').textContent = `${text} — 📖 ምዕራፍ "${c.titleAm}"`;
+  $('popupCorrect').textContent = correct;
+  $('popupTotal').textContent = total;
+  $('popupScore').textContent = pct + '%';
+  $('popupVerse').textContent = '"ቃልህ ለእግሬ መብራት፥ ለመንገዴም ብርሃን ነው።" — መዝሙር 119:105';
+  openPopup($('chapterPopup'));
+}
+function showCertificate(){
+  const email = STATE.email || 'ተማሪ';
+  const name = STATE.fullName || email.split('@')[0];
+  const book = ALL_BOOKS.find(b => b.id === getChapter().bookId);
+  const date = toEthiopian(new Date());
+  $('certName').textContent = name;
+  $('certBook').textContent = book ? book.nameAm : 'መጽሐፍ ቅዱስ';
+  $('certDate').textContent = 'የተሰጠበት ቀን፡ ' + date;
+  launchConfetti(80); emojiRain('🏆', 15);
+  Sound.chapterDone(); Haptic.celebrate();
+  openPopup($('certOverlay'));
+}
+function openSharePopup(){
+  const url = encodeURIComponent(window.location.href);
+  const text = encodeURIComponent('የቃሉ ናፍቆት የመጽሃፍ ቅዱስ ጥናት መተግበርያ — ይህን ይጠቀሙ!');
+  const full = text + '%20' + url;
+  $('shareTelegram').href = `https://t.me/share/url?url=${url}&text=${text}`;
+  $('shareWhatsapp').href = `https://wa.me/?text=${full}`;
+  $('shareFacebook').href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+  $('shareEmail').href    = `mailto:?subject=${encodeURIComponent('የቃሉ ናፍቆት')}&body=${full}`;
+  $('shareSms').href      = `sms:?&body=${full}`;
+  openPopup($('sharePopup'));
+}
+function doLogin(){
+  const email = $('emailInput').value.trim();
+  if (!email || email.indexOf('@') === -1){ alert('⚠️ እባክዎ ትክክለኛ ኢሜይል ያስገቡ።'); return; }
+  STATE.email = email; STATE.isLoggedIn = true;
+  try { localStorage.setItem('cfmb_email_v8', email); } catch (e) {}
+  loadProgress(); showHome();
+  launchConfetti(20); showToast('🎉 እንኳን ደህና መጡ!');
+  Sound.correct(); Haptic.success();
+}
+function doLogout(){
+  if (!confirm('መውጣት?')) return;
+  saveProgress(); STATE.isLoggedIn = false; STATE.email = '';
+  try { localStorage.removeItem('cfmb_email_v8'); } catch (e) {}
+  $('mainSection').classList.add('hidden');
+  $('homeSection').classList.remove('visible');
+  $('loginSection').classList.remove('hidden');
+  $('hamburgerBtn').classList.add('hidden');
+  $('appHeader').classList.remove('visible');
+  $('chapterTimer').classList.remove('visible');
+  closeDrawer();
+}
+function showHome(){
+  $('loginSection').classList.add('hidden');
+  $('mainSection').classList.add('hidden');
+  $('homeSection').classList.add('visible');
+  $('hamburgerBtn').classList.remove('hidden');
+  $('appHeader').classList.add('visible');
+  $('chapterTimer').classList.remove('visible');
+  populateTestament();
+  $('selTestament').value = 'OT';
+  populateBooks('OT');
+  $('selBook').value = getChapter()?.bookId || 'genesis';
+  populateChapters($('selBook').value);
+  $('selChapter').value = String(STATE.chapterIndex);
+  updateStartBtn();
+  $('dateDisplay').textContent = toEthiopian(new Date());
+  updateDrawerUser();
+}
+function updateDrawerUser(){
+  const email = STATE.email || '';
+  const name = STATE.fullName || (email ? email.split('@')[0] : 'ተማሪ');
+  $('drawerUserName').textContent = name;
+  $('drawerUserEmail').textContent = email || '—';
+  $('drawerUserAvatar').textContent = name.charAt(0).toUpperCase() || '👤';
+}
+function startStudy(){
+  const chapterVal = $('selChapter').value;
+  if (chapterVal === ''){ alert('⚠️ እባክዎ መጽሐፍና ምዕራፍ ይምረጡ።'); return; }
+  const chosenIdx = parseInt(chapterVal, 10);
+  const chosenChapter = ALL_CHAPTERS[chosenIdx];
+  if (!chosenChapter) return;
+  $('bibleReadRef').textContent = chosenChapter.refAm || `${chosenChapter.bookNameAm} ${chosenChapter.chapter}`;
+  STATE.selectedChapterIndex = chosenIdx;
+  openPopup($('bibleReadPopup'));
+}
+function proceedToStudy(){
+  STATE.chapterIndex = STATE.selectedChapterIndex;
+  STATE.inStudy = true;
+  closePopup($('bibleReadPopup'));
+  $('homeSection').classList.remove('visible');
+  $('mainSection').classList.remove('hidden');
+  renderChapter();
+  startTimer();
+  setTimeout(() => $('mainSection').scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+}
+function goHome(){
+  saveProgress();
+  STATE.inStudy = false;
+  if (STATE.timerId) clearInterval(STATE.timerId);
+  $('mainSection').classList.add('hidden');
+  $('homeSection').classList.add('visible');
+  $('chapterTimer').classList.remove('visible');
+  showHome();
+  closeDrawer();
+}
+function startTimer(){
+  if (STATE.timerId) clearInterval(STATE.timerId);
+  STATE.timerId = setInterval(() => {
+    STATE.sessionElapsed = Math.floor((Date.now() - STATE.sessionStart) / 1000);
+    const m = String(Math.floor(STATE.sessionElapsed/60)).padStart(2, '0');
+    const s = String(STATE.sessionElapsed % 60).padStart(2, '0');
+    const el = $('chapterTimer'); if (el) el.textContent = `⏱️ ${m}:${s}`;
+  }, 1000);
+}
+function applyTheme(theme){
+  STATE.theme = theme;
+  document.documentElement.setAttribute('data-theme', theme);
+  try { localStorage.setItem('cfmb_theme', theme); } catch (e) {}
+}
+
+function openDrawer(){
+  $('drawer').classList.add('show');
+  $('drawerOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeDrawer(){
+  $('drawer').classList.remove('show');
+  $('drawerOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function attachEvents(){
+  $('loginBtn').addEventListener('click', doLogin);
+  $('emailInput').addEventListener('keypress', e => { if (e.key === 'Enter') doLogin(); });
+
+  $('hamburgerBtn').addEventListener('click', openDrawer);
+  $('drawerCloseBtn').addEventListener('click', closeDrawer);
+  $('drawerOverlay').addEventListener('click', closeDrawer);
+
+  $('drawerHomeBtn').addEventListener('click', goHome);
+  $('drawerSaveBtn').addEventListener('click', () => { saveProgress(); showToast('💾 ተቀምጧል!'); closeDrawer(); });
+  $('drawerNameBtn').addEventListener('click', () => { $('fullNameInput').value = STATE.fullName || ''; closeDrawer(); setTimeout(() => openPopup($('namePopup')), 200); });
+  $('drawerShareBtn').addEventListener('click', () => { closeDrawer(); setTimeout(openSharePopup, 200); });
+  $('drawerHelpBtn').addEventListener('click', () => { closeDrawer(); setTimeout(() => openPopup($('helpPopup')), 200); });
+  $('drawerResetBtn').addEventListener('click', () => { closeDrawer(); setTimeout(() => openPopup($('resetPopup')), 200); });
+  $('drawerLogoutBtn').addEventListener('click', () => { closeDrawer(); setTimeout(doLogout, 200); });
+
+  $('prefSound').addEventListener('change', function(){ updatePref('sound', this.checked); });
+  $('prefHaptic').addEventListener('change', function(){ updatePref('haptic', this.checked); });
+  $('prefAnimations').addEventListener('change', function(){ updatePref('animations', this.checked); });
+  $('prefMusic').addEventListener('change', function(){ updatePref('music', this.checked); });
+  $('prefMascot').addEventListener('change', function(){ updatePref('mascot', this.checked); });
+  $('prefDark').addEventListener('change', function(){ updatePref('dark', this.checked); });
+
+  $('resetCancelBtn').addEventListener('click', () => closePopup($('resetPopup')));
+  $('resetAllChaptersBtn').addEventListener('click', () => { if (confirm('⚠️ ሁሉንም ምዕራፎች ማጥፋት ይፈልጋሉ? ይህ ተግባር አይመለስም።')) { resetAllChapters(); closePopup($('resetPopup')); } });
+  $('resetSelectedChapterBtn').addEventListener('click', () => { if (confirm('⚠️ የተመረጠውን ምዕራፍ ብቻ ማጥፋት ይፈልጋሉ?')) { resetSelectedChapter(); closePopup($('resetPopup')); } });
+
+  $('helpCloseBtn').addEventListener('click', () => closePopup($('helpPopup')));
+
+  $('nameCancelBtn').addEventListener('click', () => closePopup($('namePopup')));
+  $('nameSaveBtn').addEventListener('click', () => { STATE.fullName = $('fullNameInput').value.trim(); saveProgress(); updateDrawerUser(); closePopup($('namePopup')); });
+
+  $('bibleReadConfirmBtn').addEventListener('click', proceedToStudy);
+  $('bibleReadCancelBtn').addEventListener('click', () => closePopup($('bibleReadPopup')));
+
+  $('selTestament').addEventListener('change', function(){ populateBooks(this.value); $('selChapter').innerHTML = '<option value="">— ምዕራፉን ይምረጡ —</option>'; $('selChapter').disabled = true; updateStartBtn(); });
+  $('selBook').addEventListener('change', function(){ if (this.value) populateChapters(this.value); updateStartBtn(); });
+  $('selChapter').addEventListener('change', updateStartBtn);
+
+  $('startStudyBtn').addEventListener('click', startStudy);
+  $('homeBtn').addEventListener('click', goHome);
+
+  $('shareCloseBtn').addEventListener('click', () => { closePopup($('sharePopup')); $('qrContainer').classList.add('hidden'); });
+  $('shareSms').addEventListener('click', e => { const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent); if (isMobile){ e.preventDefault(); window.location.href = 'sms:?&body=' + encodeURIComponent('የቃሉ ናፍቆት — ' + window.location.href); } });
+  $('shareQr').addEventListener('click', () => { const box = $('qrContainer'); if (!box.classList.contains('hidden')){ box.classList.add('hidden'); return; } const url = window.location.href; $('qrCode').innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}" alt="QR Code" width="200" height="200">`; box.classList.remove('hidden'); });
+  $('shareNative').addEventListener('click', async () => { if (navigator.share){ try { await navigator.share({ title: 'የቃሉ ናፍቆት የመጽሃፍ ቅዱስ ጥናት መተግበርያ', text: 'ይህን መተግበርያ ይጠቀሙ!', url: window.location.href }); } catch (e) {} } else { alert('ይህ አማራጭ በዚህ መሳሪያ አይሰራም።'); } });
+
+  $('nextBtn').addEventListener('click', () => { if (isLastChapter()) showCertificate(); else goToChapter(STATE.chapterIndex+1); });
+  $('popupCloseBtn').addEventListener('click', () => { closePopup($('chapterPopup')); goHome(); });
+
+  $('certCloseBtn').addEventListener('click', () => closePopup($('certOverlay')));
+  $('certPrintBtn').addEventListener('click', () => {
+    const w = window.open('', '_blank');
+    const html = `<html><head><title>Certificate</title><style>body{font-family:serif;text-align:center;padding:60px;}h1{color:#3e2723;font-size:2.5rem;}h2{color:#c5a059;font-size:3rem;border-bottom:3px solid #c5a059;display:inline-block;padding:0 20px 10px;}.stamp{width:120px;height:120px;border-radius:50%;border:4px solid #c5a059;display:flex;align-items:center;justify-content:center;margin:20px auto;font-weight:800;color:#c5a059;font-size:1.2rem;transform:rotate(-15deg);opacity:.85;}.footer{font-size:.8rem;color:#a8b8c8;margin-top:30px;}</style></head><body><h1>🏆 የምስክር ወረቀት</h1><p>Certificate of Completion</p><h2>${$('certName').textContent}</h2><p>የተሰጠው የመጽሐፍ ቅዱስ ጥናት ሙሉ በሙሉ ስላጠናቀቁ ነው።</p><h3 style="color:#2e7d32;">${$('certBook').textContent}</h3><p>${$('certDate').textContent}</p><div class="stamp">✨ ተጠናቅቋል ✨</div><div class="footer">የቃሉ ናፍቆት · የመጽሐፍ ቅዱስ ጥናት መተግበርያ</div></body></html>`;
+    w.document.write(html); w.document.close(); w.print();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape'){
+      if ($('drawer').classList.contains('show')) { closeDrawer(); return; }
+      if ($('bibleReadPopup').classList.contains('show')) closePopup($('bibleReadPopup'));
+      else if ($('chapterPopup').classList.contains('show')) closePopup($('chapterPopup'));
+      else if ($('sharePopup').classList.contains('show')) closePopup($('sharePopup'));
+      else if ($('helpPopup').classList.contains('show')) closePopup($('helpPopup'));
+      else if ($('namePopup').classList.contains('show')) closePopup($('namePopup'));
+      else if ($('certOverlay').classList.contains('show')) closePopup($('certOverlay'));
+      else if ($('resetPopup').classList.contains('show')) closePopup($('resetPopup'));
+    }
+  });
+  window.addEventListener('beforeunload', saveProgress);
+}
+function initEnhancements(){ initMascot(); initMusic(); setTimeout(() => showMascotBubble('እንኳን ደህና መጡ! 🕊️', 3500), 1500); }
+
+async function init(){
+  loadPrefs();
+
+  await loadData();
+  if (!ALL_CHAPTERS.length){ document.body.innerHTML = '<p style="padding:40px;text-align:center;font-family:sans-serif;">⚠️ የመረጃ ጫና አልተሳካም። እባክዎ ገጹን ዳግም ይጫኑ።</p>'; return; }
+  if (STATE.chapterIndex >= ALL_CHAPTERS.length) STATE.chapterIndex = 0;
+  attachEvents();
+  let savedEmail = null;
+  try { savedEmail = localStorage.getItem('cfmb_email_v8'); } catch (e) {}
+  if (savedEmail){
+    STATE.email = savedEmail; STATE.isLoggedIn = true;
+    $('emailInput').value = savedEmail;
+    loadProgress();
+    if (STATE.chapterIndex >= ALL_CHAPTERS.length) STATE.chapterIndex = 0;
+    showHome();
+    updateDrawerUser();
+  } else {
+    $('loginSection').classList.remove('hidden');
+    $('homeSection').classList.remove('visible');
+    $('mainSection').classList.add('hidden');
+    $('hamburgerBtn').classList.add('hidden');
+    $('appHeader').classList.remove('visible');
+    $('chapterTimer').classList.remove('visible');
+  }
+  $('dateDisplay').textContent = toEthiopian(new Date());
+  initEnhancements();
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+else init();
+
+})();
+</script>
+</body>
+</html>
